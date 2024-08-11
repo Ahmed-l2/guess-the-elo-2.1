@@ -1,8 +1,8 @@
 import React, {useEffect,useState } from 'react';
 import Chessground from '@react-chess/chessground';
-import './chessground.base.css';
-import 'chessground/assets/chessground.brown.css';
-import 'chessground/assets/chessground.cburnett.css';
+import './chessgroundBaseOverride.css';
+import './chessgroundColorsOverride.css';
+import './style/pieces/maestro.css';
 import './App.css'
 
 
@@ -28,11 +28,10 @@ const ChessBoard = ({ fenList , details}) => {
 
 
 
-
   const handleInputChange = (e) => { // checking guess input
     setGuess(e.target.value);//#1dd1a1
     if (e.target.value){
-      document.getElementById('sub_guess').style='background-color:#10ac84;color:white'
+      document.getElementById('sub_guess').style='background-color:#f49843;color:white'
 
     }else{
 
@@ -60,11 +59,15 @@ const ChessBoard = ({ fenList , details}) => {
 
   }
 
+  
+
+
+
   const sub_func = () =>{
     new Audio("./sfx/click.mp3").play();
     if (!guess){
       //#1dd1a1 btn color freen
-
+      
     }
     else{
       const  user_guess = guessed_inp.value;
@@ -73,12 +76,14 @@ const ChessBoard = ({ fenList , details}) => {
 
                     guessed_inp.disabled = true;
                     document.getElementById('sub_guess').disabled = true;
-                    guessed_inp.style='cursor:not-allowed;background-color: #4d4d4d;'
+                    document.getElementById('next_game').disabled = false;
+                    guessed_inp.style='cursor:not-allowed;background-color: #57636c;'
+                    
 
                     w_elo.innerHTML = whiteElo;
                     b_elo.innerHTML = blackElo;
                     g_avrg.innerHTML = `${averageElo.toString().split('.')[0]}`;
-
+                    g_avrg.style='border:5px solid white'
                     g_res.style='color:silver;background-color:#4d4d4d;'
                     if (result == '1-0'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`White won by timeout`;}
@@ -112,8 +117,8 @@ const ChessBoard = ({ fenList , details}) => {
 
                     else if (user_guess > averageElo && (user_guess-averageElo) >= 100 || user_guess < averageElo && (averageElo-user_guess) >=100){
                         result_info.innerHTML= "Your guess is a bit off"
-                        result_info.style = 'color:white;background-color:#e17055';
-                        g_avrg.style='background-color:#e17055;color:white';
+                        result_info.style = 'color:white;background-color:#b33939';
+                        g_avrg.style='background-color:#b33939;color:white;';
                     }
                     else if (user_guess == averageElo){
                         document.body.style='background-color:black'
@@ -126,7 +131,7 @@ const ChessBoard = ({ fenList , details}) => {
                     }}
 
 
-                    document.getElementById("next_game").style='color:white;background-color:#e58e26';
+                    document.getElementById("next_game").style='color:white;background-color:#f49843';
 
     }
 
@@ -163,13 +168,13 @@ const ChessBoard = ({ fenList , details}) => {
 
 
 
-
+ 
 
   return (
 
     <div >
 
-
+  
       <div className="box" id="box-b">
 
         <div className="board-container">
@@ -184,10 +189,16 @@ const ChessBoard = ({ fenList , details}) => {
 
         config={{ fen: fenList[currentIndex] ,
 
-          draggable: true, // Disable piece dragging
+          draggable:{
+            enabled:true,
+          } ,// Disable piece dragging
           movable: {
-            free: false, // Disable piece movement
+            free: true, // Disable piece movement
             dests: true // Disable destination highlighting
+          },
+          highlight: {
+            lastMove:true,
+            check:true,
           },
           premove: false, // Disable premoves
         // Set the initial position
@@ -204,8 +215,9 @@ const ChessBoard = ({ fenList , details}) => {
                 <p id="b_elo"></p>
 
         </div>
+        
             <p id="g_res">Game result</p>
-
+            <p id="op_name">{opening}</p>
 
         <p id="g_avrg">Game average rating</p>
         <p id="result_info"></p>

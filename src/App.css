@@ -11,11 +11,12 @@
 
     }
     :root{
-        --primary-color : rgba(29, 29, 29,.8);
-        --secondary-color : rgba(30, 30, 30, 0.8);
-        --side-color:rgba(61, 61, 61,.2);
-        --button-color: #10ac84;
+        --primary-color : #1b1b1f;
+        --secondary-color : #2b2b2f;
+        --side-color:#1b1b1f;
+        --button-color: #f49843;
         --button-color-2: rgba(77, 77, 77,.2);
+        --nav-bar-bg:#2b2b2f;
 
         --border-rad : 10px;
         
@@ -28,7 +29,7 @@
     margin: 0;
 }
 body{
-    background-color:#1d1d1d;
+    background-color:var(--primary-color);
 
     background-size: cover;
 
@@ -113,7 +114,7 @@ body{
     flex-direction: column;
     justify-items: center;
     text-align: center;
-    row-gap: 23px;
+    row-gap: 12px;
     padding: 20px;
 
  
@@ -130,8 +131,23 @@ body{
     align-items: center;
     min-width: 100%;
     min-height: 40px;
-    min-width: 100%;
+
 }
+
+#op_name{
+    background-color: #2d2d2d;
+    padding: 10px;
+    border-radius: var(--border-rad);
+    font-size: 1.1vw;
+    color: silver;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    min-height: 50px;
+
+}
+
 .info-panel #g_res{
 
 
@@ -170,7 +186,7 @@ body{
 
 .info-panel #result_info{
     min-height: 150px;
-    background-color: #2d2d2d;
+    background-color:var(--button-color-2);;
     color: white;
     min-width: 100%;
     border-radius: var(--border-rad);

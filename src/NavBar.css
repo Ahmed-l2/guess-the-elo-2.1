@@ -3,7 +3,7 @@
     top: 0;
     width: 100%;
     display: flex;
-    background-color: var(--side-color);
+    background-color: var(--nav-bar-bg);
     align-items: center;
 
     padding: 10px;
