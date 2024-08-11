@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ChessBoard from './ChessBoard';
 import { Chess } from 'chess.js';
 import { extractMatchDetails } from './pgnUtils';
+import Navbar from './NavBAr';
+import './App.css'
+
 
 // Function to fetch and parse PGN content
 const fetchPGNContent = async (url) => {
@@ -89,12 +92,20 @@ const App = () => {
     };
 
     loadPGN();
+
+
   }, []);
+
+  
 
   return (
     <div>
-      <h1>Chess Board</h1>
-      <ChessBoard fenList={fenList} />
+      <Navbar />
+        <audio id="goat" src="./public/sfx/goat.mp3"></audio>
+        <audio id="moves_s" src="./public/sfx/move-self.mp3"></audio>
+        <audio id="click_s" src="./public/sfx/click.mp3"></audio>
+      <ChessBoard  fenList={fenList} />
+       
     </div>
   );
 };

@@ -21,6 +21,7 @@ const ChessViewer = () => {
             setPosition(fens[0]); // Set initial position
           }
         }
+        console.log(selectedPGN)
       })
       .catch(error => console.error('Error reading the PGN file:', error));
   }, []);
