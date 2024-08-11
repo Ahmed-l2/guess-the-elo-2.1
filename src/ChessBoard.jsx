@@ -70,7 +70,7 @@ const ChessBoard = ({ fenList , details}) => {
       const  user_guess = guessed_inp.value;
     
                 if (user_guess.trim() !== "") {
-                  
+                    
                     guessed_inp.disabled = true;
                     document.getElementById('sub_guess').disabled = true;
                     guessed_inp.style='cursor:not-allowed;background-color: #4d4d4d;'
@@ -79,7 +79,19 @@ const ChessBoard = ({ fenList , details}) => {
                     b_elo.innerHTML = blackElo;
                     g_avrg.innerHTML = `${averageElo.toString().split('.')[0]}`;
 
+                    g_res.style='color:silver;background-color:#4d4d4d;'
+                    if (result == '1-0'){
+                        if (matchTermination == "Time forfeit"){g_res.innerHTML=`White won by timeout`;}
+                        else{g_res.innerHTML=`White won`;}
+                    }
+                    else if(result == '0-1'){
+                        if (matchTermination == "Time forfeit"){g_res.innerHTML=`Black won by timeout`;}
+                        else{g_res.innerHTML=`Black won`;}
+                    }
+                    else if(result == '1/2-1/2'){
 
+                        g_res.innerHTML=`Draw`;}
+                        
                     next_game.style = 'color:white;background-color:#e58e26';
 
 
