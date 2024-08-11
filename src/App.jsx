@@ -3,7 +3,8 @@ import ChessBoard from './ChessBoard';
 import { Chess } from 'chess.js';
 import { extractMatchDetails } from './pgnUtils';
 import Navbar from './NavBAr';
-import './App.css'
+import './style/App.css'
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 
 // Function to fetch and parse PGN content
@@ -122,7 +123,6 @@ const App = () => {
   }, []);
 
 
-
   return (
     <div>
       <Navbar />
@@ -130,7 +130,7 @@ const App = () => {
         <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
         <audio id="click_s" src="./sfx/click.mp3"></audio>
       <ChessBoard  fenList={fenList} details={matchDetails} />
-
+     
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import React, {useEffect,useState } from 'react';
 import Chessground from '@react-chess/chessground';
-import './chessgroundBaseOverride.css';
-import './chessgroundColorsOverride.css';
+import './style/chessgroundBaseOverride.css';
+import './style/chessgroundColorsOverride.css';
 import './style/pieces/maestro.css';
-import './App.css'
+import './style/App.css'
 
 
 
@@ -148,6 +148,7 @@ const ChessBoard = ({ fenList , details}) => {
     }
   };
 
+  console.log(averageElo)
 
   const decrementIndex = () => {
     if (currentIndex !== 0) {
@@ -188,19 +189,14 @@ const ChessBoard = ({ fenList , details}) => {
 
 
         config={{ fen: fenList[currentIndex] ,
-
-          draggable:{
-            enabled:true,
-          } ,// Disable piece dragging
+          draggable:false,
+          // Disable piece dragging
           movable: {
-            free: true, // Disable piece movement
-            dests: true // Disable destination highlighting
+            free: false, // Disable piece movement
+            dests: false // Disable destination highlighting
           },
-          highlight: {
-            lastMove:true,
-            check:true,
-          },
-          premove: false, // Disable premoves
+        
+       // Disable premoves
         // Set the initial position
         }}
       />
