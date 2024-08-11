@@ -33,10 +33,29 @@ const parsePGN = (content) => {
 
 // Function to select a random game from the parsed games
 const selectRandomPGN = (games) => {
-  const gameKeys = Object.keys(games);
-  const randomKey = gameKeys[Math.floor(Math.random() * gameKeys.length)];
-  return games[randomKey];
-};
+    const gameKeys = Object.keys(games);
+    let selectedPGN = null;
+
+    while (!selectedPGN && gameKeys.length > 0) {
+      const randomIndex = Math.floor(Math.random() * gameKeys.length);
+      const randomKey = gameKeys[randomIndex];
+      const randomGame = games[randomKey];
+
+      const matchInfo = extractMatchDetails(randomGame);
+
+      if (matchInfo.whiteElo !== null && matchInfo.blackElo !== null) {
+        const eloDifference = Math.abs(matchInfo.whiteElo - matchInfo.blackElo);
+
+        if (eloDifference <= 200) {
+          selectedPGN = randomGame;
+        }
+      }
+
+      gameKeys.splice(randomIndex, 1);
+    }
+
+    return selectedPGN;
+  };
 
 // Function to parse PGN and generate a list of FENs
 const parsePGNForFENs = (pgn) => {
@@ -63,7 +82,6 @@ const parsePGNForFENs = (pgn) => {
         console.warn(`Invalid move: ${move}`); // Log invalid moves
       }
     } catch (error) {
-      console.warn(`Error processing move: ${move}`, error);
     }
   });
 
@@ -96,7 +114,7 @@ const App = () => {
 
   }, []);
 
-  
+
 
   return (
     <div>
@@ -105,7 +123,7 @@ const App = () => {
         <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
         <audio id="click_s" src="./sfx/click.mp3"></audio>
       <ChessBoard  fenList={fenList} details={matchDetails} />
-       
+
     </div>
   );
 };
