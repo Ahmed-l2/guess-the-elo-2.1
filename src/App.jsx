@@ -59,33 +59,34 @@ const selectRandomPGN = (games) => {
 
 // Function to parse PGN and generate a list of FENs
 const parsePGNForFENs = (pgn) => {
-  const game = new Chess();
-  const fenList = [];
+    const game = new Chess();
+    const fenList = [];
 
-  // Remove metadata and result lines
-  const moves = pgn
-    .split('\n') // Split by lines
-    .filter(line => !line.startsWith('[') && line.trim() !== '') // Remove metadata lines
-    .join(' ') // Join remaining lines into a single string
-    .replace(/\d+\.\s*|\s+/g, ' ')  // Remove move numbers and extra whitespace
-    .trim()
-    .split(/\s+(?=[\w-])/); // Split by moves (space followed by a move)
+    // Remove metadata lines and result lines
+    const moves = pgn
+      .split('\n') // Split by lines
+      .filter(line => !line.startsWith('[') && line.trim() !== '' && !line.includes('{ [%eval }')) // Remove metadata and eval lines
+      .join(' ') // Join remaining lines into a single string
+      .replace(/\d+\.\s*|\s+/g, ' ')  // Remove move numbers and extra whitespace
+      .trim()
+      .split(/\s+(?=[\w-])/); // Split by moves (space followed by a move)
 
-  fenList.push(game.fen()); // Add the starting position
+    fenList.push(game.fen()); // Add the starting position
 
-  moves.forEach(move => {
-    try {
-      const result = game.move(move);
-      if (result) {
-        fenList.push(game.fen());
-      } else {
-        console.warn(`Invalid move: ${move}`); // Log invalid moves
+    moves.forEach(move => {
+      try {
+        const result = game.move(move);
+        if (result) {
+          fenList.push(game.fen());
+        } else {
+          console.warn(`Invalid move: ${move}`); // Log invalid moves
+        }
+      } catch (error) {
+        console.warn(`Invalid move: ${move}`);
       }
-    } catch (error) {
-    }
-  });
+    });
 
-  return fenList;
+    return fenList;
 };
 
 const App = () => {
