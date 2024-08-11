@@ -87,7 +87,7 @@ const App = () => {
         // Extract and log match details
         const details = extractMatchDetails(randomPGN);
         setMatchDetails(details);
-        console.log('Match Details:', details);
+
       }
     };
 
@@ -101,10 +101,10 @@ const App = () => {
   return (
     <div>
       <Navbar />
-        <audio id="goat" src="./public/sfx/goat.mp3"></audio>
-        <audio id="moves_s" src="./public/sfx/move-self.mp3"></audio>
-        <audio id="click_s" src="./public/sfx/click.mp3"></audio>
-      <ChessBoard  fenList={fenList} />
+        <audio id="goat" src="./sfx/goat.mp3"></audio>
+        <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
+        <audio id="click_s" src="./sfx/click.mp3"></audio>
+      <ChessBoard  fenList={fenList} details={matchDetails} />
        
     </div>
   );

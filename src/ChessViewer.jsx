@@ -73,7 +73,7 @@ const ChessViewer = () => {
       }
     });
 
-    console.log('FEN List:', fenList); // Debugging line
+
     return fenList;
   };
 

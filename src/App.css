@@ -120,11 +120,11 @@ body{
 
 }
 .info-panel #g_type{
-    background-color: var(--button-color-2);
+    background-color: #4d4d4d;
     padding: 10px;
     border-radius: var(--border-rad);
     font-size: 1.5vw;
-    color: #4d4d4d;
+    color: silver;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -250,11 +250,11 @@ body{
     outline: none;
     border-radius: var(--border-rad);
     padding: 15px;
-    background-color: var(--button-color);
+    background-color: #4d4d4d;
     border: none;
     font-size: 1.5rem;
     width: auto;
-    color: whitesmoke;
+    color: silver;
     transition: .1s;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -262,11 +262,7 @@ body{
 
 
 }
-.gte_sub_conta button:hover{
-    transition: .1s;
-    background-color: #1dd1a1;
-    color: white;
-}
+
 .btn-container {
     min-width: 100%;
     display: flex;
@@ -310,83 +306,3 @@ body{
     text-align: center;
     transition: .1s;
 }
-@media (max-width: 600px) {
-    .box{
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        padding: 30px;
-        background-color: var(--secondary-color);
-        border-radius: 10px;
-        display:grid;
-        justify-items: center;
-        column-gap: 10px;
-        row-gap: 10px;
-        text-align: center;
-        min-width: 100%;
-        max-height: 100%;
-
-    }
-
-    .info-panel{
-
-        background-color: var(--side-color);
-        display:grid;
-        border-radius: 10px;
-        min-width: 80%;
-
-        justify-items: center;
-        text-align: center;
-        row-gap: 5px;
-        padding: 20px;
-    }
-
-    .box .board-container{
-        background-color: var(--side-color);
-        display: flex;
-        border-radius: 10px;
-        min-width: 80%;
-        align-items: center;
-        justify-items: center;
-        text-align: center;
-      
-        padding: 20px;
-    
-    }
-    .box .board-container #board{
-        width:100%;
-        
-    }
-  }
-
-  @media (max-width: 1375px) {
-    .box{
-        position: absolute;
-        top: 55%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        padding: 10px;
-        background-color: var(--secondary-color);
-        border-radius: 10px;
-        display:flex;
-        justify-items: center;
-        column-gap: 10px;
-        row-gap: 10px;
-        text-align: center;
-        max-width: 50%;
-        max-height: 50%;
-
-    }
-    .info-panel p {
-        padding: 0px;
- 
-    }
-    .info-panel{
-        row-gap: 8px;
-    }
-
-    .info-panel input,button{
-        font-size: 1rem;
-    }
-  }
