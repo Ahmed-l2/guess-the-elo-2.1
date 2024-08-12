@@ -85,6 +85,7 @@ const ChessBoard = ({ fenList , details}) => {
                     g_avrg.innerHTML = `${averageElo.toString().split('.')[0]}`;
                     g_avrg.style='border:5px solid white'
                     g_res.style='color:silver;background-color:#4d4d4d;'
+                    op_name.style='color:silver;background-color:#4d4d4d;'
                     if (result == '1-0'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`White won by timeout`;}
                         else{g_res.innerHTML=`White won`;}

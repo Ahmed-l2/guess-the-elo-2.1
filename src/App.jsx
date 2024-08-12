@@ -130,7 +130,7 @@ const App = () => {
         <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
         <audio id="click_s" src="./sfx/click.mp3"></audio>
       <ChessBoard  fenList={fenList} details={matchDetails} />
-     
+    
     </div>
   );
 };

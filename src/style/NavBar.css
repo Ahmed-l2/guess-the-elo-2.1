@@ -20,4 +20,22 @@
     margin: 0 15px;
     color: white;
     font-size: 1.5rem; 
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#version_box{
+   width: fit-content;
+   margin: 0 15px;
+}
+#version_box #beta_txt{
+    color: var(--button-color);
+    font-size: 20px;
+  
+}
+#version_box #vers_txt{
+    color: silver;
+    font-size: 20px;
 }

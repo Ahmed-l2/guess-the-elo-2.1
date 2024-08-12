@@ -136,7 +136,7 @@ body{
     background-color: var(--button-color-2);
     border-radius: var(--border-rad);
     font-size: 1.1vw;
-    color: silver;
+    color: #9d9d9d;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -175,7 +175,6 @@ body{
     min-width: 100%;
     min-height: 50px;
 }
-
 
 .info-panel #result_info{
     min-height: 150px;
@@ -315,3 +314,4 @@ body{
     text-align: center;
     transition: .1s;
 }
+
