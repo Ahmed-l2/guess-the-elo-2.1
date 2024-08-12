@@ -85,10 +85,10 @@ const parsePGNForFENs = (pgn) => {
         if (result) {
           fenList.push(game.fen());
         } else {
-          console.warn(`Invalid move: ${cleanedMove}`); // Log invalid moves
+          
         }
       } catch (error) {
-        console.warn(`Error processing move: ${cleanedMove}`, error); // Log errors with more details
+        
       }
     });
 

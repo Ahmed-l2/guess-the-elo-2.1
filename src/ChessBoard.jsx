@@ -149,7 +149,7 @@ const ChessBoard = ({ fenList , details}) => {
     }
   };
 
-  console.log(averageElo)
+
 
   const decrementIndex = () => {
     if (currentIndex !== 0) {

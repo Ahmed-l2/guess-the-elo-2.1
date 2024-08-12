@@ -24,18 +24,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
+ 
 }
 
-#version_box{
-   width: fit-content;
-   margin: 0 15px;
-}
-#version_box #beta_txt{
+
+#beta_txt{
     color: var(--button-color);
     font-size: 20px;
+    margin-inline-start: 20px;
   
 }
-#version_box #vers_txt{
+    #vers_txt{
     color: silver;
     font-size: 20px;
+    margin-inline-start: 10px;
 }

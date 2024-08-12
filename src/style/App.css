@@ -35,30 +35,6 @@ body{
 
 }
 
-.nav{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    display: flex;
-    background-color: var(--side-color);
-    align-items: center;
-
-    padding: 10px;
-    justify-content: space-between;
-}
-
-.nav .kick_link{
-    margin-left:auto;
-    margin-inline: 50px;
-   
-}
-
-.nav .gte_logo{
-    margin: 0 15px;
-    color: white;
-    font-size: 1.5rem; 
-}
-
 .box{
     
 
