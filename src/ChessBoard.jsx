@@ -199,14 +199,7 @@ const ChessBoard = ({ fenList , details}) => {
 
 
 
-        config={{ fen: fenList[currentIndex] ,
-          draggable:false,
-          // Disable piece dragging
-        movable:false
-
-       // Disable premoves
-        // Set the initial position
-        }}
+        config={{ fen: fenList[currentIndex]}}
       />
         </div>
         <div className="info-panel">
