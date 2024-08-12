@@ -134,8 +134,10 @@ const ChessBoard = ({ fenList , details}) => {
 
   }
 
-  const next_game = () =>{
-    location.reload()
+  const next_game = () => {
+    if (guess) {
+      location.reload();
+    }
   }
 
   const incrementIndex = () => {
