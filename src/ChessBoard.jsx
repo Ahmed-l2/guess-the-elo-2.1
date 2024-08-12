@@ -59,13 +59,12 @@ const ChessBoard = ({ fenList , details}) => {
 
 
   const sub_func = () =>{
-    new Audio("./sfx/click.mp3").play();
     if (!guess){
       //#1dd1a1 btn color freen
-
     }
     else{
-      const  user_guess = guessed_inp.value;
+        new Audio("./sfx/click.mp3").play();
+        const  user_guess = guessed_inp.value;
 
                 if (user_guess.trim() !== "") {
 
@@ -143,6 +142,7 @@ const ChessBoard = ({ fenList , details}) => {
     if (currentIndex !== fenList.length - 1) {
         new Audio("./sfx/move-self.mp3").play();
         setCurrentIndex((prevIndex) => (prevIndex + 1) % fenList.length);
+        document.getElementById('next-move').blur();
     }
   };
 
@@ -152,6 +152,7 @@ const ChessBoard = ({ fenList , details}) => {
     if (currentIndex !== 0) {
       new Audio("./sfx/move-self.mp3").play();
       setCurrentIndex((prevIndex) => (prevIndex - 1 + fenList.length) % fenList.length);
+      document.getElementById('prev-move').blur();
     }
   };
 
