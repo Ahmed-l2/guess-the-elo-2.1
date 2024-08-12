@@ -192,10 +192,7 @@ const ChessBoard = ({ fenList , details}) => {
         config={{ fen: fenList[currentIndex] ,
           draggable:false,
           // Disable piece dragging
-          movable: {
-            free: false, // Disable piece movement
-            dests: false // Disable destination highlighting
-          },
+        
         
        // Disable premoves
         // Set the initial position
