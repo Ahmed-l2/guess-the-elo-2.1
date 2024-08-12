@@ -112,15 +112,13 @@ body{
     display:grid;
     border-radius: 10px;
     width: 40%;
-    flex-direction: column;
     justify-items: center;
-    text-align: center;
-    row-gap: 12px;
-    padding: 20px;
+    row-gap: 10px;
+    padding: 10px;
+    
 }
 .info-panel #g_type{
     background-color: #4d4d4d;
-    padding: 10px;
     border-radius: var(--border-rad);
     font-size: 1.5vw;
     color: silver;
@@ -129,13 +127,13 @@ body{
     align-items: center;
     min-width: 100%;
 
-    min-height: 40px;
+    min-height: 50px;
+    
 
 }
 
-#op_name{
-    background-color: #2d2d2d;
-    padding: 10px;
+.info-panel #op_name{
+    background-color: var(--button-color-2);
     border-radius: var(--border-rad);
     font-size: 1.1vw;
     color: silver;
@@ -151,7 +149,6 @@ body{
 
 
     background-color: var(--button-color-2);
-    padding: 10px;
     border-radius: var(--border-rad);
     font-size: 1.5vw;
     color: #4d4d4d;
@@ -159,7 +156,7 @@ body{
     justify-content: center;
     align-items: center;
     min-width: 100%;
-    min-height: 40px;
+    min-height: 50px;
 }
 
 
@@ -168,20 +165,17 @@ body{
 .info-panel #g_avrg{
 
 
-    padding: 10px;
     background-color: var(--button-color-2);
-    text-align: center;
     border-radius: var(--border-rad);
     font-size: 1.5vw;
-    text-decoration: none;
-    min-width: 100%;
     color: #4d4d4d;
-    align-items: center;
     display: flex;
     justify-content: center;
-    min-height: 40px;
-
+    align-items: center;
+    min-width: 100%;
+    min-height: 50px;
 }
+
 
 .info-panel #result_info{
     min-height: 150px;
