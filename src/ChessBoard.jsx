@@ -39,7 +39,6 @@ const ChessBoard = ({ fenList , details}) => {
 
   if (currentIndex == fenList.length -1){
 
-
                     g_res.style='color:silver;background-color:#4d4d4d;'
                     if (result == '1-0'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`White won by timeout`;}
@@ -172,6 +171,8 @@ const ChessBoard = ({ fenList , details}) => {
         incrementIndex();
       } else if (event.key === 'ArrowLeft') {
         decrementIndex();
+      } else if (event.key === 'Enter' && guess) {
+        sub_func();
       }
     };
 
@@ -180,7 +181,7 @@ const ChessBoard = ({ fenList , details}) => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentIndex, fenList.length]);
+  }, [currentIndex, fenList.length, guess]);
 
 
 
