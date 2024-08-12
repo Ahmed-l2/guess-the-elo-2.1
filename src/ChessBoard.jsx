@@ -1,4 +1,4 @@
-import React, {useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chessground from '@react-chess/chessground';
 import './style/chessgroundBaseOverride.css';
 import './style/chessgroundColorsOverride.css';
@@ -6,11 +6,7 @@ import './style/pieces/maestro.css';
 import './style/App.css'
 
 
-
-
-
 const ChessBoard = ({ fenList , details}) => {
-
 
 
   const [guess, setGuess] = useState('');
@@ -59,7 +55,7 @@ const ChessBoard = ({ fenList , details}) => {
 
   }
 
-  
+
 
 
 
@@ -67,7 +63,7 @@ const ChessBoard = ({ fenList , details}) => {
     new Audio("./sfx/click.mp3").play();
     if (!guess){
       //#1dd1a1 btn color freen
-      
+
     }
     else{
       const  user_guess = guessed_inp.value;
@@ -78,7 +74,7 @@ const ChessBoard = ({ fenList , details}) => {
                     document.getElementById('sub_guess').disabled = true;
                     document.getElementById('next_game').disabled = false;
                     guessed_inp.style='cursor:not-allowed;background-color: #57636c;'
-                    
+
 
                     w_elo.innerHTML = whiteElo;
                     b_elo.innerHTML = blackElo;
@@ -168,15 +164,29 @@ const ChessBoard = ({ fenList , details}) => {
     setCurrentIndex(fenList.length - 1);
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'ArrowRight') {
+        incrementIndex();
+      } else if (event.key === 'ArrowLeft') {
+        decrementIndex();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentIndex, fenList.length]);
 
 
- 
 
   return (
 
     <div >
 
-  
+
       <div className="box" id="box-b">
 
         <div className="board-container">
@@ -193,7 +203,7 @@ const ChessBoard = ({ fenList , details}) => {
           draggable:false,
           // Disable piece dragging
         movable:false
-        
+
        // Disable premoves
         // Set the initial position
         }}
@@ -209,7 +219,7 @@ const ChessBoard = ({ fenList , details}) => {
                 <p id="b_elo"></p>
 
         </div>
-        
+
             <p id="g_res">Game result</p>
             <p id="op_name">{opening}</p>
 
