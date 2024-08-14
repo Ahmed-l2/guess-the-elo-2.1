@@ -22,7 +22,6 @@ const ChessBoard = ({ fenList , details}) => {
   const averageElo = Math.floor(averageElo_normal);
   const guessed_inp = document.getElementById('guess_inp');
 
-  console.log(averageElo)
 
   const handleInputChange = (e) => { // checking guess input
     setGuess(e.target.value);//#1dd1a1
