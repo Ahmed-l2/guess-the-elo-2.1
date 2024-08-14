@@ -5,38 +5,35 @@
     display: flex;
     background-color: var(--nav-bar-bg);
     align-items: center;
-
     padding: 10px;
-    justify-content: space-between;
 }
 
 .nav .kick_link{
-    margin-left:auto;
-    margin-inline: 50px;
-   
+    margin-left: auto;
+    margin-right: 50px;
 }
 
 .nav .gte_logo{
-    margin: 0 15px;
     color: white;
     font-size: 1.5rem; 
-    width: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    
- 
 }
 
+.nav img{
+    margin: 0 10px;
+    border-radius: 10px;
+}
 
 #beta_txt{
     color: var(--button-color);
     font-size: 20px;
     margin-inline-start: 20px;
-  
 }
-    #vers_txt{
+
+#vers_txt{
     color: silver;
     font-size: 20px;
-    margin-inline-start: 10px;
+    margin-inline-start:2px;
 }

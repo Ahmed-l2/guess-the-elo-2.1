@@ -37,7 +37,7 @@ body{
 
 .box{
     
-
+    
     position: absolute;
     top: 52%;
     left: 50%;
@@ -290,4 +290,3 @@ body{
     text-align: center;
     transition: .1s;
 }
-
