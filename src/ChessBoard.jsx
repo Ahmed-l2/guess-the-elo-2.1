@@ -22,7 +22,7 @@ const ChessBoard = ({ fenList , details}) => {
   const averageElo = Math.floor(averageElo_normal);
   const guessed_inp = document.getElementById('guess_inp');
 
-
+  console.log(averageElo)
 
   const handleInputChange = (e) => { // checking guess input
     setGuess(e.target.value);//#1dd1a1
@@ -105,9 +105,9 @@ const ChessBoard = ({ fenList , details}) => {
                         g_avrg.style='background-color:#0be881;color:white'
                     }
                     else if (user_guess > averageElo && (user_guess-averageElo) <= 10 && (user_guess-averageElo) > 0|| user_guess < averageElo && (averageElo-user_guess) <= 10 && (averageElo-user_guess) > 0){
-                        result_info.innerHTML= "Wait ! , Are you cheating ?"
-                        result_info.style = "color:white;background-color:#feca57;";
-                        g_avrg.style='background-color:#feca57;color:white'
+                        result_info.innerHTML= "Wait ! Are you cheating ?"
+                        result_info.style = "color:white;background-color:#81ecec;";
+                        g_avrg.style='background-color:#81ecec;color:white'
                     }
 
                     else if (user_guess > averageElo && (user_guess-averageElo) >= 100 || user_guess < averageElo && (averageElo-user_guess) >=100){
