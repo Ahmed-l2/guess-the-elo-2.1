@@ -68,9 +68,7 @@ const parsePGNForFENs = (pgn) => {
       .split('\n') // Split by lines
       .filter(line => !line.startsWith('[') && line.trim() !== '') // Remove metadata lines
       .join(' ') // Join remaining lines into a single string
-      .replace(/\{ \[%eval [^\]]+\] \}/g, '') // Remove { [%eval ...] } annotations
       .replace(/\d+\.\s*|\s+/g, ' ') // Remove move numbers and extra whitespace
-      .replace(/\.\.\.|\.+/g, '') // Remove trailing dots and ellipses
       .trim()
       .split(/\s+(?=[\w-])/); // Split by moves (space followed by a move)
 
@@ -85,10 +83,10 @@ const parsePGNForFENs = (pgn) => {
         if (result) {
           fenList.push(game.fen());
         } else {
-          
+
         }
       } catch (error) {
-        
+
       }
     });
 
@@ -102,7 +100,7 @@ const App = () => {
 
   useEffect(() => {
     const loadPGN = async () => {
-      const content = await fetchPGNContent('./pgns/matches.pgn');
+      const content = await fetchPGNContent('/pgns/raw_games.pgn');
       const games = parsePGN(content);
       const randomPGN = selectRandomPGN(games);
 
@@ -130,7 +128,7 @@ const App = () => {
         <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
         <audio id="click_s" src="./sfx/click.mp3"></audio>
       <ChessBoard  fenList={fenList} details={matchDetails} />
-    
+
     </div>
   );
 };
