@@ -102,7 +102,7 @@ const App = () => {
 
   useEffect(() => {
     const loadPGN = async () => {
-      const content = await fetchPGNContent('/pgns/matches.pgn');
+      const content = await fetchPGNContent('./pgns/matches.pgn');
       const games = parsePGN(content);
       const randomPGN = selectRandomPGN(games);
 

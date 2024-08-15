@@ -6,11 +6,14 @@
     background-color: var(--nav-bar-bg);
     align-items: center;
     padding: 10px;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--button-color) ;
 }
 
 .nav .kick_link{
     margin-left: auto;
     margin-right: 50px;
+    filter: invert();
 }
 
 .nav .gte_logo{
@@ -21,7 +24,7 @@
     align-items: center;
 }
 
-.nav img{
+.nav #logo_img{
     margin: 0 10px;
     border-radius: 10px;
 }

@@ -8,7 +8,7 @@ const ChessViewer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetch('/pgns/matches.pgn')
+    fetch('./pgns/matches.pgn')
       .then(response => response.text())
       .then(content => {
         console.log('PGN Content:', content); // Log content for debugging
@@ -66,10 +66,10 @@ const ChessViewer = () => {
         if (result) {
           fenList.push(game.fen());
         } else {
-          console.warn(`Invalid move: ${move}`); // Log invalid moves
+
         }
       } catch (error) {
-        console.warn(`Error processing move: ${move}`, error);
+      
       }
     });
 
