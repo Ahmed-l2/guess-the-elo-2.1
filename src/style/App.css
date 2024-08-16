@@ -54,6 +54,7 @@ body {
     row-gap: 10px;
     text-align: center;
     min-width: 75%;
+ 
     min-height: 70%;
 }
 
@@ -76,7 +77,7 @@ body {
     margin: 0 auto;
 }
 
-.info-panel{
+.box .info-panel{
     background-color: var(--side-color);
     display:grid;
     border-radius: 10px;
@@ -101,13 +102,14 @@ body {
 .info-panel #op_name{
     background-color: var(--button-color-2);
     border-radius: var(--border-rad);
-    font-size: 1.1vw;
+    font-size: 1.0vw;
     color: #9d9d9d;
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 100%;
     min-height: 50px;
+
 }
 
 
@@ -271,27 +273,49 @@ body {
 @media screen and (max-width: 768px) {
     .box {
         flex-direction: column;
-        width: 100%;
+        min-width: 100%;
+        padding: 20px;
+        justify-content: center;
+        align-items: center;
+        display: grid;
+        
+
 
     }
 
-    .box .board-container,
-    .info-panel {
+    .box .info-panel {
         width: 100%;
+        row-gap: 5px;
     }
 
-    .box .board-container .board {
-        width: 100%;
+    .box .board-container{
+        min-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-block: 20px;
     }
 
     .info-panel #g_type,
-    .info-panel #op_name,
+    
     .info-panel #g_res,
     .info-panel #g_avrg,
-    .info-panel #result_info,
-    .ratings-conta p {
-        font-size: 4vw;
+    p
+    {
+        font-size: 5vw;
+        min-height: 50px;
+        
     }
+
+    .ratings-conta p {
+        font-size: 5vw;
+    }
+
+    .info-panel #op_name{
+        font-size: 3vw;
+    }
+   
 
     .gte_sub_conta input,
     .gte_sub_conta button,
@@ -299,4 +323,6 @@ body {
     #next_game {
         font-size: 1rem;
     }
+
+    
 }

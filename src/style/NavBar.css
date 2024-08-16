@@ -2,6 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    min-height: 50px;
     width: 100%;
     z-index: 1000;
     display: flex;
@@ -41,4 +42,30 @@
     color: silver;
     font-size: 20px;
     margin-inline-start:2px;
+}
+
+@media screen and (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        padding: 0;
+        
+    }
+
+    .nav .kick_link {
+        margin: 10px 0;
+        
+    }
+
+    .nav .gte_logo {
+        font-size: 1.2rem;
+    }
+
+    #beta_txt, #vers_txt {
+        font-size: 16px;
+        margin-inline-start: 10px;
+    }
+
+    .nav #logo_img {
+        margin: 0 5px;
+    }
 }
