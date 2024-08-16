@@ -32,7 +32,7 @@ export const extractMatchDetails = (pgn) => {
     let event = ''
     if (timeControl) {
         event = `${getGameTypeName(timeControl)} Game`;
-        console.log(event);
+        
     }
 
     const terminationMatch = pgn.match(/\[Termination\s+"[^"]*(won.*)"\]/);
