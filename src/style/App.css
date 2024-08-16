@@ -274,22 +274,25 @@ body {
     .box {
         flex-direction: column;
         min-width: 100%;
-        padding:20px;
+        min-height: 100%;
+        padding:10px;
         justify-content: center;
         align-items: center;
         display: grid;
-        
+
 
 
     }
 
     .box .info-panel {
         min-width: 100%;
-        row-gap: 8px;
+        min-height: 50%;
+        row-gap: 5px;
     }
 
     .box .board-container{
         min-width: 100%;
+        min-height: 50%;
         display: grid;
         justify-content: center;
         flex-direction: column;
@@ -304,7 +307,7 @@ body {
     p
     {
         font-size: 5vw;
-        min-height: 40px;
+        min-height: 30px;
         
     }
 
@@ -322,7 +325,7 @@ body {
     .gte_sub_conta button,
     .move-btn,
     #next_game {
-        font-size: 5vw;
+        font-size: 4vw;
     }
 
     
