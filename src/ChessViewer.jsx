@@ -8,7 +8,7 @@ const ChessViewer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetch('./pgns/matches.pgn')
+    fetch('./pgns/filtered_games.pgn')
       .then(response => response.text())
       .then(content => {
         console.log('PGN Content:', content); // Log content for debugging

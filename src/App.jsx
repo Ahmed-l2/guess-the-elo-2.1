@@ -100,7 +100,7 @@ const App = () => {
 
   useEffect(() => {
     const loadPGN = async () => {
-      const content = await fetchPGNContent('/pgns/raw_games.pgn');
+      const content = await fetchPGNContent('/pgns/filtered_games.pgn');
       const games = parsePGN(content);
       const randomPGN = selectRandomPGN(games);
 

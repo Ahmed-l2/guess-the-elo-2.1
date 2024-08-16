@@ -2,9 +2,17 @@
 export const extractMatchDetails = (pgn) => {
 
     const timeControlDict = {
-        "900": "Rapid",
+        
+        "120":"Bullet",
         "60": "Bullet",
-        "180": "Blitz"
+        "30": "Ultra Bullet",
+        "15":"Hyper Bullet",
+        "180": "Blitz",
+        "300":"Blitz",
+        "900": "Rapid",
+        "600":"Rapid",
+        "1800":"Classical",
+        "1500":"Classical"
     };
 
     function getGameTypeName(timeControl) {
