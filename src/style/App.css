@@ -297,13 +297,12 @@ body {
     }
 
     .box .info-panel {
-        min-width: 100%;
-        
+        width: 100%;
         row-gap: 5px;
     }
 
     .box .board-container{
-        min-width: 90%;
+
         display: grid;
         justify-content: center;
         flex-direction: column;
@@ -330,7 +329,7 @@ body {
   
 
     .info-panel #op_name{
-        font-size: 3vw;
+        font-size: 4vw;
     }
    
 
@@ -338,7 +337,7 @@ body {
     .gte_sub_conta button,
     .move-btn,
     #next_game {
-        font-size: 3vw;
+        font-size: 4vw;
     }
 
     
