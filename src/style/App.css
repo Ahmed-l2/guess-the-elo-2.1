@@ -270,54 +270,45 @@ body {
     text-align: center;
     transition: .1s;
 }
-@media screen and (max-width: 768px ) {
-
-    body{
+@media screen and (max-width: 768px) {
+    body {
         margin: 0;
         padding: 0;
-        display:flex ;
+        display: flex;
         height: 100vh;
+        overflow: hidden;
     }
     .box {
-
-        width:100%;
-        min-height: 100vh;
-        display: grid;
-        justify-content: center;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         align-items: center;
         padding: 0;
         margin: 0;
-        row-gap: 0;
         border-radius: 0;
-
-
     }
 
     .box .info-panel {
-        min-width: 100%;
-        min-height: 100%;
         width: 100%;
-        height: fit-content;
+        height: auto;
         row-gap: 5px;
         background-color: transparent;
-    
+        padding: 10px;
+        box-sizing: border-box;
     }
 
-    .box .board-container{
+    .box .board-container {
         display: flex;
         flex-direction: column;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: max-content;
+        width: 100%;
+        height: auto;
         justify-content: center;
         align-items: center;
-        padding: 0 ;
+        padding: 10px;
         border-radius: 0;
-        width:100%;
-        margin: 0  50px;
-       
-        
+        box-sizing: border-box;
     }
 
     .info-panel #g_type,
@@ -325,33 +316,27 @@ body {
     .info-panel #g_res,
     .info-panel #g_avrg,
     .ratings-conta,
-    p
-    {
-        font-size: 4vw;
-        min-height: 30px;
+    p {
+        font-size: 3.5vw;
+        min-height: 25px;
         border-radius: 2px;
-        
     }
-    .ratings-conta p{
+    .ratings-conta p {
         padding: 2px;
-        font-size: 4vw;
+        font-size: 3.5vw;
         border-radius: 2px;
-       
+        border: 1px solid var(--button-color);
     }
 
-  
-
-    .info-panel #op_name{
-        font-size: 4vw;
+    .info-panel #op_name {
+        font-size: 3.5vw;
     }
-   
 
     .gte_sub_conta input,
     .gte_sub_conta button,
     .move-btn,
     #next_game {
-        font-size: 4vw;
+        font-size: 3.5vw;
+        padding: 5px;
     }
-
-    
 }
