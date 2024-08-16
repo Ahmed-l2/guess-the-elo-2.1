@@ -21,8 +21,9 @@ export const extractMatchDetails = (pgn) => {
 
     const timeControlMatch = pgn.match(/\[TimeControl\s*"\s*([^+"]+)/);
     const timeControl = timeControlMatch ? timeControlMatch[1].trim() : null;
+    let event = ''
     if (timeControl) {
-        const event = getGameTypeName(timeControl);
+        event = `${getGameTypeName(timeControl)} Game`;
         console.log(event);
     }
 

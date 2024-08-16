@@ -40,11 +40,11 @@ const ChessBoard = ({ fenList , details}) => {
                     g_res.style='color:silver;background-color:#4d4d4d;'
                     if (result == '1-0'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`White won by timeout`;}
-                        else{g_res.innerHTML=`White won`;}
+                        else{g_res.innerHTML=`White ${details.termination}`;}
                     }
                     else if(result == '0-1'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`Black won by timeout`;}
-                        else{g_res.innerHTML=`Black won`;}
+                        else{g_res.innerHTML=`Black ${details.termination}`;}
                     }
                     else if(result == '1/2-1/2'){
 
@@ -80,11 +80,11 @@ const ChessBoard = ({ fenList , details}) => {
                     op_name.style='color:silver;background-color:#4d4d4d;'
                     if (result == '1-0'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`White won by timeout`;}
-                        else{g_res.innerHTML=`White won`;}
+                        else{g_res.innerHTML=`White ${details.termination}`;}
                     }
                     else if(result == '0-1'){
                         if (matchTermination == "Time forfeit"){g_res.innerHTML=`Black won by timeout`;}
-                        else{g_res.innerHTML=`Black won`;}
+                        else{g_res.innerHTML=`Black ${details.termination}`;}
                     }
                     else if(result == '1/2-1/2'){
 
