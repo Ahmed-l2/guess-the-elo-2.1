@@ -270,11 +270,11 @@ body {
     text-align: center;
     transition: .1s;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px ) {
     .box {
         flex-direction: column;
         min-width: 100%;
-        padding: 20px;
+        padding:20px;
         justify-content: center;
         align-items: center;
         display: grid;
@@ -284,32 +284,33 @@ body {
     }
 
     .box .info-panel {
-        width: 100%;
-        row-gap: 5px;
+        min-width: 100%;
+        row-gap: 8px;
     }
 
     .box .board-container{
         min-width: 100%;
-        display: flex;
+        display: grid;
         justify-content: center;
+        flex-direction: column;
         align-items: center;
-
-        margin-block: 20px;
+        
     }
 
     .info-panel #g_type,
-    
+    .info-panel #result_info,
     .info-panel #g_res,
     .info-panel #g_avrg,
     p
     {
         font-size: 5vw;
-        min-height: 50px;
+        min-height: 40px;
         
     }
 
     .ratings-conta p {
         font-size: 5vw;
+        padding: 2px;
     }
 
     .info-panel #op_name{
@@ -321,7 +322,7 @@ body {
     .gte_sub_conta button,
     .move-btn,
     #next_game {
-        font-size: 1rem;
+        font-size: 5vw;
     }
 
     
