@@ -11,6 +11,7 @@ const ChessBoard = ({ fenList , details}) => {
 
   const [guess, setGuess] = useState('');
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [boardSize, setBoardSize] = useState(750);
   // game DATA
   const whiteElo = details.whiteElo;
   const blackElo = details.blackElo;
@@ -21,6 +22,19 @@ const ChessBoard = ({ fenList , details}) => {
   const averageElo_normal = (whiteElo + blackElo) / 2;
   const averageElo = Math.floor(averageElo_normal);
   const guessed_inp = document.getElementById('guess_inp');
+
+  const updateBoardSize = () => {
+    const width = window.innerWidth;
+    const size = Math.min(width * 0.5, 750);
+    setBoardSize(size);
+  };
+
+  useEffect(() => {
+    updateBoardSize();
+    window.addEventListener('resize', updateBoardSize);
+
+    return () => window.removeEventListener('resize', updateBoardSize);
+  }, []);
 
   const handleInputChange = (e) => { // checking guess input
     setGuess(e.target.value);//#1dd1a1
@@ -194,14 +208,11 @@ const ChessBoard = ({ fenList , details}) => {
         <div className="board-container">
         <Chessground
         className="board"
-
-        width={750}
-        height={750}
+        width={boardSize}
+        height={boardSize}
         KeyBindingComponent="true"
-
-
-
         config={{ fen: fenList[currentIndex]}}
+        key={boardSize}
       />
         </div>
         <div className="info-panel">
