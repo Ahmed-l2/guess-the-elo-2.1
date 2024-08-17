@@ -22,7 +22,8 @@ const ChessBoard = ({ fenList , details}) => {
     const averageElo_normal = (whiteElo + blackElo) / 2;
     const averageElo = Math.floor(averageElo_normal);
     const guessed_inp = document.getElementById('guess_inp');
-
+    const gamelink = details.gameLink;
+    
     const updateBoardSize = () => {
       const width = window.innerWidth;
       let size;
@@ -153,7 +154,8 @@ const ChessBoard = ({ fenList , details}) => {
 
                       }}
 
-
+                      document.getElementById('g_link').href=gamelink;
+                      document.getElementById('g_link').style='color:silver;background-color:#4d4d4d;'
                       document.getElementById("next_game").style='color:white;background-color:var(--button-color)';
 
       }
@@ -204,7 +206,7 @@ const ChessBoard = ({ fenList , details}) => {
           sub_func();
         }
       };
-
+      
       window.addEventListener('keydown', handleKeyDown);
 
       return () => {
@@ -233,6 +235,7 @@ const ChessBoard = ({ fenList , details}) => {
           </div>
           <div className="info-panel">
               <p id="g_type">{event}</p>
+              <a  id="g_link" target="_blank" rel="noopener noreferrer">Game Link</a>
               <div className="ratings-conta">
               <p id="w_elo"></p>
               <p id="b_elo"></p>

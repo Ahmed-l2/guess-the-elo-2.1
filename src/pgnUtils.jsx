@@ -23,7 +23,7 @@ export const extractMatchDetails = (pgn) => {
     const whiteElo = pgn.match(/\[WhiteElo "(\d+)"\]/)?.[1] || null;
     const blackElo = pgn.match(/\[BlackElo "(\d+)"\]/)?.[1] || null;
     const result = pgn.match(/\[Result "(.*?)"\]/)?.[1] || null;
-
+    const gameLink = pgn.match(/\[Link "(.*?)"\]/)?.[1] || null;
     const openingMatch = pgn.match(/\[ECOUrl\s+".*\/([^"\d\.]+)/);
     const opening = openingMatch ? openingMatch[1].replace(/-/g, ' ') : null;
 
@@ -45,6 +45,7 @@ export const extractMatchDetails = (pgn) => {
         result,
         opening,
         timeControl,
-        termination
+        termination,
+        gameLink
     };
 };
