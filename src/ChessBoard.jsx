@@ -25,9 +25,17 @@ const ChessBoard = ({ fenList , details}) => {
 
   const updateBoardSize = () => {
     const width = window.innerWidth;
-    const size = Math.min(width * 0.5, 750);
+    let size;
+
+    if (width <= 450) {
+        size = 420;
+    } else {
+        size = Math.min(width * 0.5, 750);
+    }
+
     setBoardSize(size);
-  };
+};
+
 
   useEffect(() => {
     updateBoardSize();
@@ -216,21 +224,18 @@ const ChessBoard = ({ fenList , details}) => {
       />
         </div>
         <div className="info-panel">
-
             <p id="g_type">{event}</p>
-
             <div className="ratings-conta">
-
-                <p id="w_elo"></p>
-                <p id="b_elo"></p>
+            <p id="w_elo"></p>
+            <p id="b_elo"></p>
 
         </div>
 
             <p id="g_res">Game result</p>
             <p id="op_name">{opening}</p>
 
-        <p id="g_avrg">Game average rating</p>
-        <p id="result_info"></p>
+            <p id="g_avrg">Game average rating</p>
+            <p id="result_info"></p>
 
             <div className="gte_sub_conta" id="ma_div">
 
