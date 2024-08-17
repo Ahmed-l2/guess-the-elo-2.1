@@ -2,6 +2,7 @@
   box-sizing: content-box;
   position: relative;
   display: block;
+  
 }
 
 cg-container {
@@ -9,9 +10,11 @@ cg-container {
   height: 100%;
   display: block;
   top: 0;
+
 }
 
 cg-board {
+
   position: absolute;
   top: 0;
   left: 0;
@@ -26,6 +29,7 @@ cg-board {
 }
 
 cg-board square {
+
   position: absolute;
   top: 0;
   left: 0;
@@ -36,6 +40,7 @@ cg-board square {
 
 cg-board square.move-dest {
   pointer-events: auto;
+
 }
 
 cg-board square.last-move {
@@ -71,7 +76,7 @@ piece.fading {
 }
 
 .cg-wrap piece.ghost {
-  opacity: 0;
+  opacity: 0.3;
 }
 
 .cg-wrap piece svg {
@@ -110,6 +115,7 @@ piece.fading {
   overflow: hidden;
   opacity: 0.6;
   z-index: 2;
+  
 }
 
 .cg-wrap .cg-custom-svgs {
