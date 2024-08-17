@@ -8,7 +8,7 @@
     display: flex;
     background-color: var(--nav-bar-bg);
     align-items: center;
-    padding: 10px;
+    padding: 5px;
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--button-color);
 }
@@ -54,7 +54,7 @@
     .nav {
       
         padding: 0;
-       
+        visibility: hidden;
         
     }
 

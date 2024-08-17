@@ -41,7 +41,7 @@ body {
 }
 
 .box {
-    margin-top: 80px;
+    margin-top: 70px;
     padding: 10px;
     background-color: var(--secondary-color);
     border-radius: 10px;
@@ -54,8 +54,8 @@ body {
     row-gap: 10px;
     text-align: center;
     min-width: 75%;
- 
     min-height: 70%;
+
 }
 
 
