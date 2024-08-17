@@ -235,7 +235,7 @@ const ChessBoard = ({ fenList , details}) => {
           </div>
           <div className="info-panel">
               <p id="g_type">{event}</p>
-              <a  id="g_link" target="_blank" rel="noopener noreferrer">Game Link</a>
+              
               <div className="ratings-conta">
               <p id="w_elo"></p>
               <p id="b_elo"></p>
@@ -274,6 +274,7 @@ const ChessBoard = ({ fenList , details}) => {
               </div>
 
               <button id="next_game" onClick={next_game}>Next Game</button>
+              <a  id="g_link" target="_blank" rel="noopener noreferrer">Game Link</a>
           </div>
 
       </div>
