@@ -155,7 +155,7 @@ const ChessBoard = ({ fenList , details}) => {
                       }}
 
                       document.getElementById('g_link').href=gamelink;
-                      document.getElementById('g_link').style='color:silver;background-color:#4d4d4d;'
+                      document.getElementById('g_link').style='color:white;background-color:#8ec24e;'
                       document.getElementById("next_game").style='color:white;background-color:var(--button-color)';
 
       }
