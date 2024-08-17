@@ -55,7 +55,7 @@ const ChessBoard = ({ fenList , details}) => {
     const handleInputChange = (e) => { // checking guess input
       setGuess(e.target.value);//#1dd1a1
       if (e.target.value){
-        document.getElementById('sub_guess').style='background-color:#f49843;color:white'
+        document.getElementById('sub_guess').style='background-color:var(--button-color);color:white'
 
       }else{
 
@@ -129,8 +129,8 @@ const ChessBoard = ({ fenList , details}) => {
                           g_avrg.style='background-color:#74b9ff;color:white'
                       }else if (user_guess > averageElo && (user_guess-averageElo) <= 50 && (user_guess-averageElo) > 5|| user_guess < averageElo && (averageElo-user_guess) <= 50 && (averageElo-user_guess) > 5){
                           result_info.innerHTML= "Wow, you're almost there!"
-                          result_info.style = 'color:white;background-color:#0be881';
-                          g_avrg.style='background-color:#0be881;color:white'
+                          result_info.style = 'color:white;background-color:#63cdda';
+                          g_avrg.style='background-color:#63cdda;color:white'
                       }
                       else if (user_guess > averageElo && (user_guess-averageElo) <= 10 && (user_guess-averageElo) > 0|| user_guess < averageElo && (averageElo-user_guess) <= 10 && (averageElo-user_guess) > 0){
                           result_info.innerHTML= "Wait ! Are you cheating ?"
@@ -154,7 +154,7 @@ const ChessBoard = ({ fenList , details}) => {
                       }}
 
 
-                      document.getElementById("next_game").style='color:white;background-color:#f49843';
+                      document.getElementById("next_game").style='color:white;background-color:var(--button-color)';
 
       }
 
