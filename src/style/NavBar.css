@@ -25,11 +25,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: default;
 }
 
 .nav #logo_img{
     margin: 0 10px;
     border-radius: 10px;
+}
+
+.nav #logo_img:hover{
+    transition: .5s;
+    transform: rotate(360deg);
 }
 
 #beta_txt{
@@ -46,9 +52,9 @@
 
 @media screen and (max-width: 768px) {
     .nav {
-        flex-direction: column;
+      
         padding: 0;
-        visibility: hidden;
+       
         
     }
 
