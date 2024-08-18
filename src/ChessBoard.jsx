@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Chessground from '@react-chess/chessground';
 import './style/chessgroundBaseOverride.css';
 import './style/chessgroundColorsOverride.css';
@@ -23,35 +23,25 @@ const ChessBoard = ({ fenList , details}) => {
     const averageElo = Math.floor(averageElo_normal);
     const guessed_inp = document.getElementById('guess_inp');
     const gamelink = details.gameLink;
-    
-    const updateBoardSize = () => {
-      const width = window.innerWidth;
-      let size;
-
-      if (width <= 450) {
-          size = 420;
-      } else {
-          size = Math.min(width * 0.5, 750);
-      }
-
-      setBoardSize(size);
-    };
-
+    const boardContainerRef = useRef(null);
 
     useEffect(() => {
+      const updateBoardSize = () => {
+        const width = window.innerWidth;
+        let size = width <= 770 ? 700 : 750;
+        setBoardSize(size);
+        if (boardContainerRef.current) {
+          boardContainerRef.current.style.setProperty('--cg-width', `${size}px`);
+          boardContainerRef.current.style.setProperty('--cg-height', `${size}px`);
+        }
+      };
+    
       updateBoardSize();
       window.addEventListener('resize', updateBoardSize);
-
-      // Force a re-render after a short delay to ensure correct initial size
-      const timer = setTimeout(() => {
-        updateBoardSize();
-      }, 100);
-
-      return () => {
-        window.removeEventListener('resize', updateBoardSize);
-        clearTimeout(timer);
-      };
+    
+      return () => window.removeEventListener('resize', updateBoardSize);
     }, []);
+    
 
     const handleInputChange = (e) => { // checking guess input
       setGuess(e.target.value);//#1dd1a1
@@ -217,21 +207,17 @@ const ChessBoard = ({ fenList , details}) => {
 
 
     return (
-
-      <div >
-
-
         <div className="box" id="box-b">
-
-          <div className="board-container">
-          <Chessground
-          className="board"
-          width={boardSize}
-          height={boardSize}
-          KeyBindingComponent="true"
-          config={{ fen: fenList[currentIndex]}}
-          key={boardSize}
-        />
+          <div className="board-container" ref={boardContainerRef}>
+            <Chessground
+              className="cg-wrap"
+              width='100%'
+              height='100%'
+              config={{ 
+                fen: fenList[currentIndex],
+                addDimensionsCssVarsTo: boardContainerRef.current
+              }}
+            />
           </div>
           <div className="info-panel">
               <p id="g_type">{event}</p>
@@ -278,11 +264,7 @@ const ChessBoard = ({ fenList , details}) => {
           </div>
 
       </div>
-
-
-      </div>
-
-    );
+  );
 };
 
 export default ChessBoard;

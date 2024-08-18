@@ -34,60 +34,45 @@ body {
     background-image: url("/bg.png");
     background-size: cover;
     display: flex;
-    flex-direction: column;
+    flex-direction: rows;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.box {
-    margin-top: 70px;
-    padding: 10px;
-    background-color: var(--secondary-color);
-    border-radius: 10px;
-    backdrop-filter: blur(20px);
-    display:flex;
-    border: 1px solid rgba(144, 139, 139,.3);
-    justify-items: center;
-    justify-content: center;
-    column-gap: 10px;
-    row-gap: 10px;
-    text-align: center;
-    min-width: 75%;
-    min-height: 70%;
-
-}
-
-
-.board-container{
-    background-color: var(--side-color);
+.holder {
+    margin-top: 4rem;
+    border: 1px solid white;
     display: flex;
-    border-radius: 20px;
-    max-width: 60%;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    justify-items: center;
-    text-align: center;
     padding: 20px;
 }
 
-.box .board-container .board{
-    border-radius: 50px;
+.box {
     width: 100%;
-    max-width: 200px;
-    margin: 0 auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 700px) minmax(auto, auto);
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    background-color: #2B2B2F;
 }
 
-.box .info-panel{
+
+.info-panel{
     background-color: var(--side-color);
-    display:grid;
-    border-radius: 20px;
-    width: 40%;
-   
+    display:flex;
+    flex-direction: column;
     justify-items: center;
     justify-content: center;
+    padding: 3%;
     row-gap: 8px;
+    border-radius: 20px;
     cursor: default;
-    padding: 20px;
+    flex-shrink: 1;
 }
 
 .info-panel #g_type{
@@ -95,11 +80,8 @@ body {
     border-radius: var(--border-rad);
     font-size: 1.4vw;
     color: silver;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 100%;
-    min-height: 50px;
+    text-align: center;
+    padding: 2%;
 }
 
 .info-panel #g_link{
@@ -107,13 +89,9 @@ body {
     border-radius: var(--border-rad);
     font-size: 1.2vw;
     color: #4d4d4d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 100%;
-    min-height: 50px;
+    text-align: center;
+    padding: .9rem;
     text-decoration: none;
-    
 }
 
 .info-panel #op_name{
@@ -121,12 +99,10 @@ body {
     border-radius: var(--border-rad);
     font-size: 0.9vw;
     color: #9d9d9d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 100%;
-    min-height: 50px;
-
+    text-align: center;
+    align-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 
@@ -135,11 +111,10 @@ body {
     border-radius: var(--border-rad);
     font-size: 1.4vw;
     color: #4d4d4d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 100%;
-    min-height: 50px;
+    text-align: center;
+    align-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .info-panel #g_avrg {
@@ -150,15 +125,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 100%;
-    min-height: 50px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .info-panel #result_info{
-    min-height: 150px;
+    padding: 5rem;
     background-color:var(--button-color-2);
     color: white;
-    min-width: 100%;
     border-radius: var(--border-rad);
     font-size: 2vw;
     align-items: center;
@@ -287,6 +261,9 @@ body {
     text-align: center;
     transition: .1s;
 }
+
+
+
 @media screen and (max-width: 768px ) {
 
     body{
@@ -296,45 +273,26 @@ body {
         height: 100dvh;
     }
     .box {
-
         width: 100%;
-        min-height: 100vh;
         display: grid;
+        grid-template-columns: 1fr;
         justify-content: center;
         align-items: center;
-        padding: 0;
-        margin: 0;
-        row-gap: 0;
         border-radius: 0;
-
-
     }
 
-    .box .info-panel {
+    .info-panel {
+        width: 100vw; /* Ensure the panel spans the full viewport width */
         min-width: 100%;
         min-height: 100%;
-        width: 100%;
         height: fit-content;
         row-gap: 5px;
         background-color: transparent;
-    
     }
 
-    .box .board-container{
-        display: flex;
-        flex-direction: column;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: max-content;
-        justify-content: center;
-        align-items: center;
-        padding: 0 ;
-        border-radius: 0;
-        width:100%;
-        margin: 0  50px;
-       
-        
+    .info-panel > * {
+        width: 100vw; /* Ensure children take full width of the panel */
+        box-sizing: border-box; /* Ensure padding and border are included in the width */
     }
 
     .info-panel #g_type,
