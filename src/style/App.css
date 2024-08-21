@@ -296,7 +296,7 @@ body {
         padding-block: 25px;
         padding-inline: 10px;
     }
-}
+}/*
 @media screen and (max-width: 1368px ) {
    
     .box{
@@ -317,8 +317,6 @@ body {
     #op_name,
     #g_res,
     #g_avrg
-    
-    
     {
     min-width: 100%;
     min-height: 20px;
@@ -349,16 +347,14 @@ body {
   
         padding: 15px;
         display: flex;
-      
     }
     .info-panel .gte_sub_conta{
         align-items: center;
         min-height: 40px;
-
         padding: 0;
     }
 
-}
+}*/
 @media screen and (max-width: 768px ) {
 
     body{
@@ -384,9 +380,7 @@ body {
         padding: -80px;
         padding-block: 0px;
         transition: .5s;
-        
     }
-
     .info-panel {
         width: 100vw; 
         min-width: 100%;
@@ -395,15 +389,12 @@ body {
         row-gap: 3px;
         background-color: transparent;
         display:table-column;
-        
     }
-  
+
     .info-panel > * {
         width: 100vw; /* Ensure children take full width of the panel */
         box-sizing: border-box; /* Ensure padding and border are included in the width */
-       
     }
-
     .info-panel #g_type,
     .info-panel #result_info,
     .info-panel #g_res,
@@ -414,31 +405,20 @@ body {
         font-size: 4vw;
         min-height: 30px;
         border-radius: 2px;
-        
     }
     .ratings-conta p{
         padding: 2px;
         font-size: 4vw;
         border-radius: 2px;
         border: 1px solid var(--button-color);
-       
     }
-
-  
-
     .info-panel #op_name{
         font-size: 4vw;
     }
-   
-
     .gte_sub_conta input,
     .gte_sub_conta button,
     .move-btn,
     #next_game {
         font-size: 4vw;
-        
-    }
-
-
-    
+    }  
 }
