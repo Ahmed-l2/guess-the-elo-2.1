@@ -303,32 +303,41 @@ body {
     body{
         margin: 0;
         padding: 0;
-        display:block ;
+        display:flex ;
+        flex-direction: column;
         height: 100dvh;
+        overflow: hidden;
     }
     .box {
         width: 100%;
-        height: max-content;
         display: grid;
         grid-template-columns: 1fr;
         justify-content: center;
         align-items: center;
         border-radius: 0;
         background-color: transparent;
+        align-items: center;
+        justify-items: center;
+        column-gap: 5px;
+        border-radius: 0px;
+        padding: 0px;
+        padding-block: 0px;
+        transition: .5s;
     }
 
     .info-panel {
         width: 100vw; 
         min-width: 100%;
         min-height: 100%;
-        height: fit-content;
-        row-gap: 5px;
+        height: 100vw;
+        row-gap: 3px;
         background-color: transparent;
     }
   
     .info-panel > * {
         width: 100vw; /* Ensure children take full width of the panel */
         box-sizing: border-box; /* Ensure padding and border are included in the width */
+       
     }
 
     .info-panel #g_type,
@@ -363,7 +372,9 @@ body {
     .move-btn,
     #next_game {
         font-size: 4vw;
+        
     }
+
 
     
 }
