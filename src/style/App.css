@@ -34,114 +34,133 @@ body {
     background-image: url("/bg.png");
     background-size: cover;
     display: flex;
-    flex-direction: rows;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+
     height: 100vh;
 }
 
 .holder {
-    margin-top: 4rem;
-    border: 1px solid white;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    text-align: center;
+    margin-top: 80px;
+    margin-inline: 80px;
+    min-width: auto;
 }
+
+
 
 .box {
-    width: 100%;
+    min-width: 100%;
     height: auto;
     display: grid;
-    grid-template-columns: minmax(0, 700px) minmax(auto, auto);
+    grid-template-columns: minmax(0, 750px) minmax(auto, auto);
     justify-content: center;
     align-items: center;
-    column-gap: 10px;
+    justify-items: center;
+    align-content: center;
+    column-gap: 15px;
     background-color: #2B2B2F;
+    border-radius: 20px;
+    padding: 15px;
 }
-
-
+.board-container {
+    min-width: 100%;
+    justify-content: center;
+    align-items: center;
+    
+}
 .info-panel{
     background-color: var(--side-color);
-    display:flex;
-    flex-direction: column;
+    display:grid;
     justify-items: center;
     justify-content: center;
-    padding: 3%;
+    padding: 10px;
     row-gap: 8px;
     border-radius: 20px;
     cursor: default;
-    flex-shrink: 1;
+    min-width: 100%;
+    min-height: 100%;
 }
+
+.info-panel 
+    #g_type,
+    #g_link,
+    #op_name,
+    #g_res,
+    #g_avrg
+    {
+    min-width: 100%;
+    min-height: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.5rem;
+    }
+
+
 
 .info-panel #g_type{
     background-color: #4d4d4d;
     border-radius: var(--border-rad);
-    font-size: 1.4vw;
     color: silver;
     text-align: center;
-    padding: 2%;
+
 }
 
 .info-panel #g_link{
     background-color: var(--button-color-2);
     border-radius: var(--border-rad);
-    font-size: 1.2vw;
     color: #4d4d4d;
     text-align: center;
-    padding: .9rem;
     text-decoration: none;
 }
 
 .info-panel #op_name{
     background-color: var(--button-color-2);
     border-radius: var(--border-rad);
-    font-size: 0.9vw;
+    font-size: 1rem;
     color: #9d9d9d;
     text-align: center;
     align-content: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+
 }
 
 
 .info-panel #g_res {
     background-color: var(--button-color-2);
     border-radius: var(--border-rad);
-    font-size: 1.4vw;
     color: #4d4d4d;
     text-align: center;
     align-content: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    
 }
 
 .info-panel #g_avrg {
     background-color: var(--button-color-2);
     border-radius: var(--border-rad);
-    font-size: 1.4vw;
     color: #4d4d4d;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+  
 }
 
 .info-panel #result_info{
-    padding: 5rem;
     background-color:var(--button-color-2);
     color: white;
     border-radius: var(--border-rad);
-    font-size: 2vw;
-    align-items: center;
+    font-size: 1.8vw;
     display: flex;
+    align-items: center;
     justify-content: center;
+    min-height:180px;
+    min-width: 100%;
 }
-
-
-
 .ratings-conta{
     min-width: 100%;
     border-radius: var(--border-rad);
@@ -149,16 +168,15 @@ body {
     align-items: center;
     column-gap:20px;
 }
-
 .ratings-conta p {
     padding: 15px;
     border-radius: var(--border-rad);
     max-width: 100%;
     border: 2px solid var(--button-color);
     min-height: 40px;
+    font-size: 2rem;
     background-color: var(--secondary-color);
     text-align: center;
-    font-size: 1.4vw;
     text-decoration: none;
     color: silver;
     width: 100%;
@@ -166,7 +184,6 @@ body {
     display: flex;
     justify-content: center;
 }
-
 .ratings-conta #b_elo{
     background-color: black;
     color: white;
@@ -175,7 +192,6 @@ body {
     background-color: whitesmoke;
     color: black;
 }
-
 .gte_sub_conta{
     min-width: 100%;
     border-radius: var(--border-rad);
@@ -189,7 +205,7 @@ body {
     padding: 15px;
     background-color: var(--button-color-2);
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     width: 80%;
     transition: .1s;
     text-align: center;
@@ -209,7 +225,7 @@ body {
     padding: 15px;
     background-color: #4d4d4d;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     width: auto;
     color: silver;
     transition: .1s;
@@ -253,7 +269,7 @@ body {
     padding: 10px;
     background-color: var(--button-color-2);
     color: #5d5d5d;
-    font-size: 1.5vw;
+    font-size: 1.4vw;
     border-radius: var(--border-rad);
     cursor: pointer;
     border: none;

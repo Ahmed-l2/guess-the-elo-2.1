@@ -250,11 +250,8 @@ const ChessBoard = ({ fenList , details}) => {
               </div>
 
               <div className="btn-container">
-
                   <button id="reset-move" onClick={goToFirst}  className="move-btn">❮❮</button>
-
                   <button id="prev-move" onClick={decrementIndex} className="move-btn">❮</button>
-
                   <button id="next-move" onClick={incrementIndex} className="move-btn">❯</button>
                   <button id="skip-move"  onClick={goToLast} className="move-btn">❯❯</button>
               </div>
