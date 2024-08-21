@@ -8,7 +8,6 @@ import './style/App.css'
 
 const ChessBoard = ({ fenList , details}) => {
 
-
     const [guess, setGuess] = useState('');
     const [currentIndex, setCurrentIndex] = useState(1);
     const [boardSize, setBoardSize] = useState(750);
@@ -35,10 +34,9 @@ const ChessBoard = ({ fenList , details}) => {
           boardContainerRef.current.style.setProperty('--cg-height', `${size}px`);
         }
       };
-    
       updateBoardSize();
       window.addEventListener('resize', updateBoardSize);
-    
+
       return () => window.removeEventListener('resize', updateBoardSize);
     }, []);
     
@@ -68,15 +66,8 @@ const ChessBoard = ({ fenList , details}) => {
                           else{g_res.innerHTML=`Black ${details.termination}`;}
                       }
                       else if(result == '1/2-1/2'){
-
                           g_res.innerHTML=`Draw`;}
-
     }
-
-
-
-
-
     const sub_func = () =>{
       if (!guess){
         //#1dd1a1 btn color freen
@@ -136,12 +127,11 @@ const ChessBoard = ({ fenList , details}) => {
                       }
                       else if (user_guess == averageElo){
                           document.body.style='background-color:black'
-
                           result_info.innerHTML= "GOAT GUESS";
                           g_avrg.style="background-color:#fff;color:black";
                           goat.play()
                           result_info.style = "color:white;background-size:cover;background-image:url('https://media1.tenor.com/m/3NxNq1agx5EAAAAd/hikaru-chess.gif');-webkit-text-stroke: 3px gold;text-shadow:1px 1px 20px white";
-
+                          document.getElementById('box-b').style='transition:10s;transform:rotate(360deg)'
                       }}
 
                       document.getElementById('g_link').href=gamelink;
