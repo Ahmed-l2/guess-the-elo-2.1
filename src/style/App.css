@@ -292,6 +292,9 @@ body {
         margin-block-end: 10px;
         height: 630px;
         grid-template-columns: minmax(0, 600px) minmax(auto, auto);
+        padding: 20px;
+        padding-block: 25px;
+        padding-inline: 10px;
     }
 }
 
