@@ -297,7 +297,68 @@ body {
         padding-inline: 10px;
     }
 }
+@media screen and (max-width: 1368px ) {
+   
+    .box{
+        margin-block-end: 0px;
+        grid-template-columns: minmax(0, 500px) minmax(auto, auto);
+        height: fit-content;
+        padding-block: 20px;
+        padding-inline: 10px;
+        
+    }
+    .info-panel{
+        max-height:400px;
+        row-gap: 2px;
+    }
+    .info-panel 
+    #g_type,
+    #g_link,
+    #op_name,
+    #g_res,
+    #g_avrg
+    
+    
+    {
+    min-width: 100%;
+    min-height: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: flex;
+    font-size: 1.0rem;
+    border-radius: 4px;
+    }
+    .info-panel .move-btn{
+        padding: 5px;
+        min-height: 10px;
+        font-size: 1rem;
+        border-radius: 4px;
+    }
+    .info-panel .ratings-conta p{
+        font-size: 1.5vw;
+        min-height: 10px;
+        border-radius: 4px;
+    }
+    .info-panel #result_info{
+        font-size: 2vw;
+        border-radius: 4px;
+        min-height: 50px;
+    }
+    .info-panel .gte_sub_conta button,input{
+  
+        padding: 15px;
+        display: flex;
+      
+    }
+    .info-panel .gte_sub_conta{
+        align-items: center;
+        min-height: 40px;
 
+        padding: 0;
+    }
+
+}
 @media screen and (max-width: 768px ) {
 
     body{
@@ -318,11 +379,12 @@ body {
         background-color: transparent;
         align-items: center;
         justify-items: center;
-        column-gap: 5px;
+        column-gap: 3px;
         border-radius: 0px;
-        padding: 0px;
+        padding: -80px;
         padding-block: 0px;
         transition: .5s;
+        
     }
 
     .info-panel {
@@ -332,6 +394,8 @@ body {
         height: 100vw;
         row-gap: 3px;
         background-color: transparent;
+        display:table-column;
+        
     }
   
     .info-panel > * {
