@@ -39,7 +39,7 @@ const ChessBoard = ({ fenList , details}) => {
 
       return () => window.removeEventListener('resize', updateBoardSize);
     }, []);
-    
+
 
     const handleInputChange = (e) => { // checking guess input
       setGuess(e.target.value);//#1dd1a1
@@ -186,7 +186,7 @@ const ChessBoard = ({ fenList , details}) => {
           sub_func();
         }
       };
-      
+
       window.addEventListener('keydown', handleKeyDown);
 
       return () => {
@@ -203,7 +203,7 @@ const ChessBoard = ({ fenList , details}) => {
               className="cg-wrap"
               width='100%'
               height='100%'
-              config={{ 
+              config={{
                 fen: fenList[currentIndex],
                 addDimensionsCssVarsTo: boardContainerRef.current
               }}
@@ -211,7 +211,7 @@ const ChessBoard = ({ fenList , details}) => {
           </div>
           <div className="info-panel">
               <p id="g_type">{event}</p>
-              
+
               <div className="ratings-conta">
               <p id="w_elo"></p>
               <p id="b_elo"></p>

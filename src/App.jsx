@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import ChessBoard from './ChessBoard';
+
 import { Chess } from 'chess.js';
 import { extractMatchDetails } from './pgnUtils';
-import Navbar from './NavBAr';
-import './style/App.css'
+import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Chessboard from './components/Chessboard';
 
 
 // Function to fetch and parse PGN content
@@ -22,13 +22,11 @@ const fetchPGNContent = async (url) => {
 const parsePGN = (content) => {
   const games = {};
   const splitGames = content.split(/\n\n(?=\[Event)/); // Split on two newlines before each [Event]
-
   splitGames.forEach((game, index) => {
     if (game) {
       games[index + 1] = game.trim(); // Index games from 1 and trim extra spaces
     }
   });
-
   return games;
 };
 
@@ -41,7 +39,6 @@ const selectRandomPGN = (games) => {
       const randomIndex = Math.floor(Math.random() * gameKeys.length);
       const randomKey = gameKeys[randomIndex];
       const randomGame = games[randomKey];
-
       const matchInfo = extractMatchDetails(randomGame);
 
       if (matchInfo.whiteElo !== null && matchInfo.blackElo !== null) {
@@ -51,10 +48,8 @@ const selectRandomPGN = (games) => {
           selectedPGN = randomGame;
         }
       }
-
       gameKeys.splice(randomIndex, 1);
     }
-
     return selectedPGN;
   };
 
@@ -63,7 +58,6 @@ const parsePGNForFENs = (pgn) => {
     const game = new Chess();
     const fenList = [];
 
-    // Remove metadata lines, result lines, and { [%eval ...] } annotations
     const moves = pgn
       .split('\n') // Split by lines
       .filter(line => !line.startsWith('[') && line.trim() !== '') // Remove metadata lines
@@ -75,7 +69,6 @@ const parsePGNForFENs = (pgn) => {
     fenList.push(game.fen()); // Add the starting position
 
     moves.forEach(move => {
-      // Clean up move by removing extra symbols
       const cleanedMove = move.replace(/[\?!\+\-]+$/, '').trim(); // Remove common move symbols and trailing spaces
 
       try {
@@ -86,13 +79,11 @@ const parsePGNForFENs = (pgn) => {
 
         }
       } catch (error) {
-
+        // console.error('Error parsing move:', error);
       }
     });
-
     return fenList;
   };
-
 
 const App = () => {
   const [fenList, setFenList] = useState([]);
@@ -111,25 +102,19 @@ const App = () => {
         // Extract and log match details
         const details = extractMatchDetails(randomPGN);
         setMatchDetails(details);
-
       }
     };
-
     loadPGN();
-
-
   }, []);
 
 
   return (
-    <div>
-      <Navbar />
+    <div className='space-y-14'>
+      <Navbar className='mt-10'/>
         <audio id="goat" src="./sfx/goat.mp3"></audio>
         <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
         <audio id="click_s" src="./sfx/click.mp3"></audio>
-        <div className='holder'>
-          <ChessBoard  fenList={fenList} details={matchDetails} />
-        </div>
+        <Chessboard fenList={fenList} details={matchDetails}/>
     </div>
   );
 };
