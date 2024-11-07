@@ -6,15 +6,29 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
 
   const subReaction = () => {
     if (guess > average && (guess - average) < 100 && (guess - average) > 50 || guess < average && (average - guess) < 100 && (average - guess) > 50) {
-      return 'bg-red-500'
+      return 'text-red-500'
     } else if (guess > average && (guess - average) <= 50 && (guess - average) > 5 || guess < average && (average - guess) <= 50 && (average - guess) > 5) {
-      return 'bg-[#63cdda]'
+      return 'text-[#63cdda]'
     } else if (guess > average && (guess - average) <= 10 && (guess - average) > 0 || guess < average && (average - guess) <= 10 && (average - guess) > 0) {
-      return 'bg-[#81ecec]'
+      return 'text-[#81ecec]'
     } else if (guess > average && (guess - average) >= 100 || guess < average && (average - guess) >= 100) {
-      return 'bg-[#b33939]'
+      return 'text-[#b33939]'
     } else if (guess == average) {
-      return 'bg-[#fff]'
+      return 'text-[#fff]'
+    }
+  }
+
+  const getComment = () => {
+    if (guess > average && (guess - average) < 100 && (guess - average) > 50 || guess < average && (average - guess) < 100 && (average - guess) > 50) {
+      return "Close, but a bit high! Keep refining your rating sense."
+    } else if (guess > average && (guess - average) <= 50 && (guess - average) > 5 || guess < average && (average - guess) <= 50 && (average - guess) > 5) {
+      return "Very good! You're getting the hang of rating estimation!"
+    } else if (guess > average && (guess - average) <= 10 && (guess - average) > 0 || guess < average && (average - guess) <= 10 && (average - guess) > 0) {
+      return "Excellent! Your rating sense is spot on!"
+    } else if (guess > average && (guess - average) >= 100 || guess < average && (average - guess) >= 100) {
+      return "Quite far off. Try to analyze the moves more carefully!"
+    } else if (guess == average) {
+      return "Perfect! You nailed the exact rating!"
     }
   }
 
@@ -51,20 +65,9 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
                 <p className="text-3xl font-bold text-white">{average}</p>
               </div>
 
-              <div className="bg-secnd rounded-lg overflow-hidden">
-                <p className="text-xs text-gray-400 p-2 border-b border-gray-700">Your Guess</p>
-                <p className={`${subReaction()} text-white text-2xl font-bold p-4 transition-all`}>{guess}</p>
-              </div>
-
-              <div className={`${subReaction()} rounded-lg p-4`}>
-                <p className="text-xs text-gray-400 mb-2">Comments</p>
-                {Math.abs(guess - average) <= 100 ? (
-                  <p className="text-white font-medium">Excellent guess! You were very close to the actual rating.</p>
-                ) : Math.abs(guess - average) <= 300 ? (
-                  <p className="text-white font-medium">Good try! You were in the right ballpark.</p>
-                ) : (
-                  <p className="text-white font-medium">Keep practicing! Your guess was quite far from the actual rating.</p>
-                )}
+              <div className="bg-secnd rounded-lg p-4 flex flex-col items-center">
+                <p className={`${subReaction()} text-white text-2xl font-bold mb-4`}>{guess}</p>
+                <p className={`${subReaction()} font-bold text-center`}>{getComment()}</p>
               </div>
 
               <div className="flex flex-col gap-3">

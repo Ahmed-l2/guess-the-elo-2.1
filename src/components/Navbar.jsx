@@ -23,6 +23,26 @@ function Navbar() {
               </span>
             </p>
           </div>
+          <div className="hidden md:flex items-center mx-5 space-x-4">
+          <a
+              href="https://paypal.me/reicchi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-200 bg-transparent border hover:bg-orange-500 hover:text-white hover:border-orange-500  px-4 py-1 rounded transition-colors duration-300 text-lg font-semibold flex items-center"
+            >
+              
+              <span className="ml-2">Donate</span>
+            </a>
+            <a
+              href="https://codevs.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
+            >
+              {'<'} <span className="text-orange-400">CODEVS </span>{'/>'}
+            </a>
+            
+          </div>
           <button
             className="md:hidden p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -41,19 +61,31 @@ function Navbar() {
             </svg>
           </button>
 
-          <div className={`${isOpen ? 'absolute top-full right-0 bg-black/50 backdrop-blur-md p-4 mt-2' : ''}`}>
-            <a
-              href="https://codevs.netlify.app/"
+          {isOpen && (
+            <div className="absolute top-full right-0 bg-black/50 backdrop-blur-md p-4 mt-2 flex flex-col space-y-4">
+              <a
+                href="https://codevs.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
+              >
+                {'<'} <span className="text-orange-400">CODEVS </span>{'/>'}
+              </a>
+              <a
+              href="https://paypal.me/reicchi"
               target="_blank"
               rel="noopener noreferrer"
-              className={`text-white hover:text-accent transition-colors duration-300 md:ml-4 text-lg font-semibold ${!isOpen ? 'hidden md:block' : 'block'}`}
+              className="text-gray-200 bg-transparent border hover:bg-orange-500 hover:text-white hover:border-orange-500  px-4 py-1 rounded transition-colors duration-300 text-lg font-semibold flex items-center"
             >
-              {'<'} <span className="text-orange-400">CODEVS </span>{'/>'}
+              
+              <span className="ml-2">Donate</span>
             </a>
-          </div>
+            </div>
+          )}
         </div>
       </div>
     );
   }
+
 
   export default Navbar;

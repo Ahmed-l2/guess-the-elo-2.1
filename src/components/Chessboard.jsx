@@ -39,7 +39,7 @@ function Chessboard({ fenList, details, loadPGN}) {
 
   useEffect(() => {
     setGuess('');
-    setCurrentIndex(0);
+    setCurrentIndex(1);
     setIsResultVisible(false);
     setHasSubmitted(false);
   }, [fenList]);
