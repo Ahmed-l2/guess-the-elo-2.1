@@ -1,23 +1,36 @@
 import React from 'react';
 
-function ResultPopup({ guess, average, wElo, bElo, title, result, gamelink, termination, onClose, isVisible }) {
+function ResultPopup({ guess, average, wElo, bElo,  gamelink, onClose, isVisible }) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed z-10 inset-0 flex justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
-        <p className="text-gray-700 mb-6">Player Guess: {guess}</p>
-        <p className="text-gray-700 mb-6">Average Elo: {average}</p>
-        <p className="text-gray-700 mb-6">White Elo: {wElo}</p>
-        <p className="text-gray-700 mb-6">Black Elo: {bElo}</p>
-        <p className="text-gray-700 mb-6">{result}</p>
-        <p className="text-gray-700 mb-6">{termination}</p>
-        <p className="text-gray-700 mb-6">{gamelink}</p>
+    <div className="fixed z-10 inset-0 flex justify-center items-center bg-black  backdrop-blur-sm bg-opacity-50">
+      <div className="bg-primary w-[40%] h-auto rounded-xl p-10 max-w-md  shadow-xl ">
+      <div className='flex mb-5 flex-col items-center gap-5'>
+        <div className='flex items-center w-full justify-between gap-2 '>
+        <p className="text-black font-bold p-5 border border-accent rounded-md bg-white w-full text-center ">{wElo}</p>
+        <p className="text-white font-bold p-5   border border-accent rounded-md bg-black w-full text-center ">{bElo}</p>
+        </div>
+        
+        <div className='flex flex-col items-center w-full '>
+         <p className="text-gray-400 font-bold p-2 rounded-t-md bg-secnd w-full text-center ">Your Guess</p> 
+          <p className="text-white font-bold p-10 text-3xl rounded-b-md bg-secnd w-full text-center ">{guess}</p>
+        </div>
+        <div className='flex flex-col items-center w-full '>
+         <p className="text-gray-400 font-bold p-2 rounded-t-md bg-secnd w-full text-center ">Average ELO</p> 
+          <p className="text-white font-bold p-10 text-3xl rounded-b-md bg-secnd w-full text-center ">{average}</p>
+        </div>
+        
+        
+        
+      </div>
+      <div className='flex flex-col items-center gap-2'>
+      <a href={gamelink} className="text-white font-bold text-center w-full p-3 rounded bg-green-500 ">Game Link</a>
         <button
           onClick={onClose}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-accent w-full font-bold text-white p-3 rounded hover:bg-blue-600"
         >Close</button>
+        </div>
       </div>
     </div>
   );

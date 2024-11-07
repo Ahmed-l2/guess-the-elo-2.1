@@ -17,8 +17,8 @@ function Chessboard({ fenList, details }) {
     whiteElo,
     blackElo,
     event,
-    result,
     opening,
+    result,
     termination: matchTermination,
     gameLink: gamelink
   } = details;
@@ -27,9 +27,11 @@ function Chessboard({ fenList, details }) {
 
   const moveAudio = useMemo(() => new Audio("./sfx/move-self.mp3"), []);
   const clickAudio = useMemo(() => new Audio("./sfx/click.mp3"), []);
+  const submmitAudio = useMemo(() => new Audio("./sfx/submit.mp3"), []);
 
   const playMoveAudio = () => moveAudio.play();
   const playClickAudio = () => clickAudio.play();
+  const playSubmitAudio = () => submmitAudio.play(); 
 
   const nextMove = () => {
     if (currentIndex < fenList.length - 1) {
@@ -37,6 +39,20 @@ function Chessboard({ fenList, details }) {
       setCurrentIndex(prev => prev + 1);
     }
   };
+
+  const resultTranslation = ()=>{
+      if (result == '1-0'){
+        return `White ${matchTermination}`
+      }
+      if(result == '0-1'){
+        return `Black ${matchTermination}`
+      }
+
+      if (result == '1/2-1/2'){
+        return `Draw ${matchTermination || ''}`
+      }
+
+  }
 
   const previousMove = () => {
     if (currentIndex > 0) {
@@ -46,7 +62,7 @@ function Chessboard({ fenList, details }) {
   };
 
   const firstMove = () => {
-    playClickAudio();
+    playSubmitAudio();
     setCurrentIndex(0);
   };
 
@@ -56,6 +72,7 @@ function Chessboard({ fenList, details }) {
   };
 
   const submitGuess = () => {
+    playSubmitAudio();
     setIsResultVisible(true);
   };
 
@@ -73,12 +90,12 @@ function Chessboard({ fenList, details }) {
   }, [guess, currentIndex, fenList.length]);
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="max-h-[90v] w-full lg:max-w-2xl md:max-w-xl p-2 border-2 border-black bg-gray-900 rounded-2xl flex flex-col">
+    <div className="flex justify-center items-center relative ">
+      <div className="max-h-[90v] w-full lg:max-w-2xl md:max-w-xl bg-[#161618] p-5   rounded-2xl flex flex-col">
         {/* Chessboard Title */}
-        <div className="flex justify-between gap-2 text-center">
-          <GameTitle label={event} />
-          <GameTitle label={opening} />
+        <div className="flex justify-between gap-2 mb-2 text-center">
+          <p className='bg-secnd rounded w-1/3 text-white font-bold text-center p-4' > {event || "game type"}</p>
+          <p className='bg-secnd rounded w-full text-white font-bold text-center p-4' > {opening || "Opening name"}</p>
         </div>
 
         {/* Chessboard */}
@@ -90,13 +107,23 @@ function Chessboard({ fenList, details }) {
 
         {/* Chessboard Navigation Controls */}
         <div className="flex-col justify-between items-center space-y-2 w-full mt-2">
-          <div className="flex gap-2">
+          <div className="flex  items-center justify-between gap-2">
+            <div className='flex gap-2'>
             <NavButton onClick={firstMove} icon={<ChevronsLeft size={40} />} />
             <NavButton onClick={previousMove} icon={<ChevronLeft size={40} />} />
             <NavButton onClick={nextMove} icon={<ChevronRight size={40} />} />
             <NavButton onClick={lastMove} icon={<ChevronsRight size={40} />} />
+            </div>
+            
+            <div className='text-white font-bold bg-secnd p-4 text-center w-full rounded'>{currentIndex == fenList.length -1 ?  <p className='text-white'>{resultTranslation()}</p> : <p className='text-gray-400'>game result</p>}</div>
           </div>
+          
           <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} />
+          
+
+          
+          
+          
         </div>
       </div>
 
@@ -107,7 +134,6 @@ function Chessboard({ fenList, details }) {
         wElo={whiteElo}
         bElo={blackElo}
         title={event}
-        result={result}
         gamelink={gamelink}
         termination={matchTermination}
         onClose={closeResult}
@@ -117,15 +143,10 @@ function Chessboard({ fenList, details }) {
   );
 }
 
-const GameTitle = ({ label }) => (
-  <div className="flex items-center justify-center p-2 text-sm sm:text-base md:text-lg bg-gray-700 font-bold w-full text-white rounded-md mb-2 line-clamp-1">
-    {label}
-  </div>
-);
 
 const NavButton = ({ onClick, icon }) => (
   <button
-    className="bg-gray-700 text-white p-2 rounded-md hover:bg-gray-600 cursor-pointer"
+    className="bg-secnd text-white p-2 rounded-md hover:bg-gray-600 cursor-pointer"
     onClick={onClick}
   >
     {icon}
@@ -133,20 +154,22 @@ const NavButton = ({ onClick, icon }) => (
 );
 
 const GuessInput = ({ guess, setGuess, onSubmit }) => (
-  <div className="flex gap-4 h-10 bg-gray-700 justify-between items-center rounded-md overflow-hidden">
+  <div className="flex  p-2 bg-secnd justify-between items-center rounded-md overflow-hidden">
     <input
-      type="text"
+      type="number"
       value={guess}
       onChange={(e) => setGuess(e.target.value)}
       placeholder="Enter Your Guess..."
-      className="flex-1 pl-4 text-gray-300 bg-transparent focus:outline-none"
+      className="flex-1 font-bold appearance-none w-full text-white bg-transparent focus:outline-none"
     />
     <button
       onClick={onSubmit}
-      className="bg-gray-500 h-full flex items-center text-white px-4 hover:bg-gray-600"
+      className="bg-accent font-bold rounded-md  flex items-center text-white p-3 hover:bg-gray-600"
     >
       Submit
     </button>
+
+    
   </div>
 );
 

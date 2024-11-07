@@ -147,7 +147,6 @@ const ChessBoard = ({ fenList , details}) => {
         location.reload();
       }
     }
-
     const incrementIndex = () => {
       if (currentIndex !== fenList.length - 1) {
           new Audio("./sfx/move-self.mp3").play();
@@ -155,9 +154,6 @@ const ChessBoard = ({ fenList , details}) => {
           document.getElementById('next-move').blur();
       }
     };
-
-
-
     const decrementIndex = () => {
       if (currentIndex !== 0) {
         new Audio("./sfx/move-self.mp3").play();
@@ -165,17 +161,14 @@ const ChessBoard = ({ fenList , details}) => {
         document.getElementById('prev-move').blur();
       }
     };
-
     const goToFirst = () => {
       new Audio("./sfx/click.mp3").play();
       setCurrentIndex(0);
     };
-
     const goToLast = () => {
       new Audio("./sfx/click.mp3").play();
       setCurrentIndex(fenList.length - 1);
     };
-
     useEffect(() => {
       const handleKeyDown = (event) => {
         if (event.key === 'ArrowRight') {
@@ -249,6 +242,9 @@ const ChessBoard = ({ fenList , details}) => {
               <button id="next_game" onClick={next_game}>Next Game</button>
               <a  id="g_link" target="_blank" rel="noopener noreferrer">Game Link</a>
           </div>
+
+
+          
 
       </div>
   );

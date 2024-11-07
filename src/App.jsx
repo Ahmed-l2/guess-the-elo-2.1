@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import { Chess } from 'chess.js';
 import { extractMatchDetails } from './pgnUtils';
-import Navbar from './Navbar';
+
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Chessboard from './components/Chessboard';
+import Navbar from './components/Navbar';
 
 
 // Function to fetch and parse PGN content
@@ -109,11 +110,8 @@ const App = () => {
 
 
   return (
-    <div className='space-y-14'>
-      <Navbar className='mt-10'/>
-        <audio id="goat" src="./sfx/goat.mp3"></audio>
-        <audio id="moves_s" src="./sfx/move-self.mp3"></audio>
-        <audio id="click_s" src="./sfx/click.mp3"></audio>
+    <div className=' flex flex-col gap-5 justify-center min-h-screen bg-primary'>
+        <Navbar />
         <Chessboard fenList={fenList} details={matchDetails}/>
     </div>
   );
