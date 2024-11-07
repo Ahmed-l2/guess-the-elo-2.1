@@ -1,35 +1,100 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-function ResultPopup({ guess, average, wElo, bElo,  gamelink, onClose, isVisible }) {
+function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible, bgColor }) {
   if (!isVisible) return null;
 
-  return (
-    <div className="fixed z-10 inset-0 flex justify-center items-center  bg-black  backdrop-blur-sm bg-opacity-50">
-      <div className="bg-primary w-[40%] h-auto rounded-xl p-10 max-w-sm  shadow-xl ">
-      <div className='flex mb-5 flex-col items-center gap-5'>
-        <div className='flex items-center w-full justify-between gap-2 '>
-        <p className="text-black font-bold p-4 text-2xl border border-accent rounded-md bg-white w-full text-center ">{wElo}</p>
-        <p className="text-white font-bold p-4 text-2xl  border border-accent rounded-md bg-black w-full text-center ">{bElo}</p>
-        </div>
-        <div className='flex flex-col items-center w-full '>
-         <p className="text-gray-400 font-bold p-2 rounded-t-md border-b border-gray-600 bg-secnd w-full text-center ">Average ELO</p>
-          <p className="text-white font-bold p-10 text-3xl rounded-b-md bg-secnd w-full text-center ">{average}</p>
-        </div>
-        <div className='flex flex-col items-center w-full '>
-         <p className="text-gray-400 font-bold p-2 rounded-t-md bg-secnd border-b border-gray-600 w-full text-center ">Your Guess</p>
-          <p className="text-white font-bold p-10 text-3xl rounded-b-md bg-secnd w-full text-center ">{guess}</p>
-        </div>
-      </div>
+  const subReaction = () => {
+    if (guess > average && (guess - average) < 100 && (guess - average) > 50 || guess < average && (average - guess) < 100 && (average - guess) > 50) {
+      return 'bg-red-500'
+    } else if (guess > average && (guess - average) <= 50 && (guess - average) > 5 || guess < average && (average - guess) <= 50 && (average - guess) > 5) {
+      return 'bg-[#63cdda]'
+    } else if (guess > average && (guess - average) <= 10 && (guess - average) > 0 || guess < average && (average - guess) <= 10 && (average - guess) > 0) {
+      return 'bg-[#81ecec]'
+    } else if (guess > average && (guess - average) >= 100 || guess < average && (average - guess) >= 100) {
+      return 'bg-[#b33939]'
+    } else if (guess == average) {
+      return 'bg-[#fff]'
+    }
+  }
 
-      <div className='flex flex-col items-center gap-2'>
-      <a href={gamelink} className="text-white font-bold text-center w-full p-3 rounded bg-green-500 ">Game Link</a>
-        <button
-          onClick={onClose}
-          className="bg-accent w-full font-bold text-white p-3 rounded hover:bg-blue-600"
-        >Close</button>
-        </div>
-      </div>
-    </div>
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed z-10 inset-0 flex justify-center items-center backdrop-blur-sm bg-black/50"
+        >
+          <motion.div
+            initial={{ scale: 0.95, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.95, y: 20 }}
+            transition={{ type: "spring", duration: 0.5 }}
+            className="bg-primary w-[98%] md:w-[500px] rounded-2xl p-6 shadow-2xl"
+          >
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white rounded-lg p-4 text-center transition-transform hover:scale-105">
+                  <p className="text-xs text-gray-500 mb-1">White ELO</p>
+                  <p className="text-2xl font-bold">{wElo}</p>
+                </div>
+                <div className="bg-black rounded-lg p-4 text-center transition-transform hover:scale-105">
+                  <p className="text-xs text-gray-400 mb-1">Black ELO</p>
+                  <p className="text-2xl font-bold text-white">{bElo}</p>
+                </div>
+              </div>
+
+              <div className="bg-secnd rounded-lg p-4 text-center transition-transform hover:scale-105">
+                <p className="text-xs text-gray-400 mb-2">Average ELO</p>
+                <p className="text-3xl font-bold text-white">{average}</p>
+              </div>
+
+              <div className="bg-secnd rounded-lg overflow-hidden">
+                <p className="text-xs text-gray-400 p-2 border-b border-gray-700">Your Guess</p>
+                <p className={`${subReaction()} text-white text-2xl font-bold p-4 transition-all`}>{guess}</p>
+              </div>
+
+              <div className={`${subReaction()} rounded-lg p-4`}>
+                <p className="text-xs text-gray-400 mb-2">Comments</p>
+                {Math.abs(guess - average) <= 100 ? (
+                  <p className="text-white font-medium">Excellent guess! You were very close to the actual rating.</p>
+                ) : Math.abs(guess - average) <= 300 ? (
+                  <p className="text-white font-medium">Good try! You were in the right ballpark.</p>
+                ) : (
+                  <p className="text-white font-medium">Keep practicing! Your guess was quite far from the actual rating.</p>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <a 
+                  href={gamelink} 
+                  target="_blank" 
+                  className="bg-green-500 p-3 rounded-lg text-white font-semibold text-center hover:bg-green-600 transition-colors"
+                >
+                  View Game
+                </a>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={onClose}
+                    className="bg-gray-500 p-3 rounded-lg text-white font-semibold hover:bg-gray-600 transition-colors"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => location.reload()}
+                    className="bg-accent p-3 rounded-lg text-white font-semibold hover:bg-opacity-90 transition-colors"
+                  >
+                    Next Game
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
