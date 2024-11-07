@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible, bgColor }) {
+function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible, bgColor, loadPGN }) {
   if (!isVisible) return null;
 
   const subReaction = () => {
@@ -68,9 +68,9 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
               </div>
 
               <div className="flex flex-col gap-3">
-                <a 
-                  href={gamelink} 
-                  target="_blank" 
+                <a
+                  href={gamelink}
+                  target="_blank"
                   className="bg-green-500 p-3 rounded-lg text-white font-semibold text-center hover:bg-green-600 transition-colors"
                 >
                   View Game
@@ -83,7 +83,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
                     Close
                   </button>
                   <button
-                    onClick={() => location.reload()}
+                    onClick={loadPGN}
                     className="bg-accent p-3 rounded-lg text-white font-semibold hover:bg-opacity-90 transition-colors"
                   >
                     Next Game

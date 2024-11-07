@@ -9,7 +9,7 @@ import "../style/chessgroundColorsOverride.css";
 import "../style/pieces/staunty.css";
 import ResultPopup from './ResultPopup';
 
-function Chessboard({ fenList, details}) {
+function Chessboard({ fenList, details, loadPGN}) {
   const [guess, setGuess] = useState('');
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isResultVisible, setIsResultVisible] = useState(false);
@@ -36,6 +36,13 @@ function Chessboard({ fenList, details}) {
   const playMoveAudio = () => moveAudio.play();
   const playClickAudio = () => clickAudio.play();
   const playSubmitAudio = () => submmitAudio.play();
+
+  useEffect(() => {
+    setGuess('');
+    setCurrentIndex(0);
+    setIsResultVisible(false);
+    setHasSubmitted(false);
+  }, [fenList]);
 
   const nextMove = () => {
     if (currentIndex < fenList.length - 1) {
@@ -72,9 +79,7 @@ function Chessboard({ fenList, details}) {
     playClickAudio();
     setCurrentIndex(fenList.length - 1);
   };
-  
 
-  
   const submitGuess = () => {
     if(guess && !hasSubmitted){
       playSubmitAudio();
@@ -100,9 +105,6 @@ function Chessboard({ fenList, details}) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [guess, currentIndex, fenList.length, hasSubmitted]);
-
-
-  
 
   return (
     <div className="flex justify-center items-center">
@@ -131,8 +133,8 @@ function Chessboard({ fenList, details}) {
             </div>
 
             <div className='text-white font-bold bg-secnd p-4 text-center w-full rounded-lg shadow-md transition-all hover:bg-opacity-90'>
-              {currentIndex == fenList.length -1 ? 
-                <p className='text-white'>{resultTranslation()}</p> : 
+              {currentIndex == fenList.length -1 ?
+                <p className='text-white'>{resultTranslation()}</p> :
                 <p className='text-gray-400'>game result</p>
               }
             </div>
@@ -144,7 +146,7 @@ function Chessboard({ fenList, details}) {
 
       <AnimatePresence>
         {showAlert && (
-          <motion.div 
+          <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
@@ -167,6 +169,7 @@ function Chessboard({ fenList, details}) {
         termination={matchTermination}
         onClose={closeResult}
         isVisible={isResultVisible}
+        loadPGN={loadPGN}
       />
     </div>
   );

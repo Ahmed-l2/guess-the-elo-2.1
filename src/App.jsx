@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import { Chess } from 'chess.js';
 import { extractMatchDetails } from './pgnUtils';
-
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Chessboard from './components/Chessboard';
 import Navbar from './components/Navbar';
@@ -90,21 +88,21 @@ const App = () => {
   const [fenList, setFenList] = useState([]);
   const [matchDetails, setMatchDetails] = useState({});
 
+  const loadPGN = async () => {
+    const content = await fetchPGNContent('/pgns/filtered_games.pgn');
+    const games = parsePGN(content);
+    const randomPGN = selectRandomPGN(games);
+
+    if (randomPGN) {
+      const fens = parsePGNForFENs(randomPGN);
+      setFenList(fens);
+
+      const details = extractMatchDetails(randomPGN);
+      setMatchDetails(details);
+    }
+  };
+
   useEffect(() => {
-    const loadPGN = async () => {
-      const content = await fetchPGNContent('/pgns/filtered_games.pgn');
-      const games = parsePGN(content);
-      const randomPGN = selectRandomPGN(games);
-
-      if (randomPGN) {
-        const fens = parsePGNForFENs(randomPGN);
-        setFenList(fens);
-
-        // Extract and log match details
-        const details = extractMatchDetails(randomPGN);
-        setMatchDetails(details);
-      }
-    };
     loadPGN();
   }, []);
 
@@ -112,7 +110,7 @@ const App = () => {
   return (
     <div className='flex flex-col gap-4'>
         <Navbar />
-        <Chessboard fenList={fenList} details={matchDetails}/>
+        <Chessboard fenList={fenList} details={matchDetails} loadPGN={loadPGN} />
     </div>
   );
 };
