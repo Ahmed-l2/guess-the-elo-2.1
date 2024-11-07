@@ -110,7 +110,7 @@ const App = () => {
 
 
   return (
-    <div className=' flex flex-col gap-4 min-h-screen bg-master bg-center bg-contain'>
+    <div className='flex flex-col gap-4'>
         <Navbar />
         <Chessboard fenList={fenList} details={matchDetails}/>
     </div>

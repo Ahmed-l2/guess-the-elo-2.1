@@ -31,7 +31,7 @@ function Chessboard({ fenList, details }) {
 
   const playMoveAudio = () => moveAudio.play();
   const playClickAudio = () => clickAudio.play();
-  const playSubmitAudio = () => submmitAudio.play(); 
+  const playSubmitAudio = () => submmitAudio.play();
 
   const nextMove = () => {
     if (currentIndex < fenList.length - 1) {
@@ -47,11 +47,9 @@ function Chessboard({ fenList, details }) {
       if(result == '0-1'){
         return `Black ${matchTermination}`
       }
-
       if (result == '1/2-1/2'){
         return `Draw ${matchTermination || ''}`
       }
-
   }
 
   const previousMove = () => {
@@ -76,7 +74,6 @@ function Chessboard({ fenList, details }) {
       playSubmitAudio();
       setIsResultVisible(true);
     }
-    
   };
 
   const closeResult = () => setIsResultVisible(false);
@@ -94,7 +91,7 @@ function Chessboard({ fenList, details }) {
 
   return (
     <div className="flex justify-center items-center ">
-      <div className="max-h-[90v] w-full lg:max-w-2xl md:max-w-xl bg-[#161618] p-3   rounded-2xl flex flex-col">
+      <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl bg-[#161618] p-3   rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-2 mb-2 text-center">
           <p className='bg-secnd rounded w-1/3 text-white font-bold text-center p-4' > {event || "game type"}</p>
@@ -117,16 +114,16 @@ function Chessboard({ fenList, details }) {
             <NavButton onClick={nextMove} icon={<ChevronRight size={40} />} />
             <NavButton onClick={lastMove} icon={<ChevronsRight size={40} />} />
             </div>
-            
+
             <div className='text-white font-bold bg-secnd p-4 text-center w-full rounded'>{currentIndex == fenList.length -1 ?  <p className='text-white'>{resultTranslation()}</p> : <p className='text-gray-400'>game result</p>}</div>
           </div>
-          
-          <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} />
-          
 
-          
-          
-          
+          <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} />
+
+
+
+
+
         </div>
       </div>
 
@@ -172,7 +169,7 @@ const GuessInput = ({ guess, setGuess, onSubmit }) => (
       Submit
     </button>
 
-    
+
   </div>
 );
 

@@ -11,7 +11,9 @@ export default {
         secnd : "#202127",
         accent : "#f49843"
       },
-
+      maxWidth: {
+        '1xl': '40rem', // Customize this value
+      },
       backgroundImage:{
         'master':"url('./bg.png')"
       }
