@@ -42,13 +42,13 @@ function Navbar() {
           </button>
 
           <div className={`${isOpen ? 'absolute top-full right-0 bg-black/50 backdrop-blur-md p-4 mt-2' : ''}`}>
-            <a 
-              href="https://codevs.netlify.app/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://codevs.netlify.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`text-white hover:text-accent transition-colors duration-300 md:ml-4 text-lg font-semibold ${!isOpen ? 'hidden md:block' : 'block'}`}
             >
-              CODEVS TEAM
+              {'<'} <span className="text-orange-400">CODEVS </span>{'/>'}
             </a>
           </div>
         </div>

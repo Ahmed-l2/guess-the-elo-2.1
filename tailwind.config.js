@@ -12,7 +12,7 @@ export default {
         accent : "#f49843"
       },
       maxWidth: {
-        '1xl': '40rem', // Customize this value
+        '1xl': '39rem', // Customize this value
       },
       backgroundImage:{
         'master':"url('./bg.png')"
