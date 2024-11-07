@@ -5,7 +5,7 @@ import Popup from './Popup';  // Import the Popup component
 
 import "../style/chessgroundBaseOverride.css";
 import "../style/chessgroundColorsOverride.css";
-import "../style/chessground.cburnett.css";
+import "../style/pieces/staunty.css";
 import ResultPopup from './ResultPopup';
 
 function Chessboard({ fenList, details }) {
@@ -72,8 +72,11 @@ function Chessboard({ fenList, details }) {
   };
 
   const submitGuess = () => {
-    playSubmitAudio();
-    setIsResultVisible(true);
+    if(guess){
+      playSubmitAudio();
+      setIsResultVisible(true);
+    }
+    
   };
 
   const closeResult = () => setIsResultVisible(false);
@@ -90,8 +93,8 @@ function Chessboard({ fenList, details }) {
   }, [guess, currentIndex, fenList.length]);
 
   return (
-    <div className="flex justify-center items-center relative ">
-      <div className="max-h-[90v] w-full lg:max-w-2xl md:max-w-xl bg-[#161618] p-5   rounded-2xl flex flex-col">
+    <div className="flex justify-center items-center ">
+      <div className="max-h-[90v] w-full lg:max-w-2xl md:max-w-xl bg-[#161618] p-3   rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-2 mb-2 text-center">
           <p className='bg-secnd rounded w-1/3 text-white font-bold text-center p-4' > {event || "game type"}</p>
@@ -154,7 +157,7 @@ const NavButton = ({ onClick, icon }) => (
 );
 
 const GuessInput = ({ guess, setGuess, onSubmit }) => (
-  <div className="flex  p-2 bg-secnd justify-between items-center rounded-md overflow-hidden">
+  <div className="flex  p-1 bg-secnd justify-between items-center rounded-md overflow-hidden">
     <input
       type="number"
       value={guess}
