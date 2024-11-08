@@ -19,18 +19,60 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
   }
 
   const getComment = () => {
-    if (guess > average && (guess - average) < 100 && (guess - average) > 50 || guess < average && (average - guess) < 100 && (average - guess) > 50) {
-      return "Close, but a bit high! Keep refining your rating sense."
-    } else if (guess > average && (guess - average) <= 50 && (guess - average) > 5 || guess < average && (average - guess) <= 50 && (average - guess) > 5) {
-      return "Very good! You're getting the hang of rating estimation!"
-    } else if (guess > average && (guess - average) <= 10 && (guess - average) > 0 || guess < average && (average - guess) <= 10 && (average - guess) > 0) {
-      return "Excellent! Your rating sense is spot on!"
-    } else if (guess > average && (guess - average) >= 100 || guess < average && (average - guess) >= 100) {
-      return "Quite far off. Try to analyze the moves more carefully!"
-    } else if (guess == average) {
-      return "Perfect! You nailed the exact rating!"
+    const difference = Math.abs(guess - average);
+
+    if (difference === 0) {
+      return {
+        message: "Perfect! You nailed it exactly. Are you secretly a grandmaster?",
+        color: "text-green-500"
+      };
+    } else if (difference <= 5) {
+      return {
+        message: "Incredible! Your rating guess is basically telepathic. Ever considered a career in chess analytics?",
+        color: "text-green-400"
+      };
+    } else if (difference <= 20) {
+      return {
+        message: "Very impressive! You're just a few points off. Keep this up, and you'll be the human equivalent of a chess engine.",
+        color: "text-blue-500"
+      };
+    } else if (difference <= 50) {
+      return {
+        message: guess > average
+          ? "Close, but you're giving too much credit! Tone it down a bit."
+          : "Close, but you're underselling them! This player has a bit more skill.",
+        color: "text-blue-400"
+      };
+    } else if (difference <= 100) {
+      return {
+        message: guess > average
+          ? "Not bad, but you overshot by a fair bit. Try dialing it down a notch!"
+          : "Not bad, but you undershot by a fair bit. Give them some more respect!",
+        color: "text-yellow-500"
+      };
+    } else if (difference <= 250) {  // increased from 200
+      return {
+        message: guess > average
+          ? "Oof, that’s quite a leap! Maybe cool it on the optimism?"
+          : "Ouch, you're way underestimating! This player deserves a bit more credit.",
+        color: "text-yellow-600"
+      };
+    } else if (difference <= 500) {  // increased from 400
+      return {
+        message: guess > average
+          ? "Well, that was... ambitious. Are we guessing ratings or launching rockets?"
+          : "Harsh! You might have just insulted this player in two different languages.",
+        color: "text-red-500"
+      };
+    } else {
+      return {
+        message: guess > average
+          ? "Whoa, calm down! This player isn’t exactly Magnus Carlsen."
+          : "Wow, did you guess by rolling dice? Because that rating is way off!",
+        color: "text-red-700"
+      };
     }
-  }
+  };
 
   return (
     <AnimatePresence>
@@ -66,8 +108,10 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
               </div>
 
               <div className="bg-secnd rounded-lg p-4 flex flex-col items-center">
-                <p className={`${subReaction()} text-white text-2xl font-bold mb-4`}>{guess}</p>
-                <p className={`${subReaction()} font-bold text-center`}>{getComment()}</p>
+                <p className={`${subReaction()} text-2xl font-bold mb-4 ${getComment().color}`}>{guess}</p>
+                <p className={`${subReaction()} font-bold text-center ${getComment().color}`}>
+                  {getComment().message}
+                </p>
               </div>
 
               <div className="flex flex-col gap-3">
