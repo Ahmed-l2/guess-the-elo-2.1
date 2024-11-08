@@ -4,6 +4,8 @@ import { extractMatchDetails } from './pgnUtils';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Chessboard from './components/Chessboard';
 import Navbar from './components/Navbar';
+import Landing from './Routes/Landing';
+import GuessThePlayer from './Routes/GuessThePlayer';
 
 
 // Function to fetch and parse PGN content
@@ -107,11 +109,37 @@ const App = () => {
   }, []);
 
 
+  const loadPlayerPGN = async () => {
+    const content = await fetchPGNContent('/pgns/filtered_games.pgn');
+    const games = parsePGN(content);
+    const randomPGN = selectRandomPGN(games);
+
+    if (randomPGN) {
+      const fens = parsePGNForFENs(randomPGN);
+      setFenList(fens);
+
+      const details = extractMatchDetails(randomPGN);
+      setMatchDetails(details);
+    }
+  };
+
+  useEffect(() => {
+    loadPlayerPGN();
+  }, []);
+
+
   return (
-    <div className='flex flex-col gap-4'>
+    <Router>
+      <div className='flex flex-col gap-4'>
         <Navbar />
-        <Chessboard fenList={fenList} details={matchDetails} loadPGN={loadPGN} />
-    </div>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/WTE" element={<Chessboard fenList={fenList} details={matchDetails} loadPGN={loadPGN} />} />
+          <Route path="/GuessThePlayer" element={<GuessThePlayer fenList={fenList} details={matchDetails} loadPGN={loadPGN}  />} />
+          
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

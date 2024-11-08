@@ -23,6 +23,14 @@ function Navbar() {
             </span>
           </p>
         </div>
+        <div className="flex items-center">
+          <a
+            href="/"
+            className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold mx-4"
+          >
+            Home
+          </a>
+        </div>
         <div className="hidden md:flex items-center mx-5 space-x-4">
           <a
             href="https://paypal.me/reicchi"
@@ -61,6 +69,12 @@ function Navbar() {
         {isOpen && (
           <div className="absolute top-full right-0 bg-black/50 backdrop-blur-md p-4 mt-2 flex flex-col space-y-4">
             <a
+              href="/"
+              className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
+            >
+              Home
+            </a>
+            <a
               href="https://codevs.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
@@ -80,5 +94,6 @@ function Navbar() {
     </div>
   );
 }
+
 
 export default Navbar;
