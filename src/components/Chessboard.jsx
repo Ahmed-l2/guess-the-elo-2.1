@@ -108,11 +108,11 @@ function Chessboard({ fenList, details, loadPGN}) {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl bg-[#161618] p-6 shadow-2xl rounded-2xl flex flex-col">
+      <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl sm:max-w-lg bg-[#161618] p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-3 mb-4">
           <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-4 shadow-md hover:bg-opacity-90 transition-all' > {event || "game type"}</p>
-          <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-4 shadow-md hover:bg-opacity-90 transition-all' > {opening || "Opening name"}</p>
+          <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-4 shadow-md hover:bg-opacity-90 transition-all line' > {opening || "Opening name"}</p>
         </div>
 
         {/* Chessboard */}

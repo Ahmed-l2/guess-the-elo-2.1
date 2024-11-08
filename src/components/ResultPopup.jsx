@@ -88,7 +88,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
             animate={{ scale: 1, y: 0 }}
             exit={{ scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="bg-primary w-[98%] md:w-[500px] rounded-2xl p-6 shadow-2xl"
+            className="bg-primary w-[98%] sm:w-[500px] rounded-2xl p-6 shadow-2xl"
           >
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-3">
