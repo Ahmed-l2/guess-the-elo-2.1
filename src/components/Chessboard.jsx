@@ -3,31 +3,43 @@ import Chessground from "@react-chess/chessground";
 import { ChevronRight, ChevronLeft, ChevronsRight, ChevronsLeft } from 'lucide-react';
 import Popup from './Popup';  // Import the Popup component
 import { motion, AnimatePresence } from 'framer-motion';
+import { fetchRandomGame } from '../lib/appwrite';
 
 import "../style/chessgroundBaseOverride.css";
 import "../style/chessgroundColorsOverride.css";
 import "../style/pieces/staunty.css";
 import ResultPopup from './ResultPopup';
 
-function Chessboard({ fenList, details, loadPGN}) {
+function Chessboard() {
+  const [fenList, setFenList] = useState([]);
+  const [gameDetails, setGameDetails] = useState({});
   const [guess, setGuess] = useState('');
   const [currentIndex, setCurrentIndex] = useState(1);
   const [isResultVisible, setIsResultVisible] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
+  const getRandomGame = async () => {
+    const data = await fetchRandomGame(); // Fetching data from Appwrite
+    setFenList(data.fenList);  // Extract fenList
+    setGameDetails(data);      // Set other game details
+  };
+
+  useEffect(() => {
+    getRandomGame();
+  }, []);
+
   const {
     whiteElo,
     blackElo,
+    averageElo,
     event,
     opening,
     result,
     termination: matchTermination,
     gameLink: gamelink,
 
-  } = details;
-
-  const averageElo = useMemo(() => Math.floor((whiteElo + blackElo) / 2), [whiteElo, blackElo]);
+  } = gameDetails;
 
   const moveAudio = useMemo(() => new Audio("./sfx/move-self.mp3"), []);
   const clickAudio = useMemo(() => new Audio("./sfx/click.mp3"), []);
@@ -169,7 +181,7 @@ function Chessboard({ fenList, details, loadPGN}) {
         termination={matchTermination}
         onClose={closeResult}
         isVisible={isResultVisible}
-        loadPGN={loadPGN}
+        loadPGN={getRandomGame}
       />
     </div>
   );
