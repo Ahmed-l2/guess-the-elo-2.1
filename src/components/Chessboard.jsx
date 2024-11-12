@@ -41,9 +41,11 @@ function Chessboard() {
 
   } = gameDetails;
 
-  const moveAudio = useMemo(() => new Audio("./sfx/move-self.mp3"), []);
-  const clickAudio = useMemo(() => new Audio("./sfx/click.mp3"), []);
-  const submmitAudio = useMemo(() => new Audio("./sfx/submit.mp3"), []);
+  console.log(averageElo)
+
+  const moveAudio =  new Audio("./sfx/move-self.mp3")
+  const clickAudio =  new Audio("./sfx/click.mp3")
+  const submmitAudio =  new Audio("./sfx/submit.mp3")
 
   const playMoveAudio = () => moveAudio.play();
   const playClickAudio = () => clickAudio.play();
@@ -119,7 +121,7 @@ function Chessboard() {
   }, [guess, currentIndex, fenList.length, hasSubmitted]);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="  flex justify-center items-center">
       <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl sm:max-w-lg bg-[#161618] p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-3 mb-4">

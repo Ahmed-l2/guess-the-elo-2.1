@@ -16,8 +16,14 @@ export default {
       },
       backgroundImage:{
         'master':"url('./bg.png')"
+      },
+      fontFamily: {
+        'baloo': ["Baloo 2", 'sans-serif'],
+        'bebas': ['Bebas Neue', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'russo': ['Russo One', 'sans-serif'],
+        'luckiest': ['Luckiest Guy', 'sans-serif']
       }
-    },
-  },
+    },  },
   plugins: [],
 }

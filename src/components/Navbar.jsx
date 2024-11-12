@@ -4,9 +4,9 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="relative top-0 w-full z-50 backdrop-blur-md border-b-2 border-b-accent">
+    <div className=" top-0 w-full z-50 backdrop-blur-md border-b-2 border-b-accent">
       <div className="flex items-center justify-between p-2">
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <img
             id="logo_img"
             src="/logo.png"
@@ -15,18 +15,19 @@ function Navbar() {
           />
           <p className="text-white text-xl font-bold sm:text-sm flex items-center cursor-default">
             WHAT'S THE ELO
-            <span id="beta_txt" className="text-[--button-color] text-xl sm:text-base ml-5 sm:ml-2">
-              BETA
-            </span>
+            
             <span id="vers_txt" className="text-accent text-xl sm:text-base ml-1">
-              v2.0
+              v2.<span className="text-gray-400">1</span>
+            </span>
+            <span id="beta_txt" className="bg-accent rounded-full px-3 font-medium text-sm sm:text-base  sm:ml-2">
+              BETA
             </span>
           </p>
         </div>
-        <div className="flex items-center">
+        <div className="hidden md:flex items-center mx-5 space-x-4 absolute left-1/2 transform -translate-x-1/2">
           <a
             href="/"
-            className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold mx-4"
+            className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
           >
             Home
           </a>
