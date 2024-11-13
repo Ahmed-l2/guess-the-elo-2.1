@@ -121,12 +121,12 @@ function Chessboard() {
   }, [guess, currentIndex, fenList.length, hasSubmitted]);
 
   return (
-    <div className="  flex justify-center items-center">
-      <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl sm:max-w-lg bg-[#161618] p-6 shadow-2xl rounded-2xl flex flex-col">
+    <div className="flex justify-center items-center">
+      <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
-        <div className="flex justify-between gap-3 mb-4">
-          <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-4 shadow-md hover:bg-opacity-90 transition-all' > {event || "game type"}</p>
-          <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-4 shadow-md hover:bg-opacity-90 transition-all line' > {opening || "Opening name"}</p>
+        <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
+          <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all' > {event || "game type"}</p>
+          <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
         </div>
 
         {/* Chessboard */}
@@ -137,16 +137,16 @@ function Chessboard() {
         </div>
 
         {/* Chessboard Navigation Controls */}
-        <div className="flex-col justify-between items-center space-y-4 w-full mt-4">
-          <div className="flex items-center justify-between gap-3">
-            <div className='flex gap-3'>
-              <NavButton onClick={firstMove} icon={<ChevronsLeft size={32} />} />
-              <NavButton onClick={previousMove} icon={<ChevronLeft size={32} />} />
-              <NavButton onClick={nextMove} icon={<ChevronRight size={32} />} />
-              <NavButton onClick={lastMove} icon={<ChevronsRight size={32} />} />
+        <div className="flex-col justify-between items-center space-y-2 sm:space-y-4 w-full mt-2 sm:mt-4">
+          <div className="flex items-center justify-between gap-2 sm:gap-3">
+            <div className='flex gap-1 sm:gap-3'>
+              <NavButton onClick={firstMove} icon={<ChevronsLeft size={24} className="sm:w-8 sm:h-8" />} />
+              <NavButton onClick={previousMove} icon={<ChevronLeft size={24} className="sm:w-8 sm:h-8" />} />
+              <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8" />} />
+              <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8" />} />
             </div>
 
-            <div className='text-white font-bold bg-secnd p-4 text-center w-full rounded-lg shadow-md transition-all hover:bg-opacity-90'>
+            <div className='text-white font-bold grow bg-secnd p-4 sm:p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90'>
               {currentIndex == fenList.length -1 ?
                 <p className='text-white'>{resultTranslation()}</p> :
                 <p className='text-gray-400'>game result</p>
@@ -165,7 +165,7 @@ function Chessboard() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="fixed left-4 bottom-4 font-bold bg-red-500 text-white p-4 rounded-lg shadow-xl z-50 backdrop-blur-sm"
+            className="fixed left-4 bottom-4 font-bold bg-red-500 text-white p-3 sm:p-4 text-sm sm:text-base rounded-lg shadow-xl z-50 backdrop-blur-sm"
           >
             Please enter your guess before submitting!
           </motion.div>
@@ -185,8 +185,7 @@ function Chessboard() {
         isVisible={isResultVisible}
         loadPGN={getRandomGame}
       />
-    </div>
-  );
+    </div>  );
 }
 
 const NavButton = ({ onClick, icon }) => (

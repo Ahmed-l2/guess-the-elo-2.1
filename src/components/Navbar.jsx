@@ -11,15 +11,15 @@ function Navbar() {
             id="logo_img"
             src="/logo.png"
             width={40}
-            className="mx-2 rounded-lg hover:transition-transform hover:duration-500 hover:rotate-360"
+            className="mx-2 rounded-lg  hover:transition-transform hover:duration-500 hover:rotate-360"
           />
-          <p className="text-white text-xl font-bold sm:text-sm flex items-center cursor-default">
+          <p className="text-white text-sm md:text-sm font-bold flex items-center cursor-default">
             WHAT'S THE ELO
             
-            <span id="vers_txt" className="text-accent text-xl sm:text-base ml-1">
+            <span id="vers_txt" className="text-accent text-sm md:text-sm sm:text-base ml-1">
               v2.<span className="text-gray-400">1</span>
             </span>
-            <span id="beta_txt" className="bg-accent rounded-full px-3 font-medium text-sm sm:text-base  sm:ml-2">
+            <span id="beta_txt" className="bg-accent mx-2 rounded-full px-3 text-sm md:text-sm font-medium  sm:text-base  sm:ml-2">
               BETA
             </span>
           </p>

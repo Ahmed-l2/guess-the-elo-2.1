@@ -9,19 +9,7 @@ import great from '/icons/great.png'
 function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible, bgColor, loadPGN }) {
   if (!isVisible) return null;
 
-  const subReaction = () => {
-    if (guess > average && (guess - average) < 100 && (guess - average) > 50 || guess < average && (average - guess) < 100 && (average - guess) > 50) {
-      return 'text-red-500'
-    } else if (guess > average && (guess - average) <= 50 && (guess - average) > 5 || guess < average && (average - guess) <= 50 && (average - guess) > 5) {
-      return 'text-[#63cdda]'
-    } else if (guess > average && (guess - average) <= 10 && (guess - average) > 0 || guess < average && (average - guess) <= 10 && (average - guess) > 0) {
-      return 'text-[#81ecec]'
-    } else if (guess > average && (guess - average) >= 100 || guess < average && (average - guess) >= 100) {
-      return 'text-[#b33939]'
-    } else if (guess == average) {
-      return 'text-[#fff]'
-    }
-  }
+
 
   const getComment = () => {
     const difference = Math.abs(guess - average);
@@ -29,20 +17,20 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
     if (difference === 0) {
       return {
         message: "Perfect! You nailed it exactly. Are you secretly a grandmaster...interesting?",
-        color: "text-[#1bada6]",
+        color: "bg-[#1bada6]",
         icon: brilliant,
         animate: true
       };
     } else if (difference <= 5) {
       return {
         message: "Incredible! Your rating guess is basically telepathic. Ever considered a career in chess analytics?",
-        color: "text-[#1bada6]",
+        color: "bg-[#1bada6]",
         icon: brilliant
       };
     } else if (difference <= 20) {
       return {
         message: "Very impressive! You're just a few points off. Keep this up, and you'll be the human equivalent of a chess engine.",
-        color: "text-[#5c8bb0]",
+        color: "bg-[#5c8bb0]",
         icon: great
       };
     } else if (difference <= 50) {
@@ -50,7 +38,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
         message: guess > average
           ? "Close, but you're giving too much credit! Tone it down a bit."
           : "Close, but you're underselling them! This player has a bit more skill.",
-        color: "text-[#5c8bb0]",
+        color: "bg-[#5c8bb0]",
         icon: great
       };
     } else if (difference <= 100) {
@@ -58,7 +46,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
         message: guess > average
           ? "Not bad, but you overshot by a fair bit. Try dialing it down a notch!"
           : "Not bad, but you undershot by a fair bit. Give them some more respect!",
-        color: "text-[#f7c045]",
+        color: "bg-[#f7c045]",
         icon: inaccuracy
       };
     } else if (difference <= 250) {
@@ -66,7 +54,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
         message: guess > average
           ? "Oof, that's quite a leap! Maybe cool it on the optimism?"
           : "Ouch, you're way underestimating! This player deserves a bit more credit.",
-        color: "text-[#e58f2a]",
+        color: "bg-[#e58f2a]",
         icon: mistake
       };
     } else if (difference <= 500) {
@@ -74,15 +62,15 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
         message: guess > average
           ? "Well, that was... ambitious. Are we guessing ratings or launching rockets?"
           : "Harsh! You might have just insulted this player in two different languages.",
-        color: "text-[#d14e51]",
+        color: "bg-[#ca3431]",
         icon: blunder
       };
     } else {
       return {
         message: guess > average
-          ? "Whoa, calm down! This player isn't exactly Magnus Carlsen."
+          ? "Whoa, calm down! This player isn't exactly Hikaru."
           : "Wow, did you guess by rolling dice? Because that rating is way off!",
-        color: "text-[#d14e51]",
+        color: "bg-[#ca3431]",
         icon: blunder
       };
     }
@@ -118,13 +106,13 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
                 </div>
               </div>
 
-              <div className="bg-secnd rounded-lg p-4 text-center transition-transform hover:scale-105">
+              <div className="bg-secnd shadow-lg rounded-lg p-4 text-center transition-transform hover:scale-105">
                 <p className="text-xs text-gray-400 mb-2">Average ELO</p>
                 <p className="text-3xl font-bold text-white">{average}</p>
               </div>
 
               <motion.div 
-                className={`bg-${comment.color}bg-secnd rounded-lg p-4 flex flex-col items-center relative`}
+                className={`${comment.color} rounded-lg p-4 shadow-lg flex flex-col items-center relative`}
                 animate={comment.animate ? {
                   backgroundColor: ['#1bada6', '#ffffff', '#1bada6'],
                 } : {}}
@@ -135,8 +123,8 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
                 } : {}}
               >
                 <img src={comment.icon} className="absolute top-1 left-1 h-10 " />
-                <p className={`${subReaction()} text-2xl font-bold mb-4 ${comment.color}`}>{guess}</p>
-                <p className={`${subReaction()} font-bold text-center ${comment.color}`}>
+                <p className={` text-3xl font-bold text-white mb-4 `}>{guess}</p>
+                <p className={` font-bold text-2xl text-center text-white `}>
                   {comment.message}
                 </p>
               </motion.div>
