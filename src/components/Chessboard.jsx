@@ -4,7 +4,7 @@ import { ChevronRight, ChevronLeft, ChevronsRight, ChevronsLeft } from 'lucide-r
 import Popup from './Popup';  // Import the Popup component
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchRandomGame } from '../lib/appwrite';
-
+import goatSound from '/sfx/goat.mp3'
 import "../style/chessgroundBaseOverride.css";
 import "../style/chessgroundColorsOverride.css";
 import "../style/pieces/staunty.css";
@@ -41,15 +41,17 @@ function Chessboard() {
 
   } = gameDetails;
 
-  console.log(averageElo)
+
 
   const moveAudio =  new Audio("./sfx/move-self.mp3")
   const clickAudio =  new Audio("./sfx/click.mp3")
   const submmitAudio =  new Audio("./sfx/submit.mp3")
+  const goatAudio = new Audio(goatSound)
 
   const playMoveAudio = () => moveAudio.play();
   const playClickAudio = () => clickAudio.play();
   const playSubmitAudio = () => submmitAudio.play();
+  const playGoatAudio =  () => goatAudio.play();
 
   useEffect(() => {
     setGuess('');
@@ -57,6 +59,10 @@ function Chessboard() {
     setIsResultVisible(false);
     setHasSubmitted(false);
   }, [fenList]);
+
+
+ 
+  
 
   const nextMove = () => {
     if (currentIndex < fenList.length - 1) {
@@ -90,13 +96,57 @@ function Chessboard() {
   };
 
   const lastMove = () => {
+    
     playClickAudio();
     setCurrentIndex(fenList.length - 1);
   };
 
+  const gameMode = () =>{
+     if(event === "Blitz Game"){
+      return 'bg-[#e3aa24] text-white'
+
+     }else if(event === "Bullet Game"){
+      return 'bg-[#fad541]'
+
+
+     }else if(event === "Rapid Game"){
+      return 'bg-[#8bc051] text-white'
+     }else if(event === "Classical Game"){
+      return 'bg-[#473a9f] text-white'
+     }else if(event === "Ultra Bullet Game"){
+      return 'bg-[#fff242] '
+     }
+  }
+
+  const eventTranslation = () =>{
+    if(event === "Blitz Game"){
+     return 'BLITZ '
+    }else if(event === "Bullet Game"){
+     return 'BULLET'
+    }else if(event === "Rapid Game"){
+     return 'RAPID'
+    }else if(event === "Classical Game"){
+     return 'CLASSICAL'
+    }else if(event === "Ultra Bullet Game"){
+     return 'ULTRA BULLET'
+    }
+ }
+
+
+
+
+
   const submitGuess = () => {
+
     if(guess && !hasSubmitted){
-      playSubmitAudio();
+      if(guess == averageElo){
+        playSubmitAudio();
+        playGoatAudio()
+        
+      }else{
+        playSubmitAudio();
+      }
+      
       setIsResultVisible(true);
       setHasSubmitted(true);
     } else if (hasSubmitted) {
@@ -125,7 +175,7 @@ function Chessboard() {
       <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
-          <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all' > {event || "game type"}</p>
+          <p className={`${gameMode()} rounded-lg w-1/3   font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
           <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
         </div>
 

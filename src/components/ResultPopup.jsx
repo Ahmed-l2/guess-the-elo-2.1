@@ -6,6 +6,7 @@ import inaccuracy from '/icons/inaccuracy.png'
 import mistake from '/icons/mistake.png'
 import great from '/icons/great.png'
 
+
 function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible, bgColor, loadPGN }) {
   if (!isVisible) return null;
 
@@ -15,9 +16,10 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
     const difference = Math.abs(guess - average);
 
     if (difference === 0) {
+
       return {
         message: "Perfect! You nailed it exactly. Are you secretly a grandmaster...interesting?",
-        color: "bg-[#1bada6]",
+        color: "bg-[url('https://media1.tenor.com/m/3NxNq1agx5EAAAAd/hikaru-chess.gif')]",        
         icon: brilliant,
         animate: true
       };
@@ -113,14 +115,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
 
               <motion.div 
                 className={`${comment.color} rounded-lg p-4 shadow-lg flex flex-col items-center relative`}
-                animate={comment.animate ? {
-                  backgroundColor: ['#1bada6', '#ffffff', '#1bada6'],
-                } : {}}
-                transition={comment.animate ? {
-                  duration: 1,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                } : {}}
+               
               >
                 <img src={comment.icon} className="absolute top-1 left-1 h-10 " />
                 <p className={` text-3xl font-bold text-white mb-4 `}>{guess}</p>

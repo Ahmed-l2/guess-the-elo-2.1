@@ -4,7 +4,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" top-0 w-full z-50 backdrop-blur-md border-b-2 border-b-accent">
+    <div className=" top-0 w-full z-50 bg-secnd backdrop-blur-md border-b-2 border-b-accent">
       <div className="flex items-center justify-between p-2">
         <div className="flex items-center gap-2">
           <img
@@ -13,7 +13,7 @@ function Navbar() {
             width={40}
             className="mx-2 rounded-lg  hover:transition-transform hover:duration-500 hover:rotate-360"
           />
-          <p className="text-white text-sm md:text-sm font-bold flex items-center cursor-default">
+          <a href="/" className="text-white text-sm md:text-sm font-bold flex items-center">
             WHAT'S THE ELO
             
             <span id="vers_txt" className="text-accent text-sm md:text-sm sm:text-base ml-1">
@@ -22,14 +22,6 @@ function Navbar() {
             <span id="beta_txt" className="bg-accent mx-2 rounded-full px-3 text-sm md:text-sm font-medium  sm:text-base  sm:ml-2">
               BETA
             </span>
-          </p>
-        </div>
-        <div className="hidden md:flex items-center mx-5 space-x-4 absolute left-1/2 transform -translate-x-1/2">
-          <a
-            href="/"
-            className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
-          >
-            Home
           </a>
         </div>
         <div className="hidden md:flex items-center mx-5 space-x-4">
@@ -69,12 +61,6 @@ function Navbar() {
 
         {isOpen && (
           <div className="absolute top-full right-0 bg-black/50 backdrop-blur-md p-4 mt-2 flex flex-col space-y-4">
-            <a
-              href="/"
-              className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
-            >
-              Home
-            </a>
             <a
               href="https://codevs.netlify.app/"
               target="_blank"

@@ -15,7 +15,8 @@ export default {
         '1xl': '39rem', // Customize this value
       },
       backgroundImage:{
-        'master':"url('./bg.png')"
+        'master':"url('/bg.png')",
+        'wood':"url('/bgs/bg2.jpg')"
       },
       fontFamily: {
         'baloo': ["Baloo 2", 'sans-serif'],
