@@ -40,9 +40,6 @@ function Chessboard() {
     gameLink: gamelink,
 
   } = gameDetails;
-
-
-
   const moveAudio =  new Audio("./sfx/move-self.mp3")
   const clickAudio =  new Audio("./sfx/click.mp3")
   const submmitAudio =  new Audio("./sfx/submit.mp3")
@@ -132,10 +129,6 @@ function Chessboard() {
     }
  }
 
-
-
-
-
   const submitGuess = () => {
 
     if(guess && !hasSubmitted){
@@ -172,11 +165,12 @@ function Chessboard() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="max-h-[90v] w-full lg:max-w-1xl md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
+      <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
           <p className={`${gameMode()} rounded-lg w-1/3   font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
           <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
+
         </div>
 
         {/* Chessboard */}
@@ -188,20 +182,22 @@ function Chessboard() {
 
         {/* Chessboard Navigation Controls */}
         <div className="flex-col justify-between items-center space-y-2 sm:space-y-4 w-full mt-2 sm:mt-4">
-          <div className="flex items-center justify-between gap-2 sm:gap-3">
-            <div className='flex gap-1 sm:gap-3'>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
+            <div className='flex gap-1 sm:gap-1 w-full'>
               <NavButton onClick={firstMove} icon={<ChevronsLeft size={24} className="sm:w-8 sm:h-8" />} />
               <NavButton onClick={previousMove} icon={<ChevronLeft size={24} className="sm:w-8 sm:h-8" />} />
               <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8" />} />
               <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8" />} />
             </div>
-
-            <div className='text-white font-bold grow bg-secnd p-4 sm:p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90'>
+            <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-4 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:w-1/4' > {`move ${currentIndex} ` || "Moves"}</p>
+            <div className='text-white font-bold truncate w-full sm:grow bg-secnd p-4 sm:p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90  sm:mt-0'>
               {currentIndex == fenList.length -1 ?
                 <p className='text-white'>{resultTranslation()}</p> :
                 <p className='text-gray-400'>game result</p>
               }
+              
             </div>
+           
           </div>
 
           <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} disabled={hasSubmitted} />
@@ -240,7 +236,7 @@ function Chessboard() {
 
 const NavButton = ({ onClick, icon }) => (
   <button
-    className="bg-secnd text-white p-3 rounded-lg hover:bg-gray-600 cursor-pointer transform transition-all hover:scale-105 active:scale-95 shadow-md"
+    className="bg-secnd grow text-center text-white p-3 rounded-lg hover:bg-gray-600 cursor-pointer transform transition-all hover:scale-105 active:scale-95 shadow-md"
     onClick={onClick}
   >
     {icon}
@@ -248,7 +244,7 @@ const NavButton = ({ onClick, icon }) => (
 );
 
 const GuessInput = ({ guess, setGuess, onSubmit, disabled }) => (
-  <div className="flex p-2 bg-secnd justify-between items-center rounded-lg overflow-hidden shadow-md">
+  <div className="flex p-1 bg-secnd justify-between items-center rounded-lg overflow-hidden shadow-md">
     <input
       type="number"
       value={guess}
