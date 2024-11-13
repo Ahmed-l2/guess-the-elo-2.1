@@ -132,7 +132,7 @@ function Chessboard() {
       return 'bg-[#473a9f] text-white'
      }else if(event === "Ultra Bullet Game"){
       return 'bg-[#fff242] '
-     }
+     }else {return 'bg-secnd text-white'}
   }
 
   const eventTranslation = () =>{
