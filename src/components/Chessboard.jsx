@@ -10,6 +10,7 @@ import "../style/chessgroundColorsOverride.css";
 import "../style/pieces/staunty.css";
 import ResultPopup from './ResultPopup';
 
+
 function Chessboard() {
   const [fenList, setFenList] = useState([]);
   const [gameDetails, setGameDetails] = useState({});
@@ -18,6 +19,7 @@ function Chessboard() {
   const [isResultVisible, setIsResultVisible] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [evaluation, setEvaluation] = useState(null);
 
   const getRandomGame = async () => {
     const data = await fetchRandomGame(); // Fetching data from Appwrite
@@ -28,6 +30,8 @@ function Chessboard() {
   useEffect(() => {
     getRandomGame();
   }, []);
+
+  
 
   const {
     whiteElo,
@@ -58,8 +62,24 @@ function Chessboard() {
   }, [fenList]);
 
 
- 
-  
+  useEffect(() => {
+    const fetchEvaluation = async () => {
+      if (fenList[currentIndex]) {
+        try {
+          const response = await fetch(`https://stockfish.online/api/stockfish.php?fen=${fenList[currentIndex]}&depth=12&mode=eval`);
+          const data = await response.json();
+          const evalMatch = data.data.match(/Total evaluation: ([-\d.]+)/);
+          const evalValue = evalMatch ? parseFloat(evalMatch[1]) : null;
+          setEvaluation(evalValue);
+        } catch (error) {
+          console.error('Error fetching evaluation:', error);
+        }
+      }
+    };
+
+    fetchEvaluation();
+  }, [fenList, currentIndex]);
+
 
   const nextMove = () => {
     if (currentIndex < fenList.length - 1) {
@@ -129,6 +149,20 @@ function Chessboard() {
     }
  }
 
+ const evalTranslation = () =>{
+      if (evaluation > 0) return "text-black"
+      else if (evaluation < 0) return "text-white"
+    
+      
+ }
+ 
+  const getEvalBarHeight = () => {
+    if (!evaluation ) return '0%';
+    const normalizedEval = Math.max(Math.min(evaluation, 5), -5); 
+    const percentage = (1 - ((normalizedEval + 5) / 10)) * 100;
+    return `${percentage}%`;
+  };
+
   const submitGuess = () => {
 
     if(guess && !hasSubmitted){
@@ -165,13 +199,24 @@ function Chessboard() {
 
   return (
     <div className="flex justify-center items-center">
+      <div className="w-8 h-96 bg-white rounded  relative mr-2 overflow-hidden">
+        <div 
+          className="absolute bottom-0 w-full bg-black   transition-all duration-300 ease-in-out"
+          style={{ height: getEvalBarHeight() }}
+        />
+        <div className={`absolute w-full text-xs z-50  ${evalTranslation()}  font-bold text-center`} style={{ top: '50%', transform: 'translateY(-50%)' }}>
+          {evaluation ? evaluation.toFixed(1) : 'M'}
+        </div>
+      </div>
       <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
+        
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
           <p className={`${gameMode()} rounded-lg w-1/3   font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
           <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
-
+          
         </div>
+        
 
         {/* Chessboard */}
         <div className="aspect-square w-full h-full rounded-lg overflow-hidden shadow-lg">
@@ -189,7 +234,7 @@ function Chessboard() {
               <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8" />} />
               <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8" />} />
             </div>
-            <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-4 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:w-1/4' > {`move ${currentIndex} ` || "Moves"}</p>
+            <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-4 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate ' > {`move ${currentIndex} ` || "Moves"}</p>
             <div className='text-white font-bold truncate w-full sm:grow bg-secnd p-4 sm:p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90  sm:mt-0'>
               {currentIndex == fenList.length -1 ?
                 <p className='text-white'>{resultTranslation()}</p> :
