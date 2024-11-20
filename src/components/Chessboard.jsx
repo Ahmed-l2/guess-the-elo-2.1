@@ -20,6 +20,7 @@ function Chessboard() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [average, setAverage] = useState('');
   const [wElo, setWElo] = useState('');
@@ -33,20 +34,6 @@ function Chessboard() {
     result = '',
     termination: matchTermination = '',
   } = gameDetails || {};
-
-
-  const getResults = async () => {
-    if (!id) return; // Avoid fetching if id is not set
-    try {
-      const results = await fetchGameDetails(id);
-      setAverage(results.averageElo);
-      setWElo(results.whiteElo);
-      setBElo(results.blackElo);
-      setGameLink(results.gameLink);
-    } catch (error) {
-      console.error("Error fetching game details:", error);
-    }
-  };
 
   const getRandomGame = async () => {
     const data = await fetchRandomGame(); // Fetching data from Appwrite
@@ -73,8 +60,11 @@ function Chessboard() {
     setCurrentIndex(1);
     setIsResultVisible(false);
     setHasSubmitted(false);
+    setAverage('');
+    setWElo('');
+    setBElo('');
+    setGameLink('');
   }, [fenList]);
-
 
   useEffect(() => {
     const fetchEvaluation = async () => {
@@ -178,7 +168,7 @@ function Chessboard() {
   const submitGuess = async () => {
     if (guess && !hasSubmitted) {
       playSubmitAudio();
-
+      setIsLoading(true);
       try {
         if (id) {
           const results = await fetchGameDetails(id);
@@ -225,7 +215,7 @@ function Chessboard() {
           {evaluation ? evaluation.toFixed(1) : 'M'}
         </div>
       </div> */}
-      <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
+      <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl  sm:rounded-2xl flex flex-col">
         {/* Chessboard Title */}
 
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
@@ -251,11 +241,11 @@ function Chessboard() {
               <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8" />} />
               <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8" />} />
             </div>
-            <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-4 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate ' > {`move ${currentIndex} ` || "Moves"}</p>
+            <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-4 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hidden sm:block' > {`Move ${currentIndex}` || "Moves"}</p>
             <div className='text-white font-bold truncate w-full sm:grow bg-secnd p-4 sm:p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90  sm:mt-0'>
               {currentIndex == fenList.length -1 ?
                 <p className='text-white'>{resultTranslation()}</p> :
-                <p className='text-gray-400'>game result</p>
+                <p className='text-gray-400'>Game Results</p>
               }
 
             </div>
@@ -294,7 +284,8 @@ function Chessboard() {
         isVisible={isResultVisible}
         loadPGN={getRandomGame}
       />
-    </div>  );
+    </div>
+  );
 }
 
 const NavButton = ({ onClick, icon }) => (

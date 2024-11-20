@@ -4,7 +4,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className=" top-0 w-full z-50 bg-secnd backdrop-blur-md border-b-2 border-b-accent">
+    <div className="top-0 w-full z-50 backdrop-blur-md">
       <div className="flex items-center justify-between p-2">
         <div className="flex items-center gap-2">
           <img
@@ -15,7 +15,7 @@ function Navbar() {
           />
           <a href="/" className="text-white text-sm md:text-sm font-bold flex items-center">
             WHAT'S THE ELO
-            
+
             <span id="vers_txt" className="text-accent text-sm md:text-sm sm:text-base ml-1">
               v2.<span className="text-gray-400">1</span>
             </span>
