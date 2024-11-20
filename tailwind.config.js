@@ -13,6 +13,7 @@ export default {
       },
       maxWidth: {
         '1xl': '39rem', // Customize this value
+        '1.5xl': '41rem',
       },
       backgroundImage:{
         'master':"url('/bg.png')",
