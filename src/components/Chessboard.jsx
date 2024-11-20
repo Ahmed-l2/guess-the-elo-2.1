@@ -223,7 +223,7 @@ function Chessboard() {
           {evaluation ? evaluation.toFixed(1) : 'M'}
         </div>
       </div> */}
-      <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl  sm:rounded-2xl flex flex-col">
+      <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl sm:rounded-2xl flex flex-col">
         {/* Chessboard Title */}
 
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
