@@ -36,9 +36,11 @@ function Chessboard() {
   } = gameDetails || {};
 
   const getRandomGame = async () => {
+    setIsLoading(true);
     const data = await fetchRandomGame(); // Fetching data from Appwrite
     setFenList(data.fenList);  // Extract fenList
     setGameDetails(data);      // Set other game details
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -189,6 +191,7 @@ function Chessboard() {
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 3000);
     }
+    setIsLoading(false);
   };
 
   const closeResult = () => setIsResultVisible(false);
@@ -206,6 +209,11 @@ function Chessboard() {
 
   return (
     <div className="flex justify-center items-center">
+      {isLoading && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
       {/* <div className="w-8 h-96 bg-white rounded  relative mr-2 overflow-hidden">
         <div
           className="absolute bottom-0 w-full bg-black   transition-all duration-300 ease-in-out"
