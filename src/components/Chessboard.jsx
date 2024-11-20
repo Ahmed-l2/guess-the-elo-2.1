@@ -3,7 +3,7 @@ import Chessground from "@react-chess/chessground";
 import { ChevronRight, ChevronLeft, ChevronsRight, ChevronsLeft } from 'lucide-react';
 import Popup from './Popup';  // Import the Popup component
 import { motion, AnimatePresence } from 'framer-motion';
-import { fetchRandomGame } from '../lib/appwrite';
+import { fetchGameDetails, fetchRandomGame } from '../lib/appwrite';
 import goatSound from '/sfx/goat.mp3'
 import "../style/chessgroundBaseOverride.css";
 import "../style/chessgroundColorsOverride.css";
@@ -21,6 +21,33 @@ function Chessboard() {
   const [showAlert, setShowAlert] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
 
+  const [average, setAverage] = useState('');
+  const [wElo, setWElo] = useState('');
+  const [bElo, setBElo] = useState('');
+  const [gamelink, setGameLink] = useState('');
+
+  const {
+    $id: id = null,
+    event = '',
+    opening = '',
+    result = '',
+    termination: matchTermination = '',
+  } = gameDetails || {};
+
+
+  const getResults = async () => {
+    if (!id) return; // Avoid fetching if id is not set
+    try {
+      const results = await fetchGameDetails(id);
+      setAverage(results.averageElo);
+      setWElo(results.whiteElo);
+      setBElo(results.blackElo);
+      setGameLink(results.gameLink);
+    } catch (error) {
+      console.error("Error fetching game details:", error);
+    }
+  };
+
   const getRandomGame = async () => {
     const data = await fetchRandomGame(); // Fetching data from Appwrite
     setFenList(data.fenList);  // Extract fenList
@@ -31,19 +58,6 @@ function Chessboard() {
     getRandomGame();
   }, []);
 
-  
-
-  const {
-    whiteElo,
-    blackElo,
-    averageElo,
-    event,
-    opening,
-    result,
-    termination: matchTermination,
-    gameLink: gamelink,
-
-  } = gameDetails;
   const moveAudio =  new Audio("./sfx/move-self.mp3")
   const clickAudio =  new Audio("./sfx/click.mp3")
   const submmitAudio =  new Audio("./sfx/submit.mp3")
@@ -113,7 +127,7 @@ function Chessboard() {
   };
 
   const lastMove = () => {
-    
+
     playClickAudio();
     setCurrentIndex(fenList.length - 1);
   };
@@ -152,28 +166,31 @@ function Chessboard() {
  const evalTranslation = () =>{
       if (evaluation > 0) return "text-black"
       else if (evaluation < 0) return "text-white"
-    
-      
  }
- 
+
   const getEvalBarHeight = () => {
     if (!evaluation ) return '0%';
-    const normalizedEval = Math.max(Math.min(evaluation, 5), -5); 
+    const normalizedEval = Math.max(Math.min(evaluation, 5), -5);
     const percentage = (1 - ((normalizedEval + 5) / 10)) * 100;
     return `${percentage}%`;
   };
 
-  const submitGuess = () => {
+  const submitGuess = async () => {
+    if (guess && !hasSubmitted) {
+      playSubmitAudio();
 
-    if(guess && !hasSubmitted){
-      if(guess == averageElo){
-        playSubmitAudio();
-        playGoatAudio()
-        
-      }else{
-        playSubmitAudio();
+      try {
+        if (id) {
+          const results = await fetchGameDetails(id);
+          setAverage(results.averageElo);
+          setWElo(results.whiteElo);
+          setBElo(results.blackElo);
+          setGameLink(results.gameLink);
+        }
+      } catch (error) {
+        console.error("Error fetching game details:", error);
       }
-      
+
       setIsResultVisible(true);
       setHasSubmitted(true);
     } else if (hasSubmitted) {
@@ -199,24 +216,24 @@ function Chessboard() {
 
   return (
     <div className="flex justify-center items-center">
-      <div className="w-8 h-96 bg-white rounded  relative mr-2 overflow-hidden">
-        <div 
+      {/* <div className="w-8 h-96 bg-white rounded  relative mr-2 overflow-hidden">
+        <div
           className="absolute bottom-0 w-full bg-black   transition-all duration-300 ease-in-out"
           style={{ height: getEvalBarHeight() }}
         />
         <div className={`absolute w-full text-xs z-50  ${evalTranslation()}  font-bold text-center`} style={{ top: '50%', transform: 'translateY(-50%)' }}>
           {evaluation ? evaluation.toFixed(1) : 'M'}
         </div>
-      </div>
+      </div> */}
       <div className="max-h-[90v] w-full lg:max-w-2xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl rounded-2xl flex flex-col">
         {/* Chessboard Title */}
-        
+
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
           <p className={`${gameMode()} rounded-lg w-1/3   font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
           <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
-          
+
         </div>
-        
+
 
         {/* Chessboard */}
         <div className="aspect-square w-full h-full rounded-lg overflow-hidden shadow-lg">
@@ -240,9 +257,9 @@ function Chessboard() {
                 <p className='text-white'>{resultTranslation()}</p> :
                 <p className='text-gray-400'>game result</p>
               }
-              
+
             </div>
-           
+
           </div>
 
           <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} disabled={hasSubmitted} />
@@ -265,12 +282,13 @@ function Chessboard() {
 
       {/* Popup Component */}
       <ResultPopup
-        guess={guess}
-        average={averageElo}
-        wElo={whiteElo}
-        bElo={blackElo}
-        title={event}
+        wElo={wElo}
+        bElo={bElo}
+        result={result}
         gamelink={gamelink}
+        average={average}
+        guess={guess}
+        title={event}
         termination={matchTermination}
         onClose={closeResult}
         isVisible={isResultVisible}

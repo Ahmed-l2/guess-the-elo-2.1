@@ -19,7 +19,7 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
 
       return {
         message: "Perfect! You nailed it exactly. Are you secretly a grandmaster...interesting?",
-        color: "bg-[url('https://media1.tenor.com/m/3NxNq1agx5EAAAAd/hikaru-chess.gif')]",        
+        color: "bg-[url('https://media1.tenor.com/m/3NxNq1agx5EAAAAd/hikaru-chess.gif')]",
         icon: brilliant,
         animate: true
       };
@@ -113,9 +113,9 @@ function ResultPopup({ guess, average, wElo, bElo, gamelink, onClose, isVisible,
                 <p className="text-3xl font-bold text-white">{average}</p>
               </div>
 
-              <motion.div 
+              <motion.div
                 className={`${comment.color} rounded-lg p-4 shadow-lg flex flex-col items-center relative`}
-               
+
               >
                 <img src={comment.icon} className="absolute top-1 left-1 h-10 " />
                 <p className={` text-3xl font-bold text-white mb-4 `}>{guess}</p>
