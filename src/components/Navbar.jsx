@@ -25,13 +25,13 @@ function Navbar() {
           </a>
         </div>
         <div className="hidden md:flex items-center mx-5 space-x-4">
-          <a
+          {/* <a
             href="https://paypal.me/reicchi"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white bg-gradient-to-r from-orange-500 to-yellow-500 px-3 py-1 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300 text-lg font-semibold flex items-center"
           >Donate
-          </a>
+          </a> */}
           <a
             href="https://codevs.netlify.app/"
             target="_blank"
@@ -69,12 +69,12 @@ function Navbar() {
             >
               {'<'} <span className="text-orange-400">CODEVS </span>{'/>'}
             </a>
-            <a
+            {/* <a
               href="https://paypal.me/reicchi"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white bg-gradient-to-r from-orange-500 to-yellow-500 px-3 py-1 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300 font-semibold flex justify-center"
-            >Donate</a>
+              className=" text-white bg-gradient-to-r from-orange-500 to-yellow-500 px-3 py-1 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl duration-300 font-semibold flex justify-center"
+            >Donate</a> */}
           </div>
         )}
       </div>

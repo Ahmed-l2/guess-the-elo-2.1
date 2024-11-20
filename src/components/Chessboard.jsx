@@ -211,56 +211,43 @@ function Chessboard() {
     <div className="flex justify-center items-center">
       {isLoading && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"/>
         </div>
       )}
-      {/* <div className="w-8 h-96 bg-white rounded  relative mr-2 overflow-hidden">
-        <div
-          className="absolute bottom-0 w-full bg-black   transition-all duration-300 ease-in-out"
-          style={{ height: getEvalBarHeight() }}
-        />
-        <div className={`absolute w-full text-xs z-50  ${evalTranslation()}  font-bold text-center`} style={{ top: '50%', transform: 'translateY(-50%)' }}>
-          {evaluation ? evaluation.toFixed(1) : 'M'}
-        </div>
-      </div> */}
-      <div className="max-h-[90v] w-full lg:max-w-1.5xl lg:py-4  md:max-w-xl sm:max-w-lg bg-[#161618] p-3 sm:p-6 shadow-2xl sm:rounded-2xl flex flex-col">
+      <div className="max-h-[90v] w-full lg:max-w-6xl lg:py-4  md:max-w-5xl sm:max-w-3xl bg-[#161618] p-3 sm:p-6 shadow-2xl sm:rounded-2xl flex flex-col">
         {/* Chessboard Title */}
-
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
           <p className={`${gameMode()} rounded-lg w-1/3   font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
           <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
-
         </div>
 
-
-        {/* Chessboard */}
-        <div className="aspect-square w-full h-full rounded-lg overflow-hidden shadow-lg">
-          <Chessground width="100%" height="100%"
-            config={{ fen: fenList[currentIndex] }}
-          />
-        </div>
-
-        {/* Chessboard Navigation Controls */}
-        <div className="flex-col justify-between items-center space-y-2 sm:space-y-4 w-full mt-2 sm:mt-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3">
-            <div className='flex gap-1 sm:gap-1 w-full'>
-              <NavButton onClick={firstMove} icon={<ChevronsLeft size={24} className="sm:w-8 sm:h-8" />} />
-              <NavButton onClick={previousMove} icon={<ChevronLeft size={24} className="sm:w-8 sm:h-8" />} />
-              <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8" />} />
-              <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8" />} />
-            </div>
-            <p className='bg-secnd rounded-lg w-1/3 text-white font-bold text-center p-4 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hidden sm:block' > {`Move ${currentIndex}` || "Moves"}</p>
-            <div className='text-white font-bold truncate w-full sm:grow bg-secnd p-4 sm:p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90  sm:mt-0'>
-              {currentIndex == fenList.length -1 ?
-                <p className='text-white'>{resultTranslation()}</p> :
-                <p className='text-gray-400'>Game Results</p>
-              }
-
-            </div>
-
+        <div className="flex flex-col sm:flex-row gap-4">
+          {/* Chessboard */}
+          <div className="w-full sm:w-2/3 aspect-square rounded-lg overflow-hidden shadow-lg">
+            <Chessground width="100%" height="100%"
+              config={{ fen: fenList[currentIndex] }}
+            />
           </div>
 
-          <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} disabled={hasSubmitted} />
+          {/* Chessboard Navigation Controls */}
+          <div className="w-full sm:w-1/3 flex flex-col justify-between">
+            <div className='flex flex-col gap-3'>
+              <div className='flex flex-row gap-1'>
+                <NavButton onClick={firstMove} icon={<ChevronsLeft size={24} className="sm:w-8 sm:h-8 mx-auto" />} />
+                <NavButton onClick={previousMove} icon={<ChevronLeft size={24} className="sm:w-8 sm:h-8 mx-auto" />} />
+                <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8 mx-auto" />} />
+                <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8 mx-auto" />} />
+              </div>
+              <p className='hidden sm:block bg-secnd rounded-lg w-full text-white font-bold text-center p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate' > {`Move ${currentIndex}` || "Moves"}</p>
+              <div className='text-white font-bold truncate w-full bg-secnd p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90 sm:mb-0 mb-4'>
+                {currentIndex == fenList.length -1 ?
+                  <p className='text-white'>{resultTranslation()}</p> :
+                  <p className='text-gray-400'>Game Results</p>
+                }
+              </div>
+            </div>
+            <GuessInput guess={guess} setGuess={setGuess} onSubmit={submitGuess} disabled={hasSubmitted} />
+          </div>
         </div>
       </div>
 
