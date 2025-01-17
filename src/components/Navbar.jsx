@@ -36,9 +36,9 @@ function Navbar() {
             href="https://codevs.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-accent transition-colors duration-300 text-lg font-semibold"
+            className="text-white hover:text-accent font-extrabold  transition-colors duration-300 text-lg font-semibold"
           >
-            {'<'} <span className="text-orange-400">CODEVS </span>{'/>'}
+            {'<'} <span className="text-orange-400 font-extrabold ">CODEVS </span>{'/>'}
           </a>
         </div>
         <button

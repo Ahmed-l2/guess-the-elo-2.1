@@ -1,7 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Chessground from "@react-chess/chessground";
 import { ChevronRight, ChevronLeft, ChevronsRight, ChevronsLeft } from 'lucide-react';
-import Popup from './Popup';  // Import the Popup component
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchGameDetails, fetchRandomGame } from '../lib/appwrite';
 import goatSound from '/sfx/goat.mp3'
@@ -155,17 +154,6 @@ function Chessboard() {
     }
  }
 
- const evalTranslation = () =>{
-      if (evaluation > 0) return "text-black"
-      else if (evaluation < 0) return "text-white"
- }
-
-  const getEvalBarHeight = () => {
-    if (!evaluation ) return '0%';
-    const normalizedEval = Math.max(Math.min(evaluation, 5), -5);
-    const percentage = (1 - ((normalizedEval + 5) / 10)) * 100;
-    return `${percentage}%`;
-  };
 
   const submitGuess = async () => {
     if (guess && !hasSubmitted) {
@@ -200,6 +188,8 @@ function Chessboard() {
     const handleKeyDown = (event) => {
       if (event.key === 'ArrowRight') nextMove();
       else if (event.key === 'ArrowLeft') previousMove();
+      else if (event.key === 'ArrowUp') lastMove();
+      else if (event.key === 'ArrowDown') firstMove();
       else if (event.key === 'Enter' && (guess || hasSubmitted)) submitGuess();
     };
 

@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Chessboard from './components/Chessboard';
 import Navbar from './components/Navbar';
 import Landing from './Routes/Landing';
-import GuessThePlayer from './Routes/GuessThePlayer';
+import Multiplayer from './Routes/Multiplayer';
+import PartyCreation from './Routes/PartyCreation';
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -49,7 +50,7 @@ const App = () => {
             }
           />
           <Route
-            path="/GuessThePlayer"
+            path="/party"
             element={
               <motion.div
                 variants={pageVariants}
@@ -58,7 +59,21 @@ const App = () => {
                 exit="exit"
                 transition={{ duration: 0.5 }}
               >
-                <GuessThePlayer />
+                <PartyCreation />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/Multiplayer"
+            element={
+              <motion.div
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.5 }}
+              >
+                <Multiplayer />
               </motion.div>
             }
           />

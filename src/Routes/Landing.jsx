@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import wte from '/bgs/wtecard.jpg'
 
-import wtp from '/bgs/gtpcard.png'
+import wtp from '/bgs/gtpcard.jpg'
 
 export default function Landing(){
     return(
@@ -38,24 +38,29 @@ export default function Landing(){
           <div className="flex flex-col md:flex-row justify-center z-50 items-center gap-8">
             <Link 
               to="/WTE"
-              className="relative text-white p-8 filter grayscale-10 hover:filter-none rounded-2xl text-2xl md:text-3xl transition-all duration-300 shadow-xl w-full md:w-96 h-48 md:h-64 overflow-hidden group hover:scale-105"
+              className="relative text-white p-8 filter border-2 hover:shadow-white  rounded-2xl text-2xl md:text-3xl transition-all duration-300 shadow-xl w-full md:w-96 h-48 md:h-64 overflow-hidden group opacity-70 hover:rotate-1 hover:scale-105"
               style={{ backgroundImage: `url(${wte})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
-              <div className="absolute inset-0 bg-black/50 group-hover:backdrop-blur-xl transition-all duration-300"></div>
-              <motion.div className="relative font-luckiest z-10 flex items-center justify-center h-full  tracking-wider">
-                What's The ELO!
+              <div className="absolute inset-0 bg-black/50  transition-all duration-300"></div>
+              <motion.div className="relative font-luckiest z-10 flex items-center justify-center h-full">
+                Singleplayer
               </motion.div>
             </Link>
 
             <div 
-              className="relative text-white filter grayscale p-8 rounded-2xl text-2xl md:text-3xl transition-all duration-300 shadow-xl w-full md:w-96 h-48 md:h-64 overflow-hidden group cursor-not-allowed opacity-70"
+              className="relative text-white  p-8 border-2 rounded-2xl hover:shadow-2xl hover:shadow-white text-2xl md:text-3xl transition-all cursor-pointer duration-300 shadow-xl w-full md:w-96 h-48 md:h-64 overflow-hidden group opacity-70 hover:rotate-1 hover:scale-105"
               style={{ backgroundImage: `url(${wtp})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
-              <div className="absolute inset-0 bg-black/50 backdrop-blur-lg transition-all duration-300"></div>
-              <motion.div className="relative font-luckiest z-10 flex flex-col items-center justify-center h-full  tracking-wider">
-                <span>Guess The Player</span>
-                <span className="text-base md:text-lg mt-2 font-extralight">Coming Soon...</span>
+            <Link 
+              to="/party"
+              className=""
+              style={{ backgroundImage: `url(${wte})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+            >
+              <div className="absolute inset-0 bg-black/50  transition-all duration-300"></div>
+              <motion.div className="relative font-luckiest z-10 flex flex-col items-center justify-center h-full ">
+                <span>Multiplayer</span>
               </motion.div>
+              </Link>
             </div>
           </div>
         </motion.div>
