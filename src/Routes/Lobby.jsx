@@ -103,7 +103,7 @@ function Lobby() {
         transition={{ type: "spring", bounce: 0.5 }}
         className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-luckiest font-bold text-white mb-2 animate-pulse text-center drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
       >
-     {console.log(player) && player.isHost ? 'Party Lobby ' : 'Waiting for Host...'}
+     {player.isHost ? 'Party Lobby ' : 'Waiting for Host...'}
 
       </motion.h1>
 
