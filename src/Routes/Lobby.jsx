@@ -5,8 +5,8 @@ import { useParams, useLocation } from 'react-router-dom'
 import { databases, client } from "../lib/appwrite"
 
 function Lobby() {
-  const [rounds, setRounds] = useState(0)
-  const [timePerRound, setTimePerRound] = useState(0)
+  const [rounds, setRounds] = useState(1)
+  const [timePerRound, setTimePerRound] = useState(60)
   const [players, setPlayers] = useState([])
   const { id } = useParams()
 
@@ -46,6 +46,31 @@ function Lobby() {
     };
   }, [id]);
 
+  const updateGameSettings = async (rounds, timePerRound) => {
+    try {
+      const response = await databases.updateDocument(
+        "672e683c001beba0b2a6",
+        "678ad4ab0017e805fec9",
+        id,
+        {
+          rounds,
+          time_per_round: parseInt(timePerRound)
+        }
+      );
+      console.log("Settings updated:", response);
+    } catch (error) {
+      console.error("Error updating game settings:", error);
+    }
+  };
+
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      updateGameSettings(rounds, timePerRound);
+    }, 500);
+
+    return () => clearTimeout(debounceTimer);
+  }, [rounds, timePerRound]);
+
   console.log("Fetched players:",players);
   return (
     <motion.div
@@ -78,35 +103,46 @@ function Lobby() {
 
         <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
           <div className="flex-1">
-            <div className="bg-white/10 border-2 border-white/20 rounded-xl p-3 sm:p-4 h-full">
-              <h2 className="text-white font-luckiest text-lg sm:text-xl mb-3 sm:mb-4 flex items-center gap-2">
-                <Settings size={20} className="sm:w-6 sm:h-6" />
+            <div className="bg-white/10 border-2 border-white/20 rounded-xl p-4 sm:p-6 h-full">
+              <h2 className="text-white font-luckiest text-xl sm:text-2xl mb-4 sm:mb-6 flex items-center gap-3">
+                <Settings size={24} className="sm:w-8 sm:h-8" />
                 Game Settings
               </h2>
-              <div className="space-y-3 sm:space-y-4">
-                <div className="flex flex-col text-white gap-1 sm:gap-2">
-                  <label className="flex items-center gap-2 text-sm sm:text-base">
-                    Number of Rounds:
+              <div className="space-y-6 sm:space-y-8">
+                <div className="flex flex-col text-white gap-3 sm:gap-4">
+                  <label className="flex items-center gap-3 text-lg sm:text-xl font-semibold">
+                    <div className="bg-white/5 p-3 rounded-lg">
+                      Number of Rounds: <span className="text-orange-400">{rounds}</span>
+                    </div>
                   </label>
                   <input
-                    type="number"
+                    type="range"
                     value={rounds}
-                    onChange={(e) => setRounds(Number(e.target.value))}
-                    className="bg-white/10 border-2 font-extrabold border-white/20 rounded-lg p-1.5 sm:p-2 w-full text-center text-sm sm:text-base"
+                    onChange={(e) => {
+                      const newRounds = Math.min(Math.max(Number(e.target.value), 1), 10);
+                      setRounds(newRounds);
+                    }}
+                    className="w-full h-4 bg-white/10 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-400 [&::-webkit-slider-thumb]:shadow-lg hover:[&::-webkit-slider-thumb]:bg-orange-500 transition-all"
                     min="1"
                     max="10"
+                    step="1"
                   />
                 </div>
-                <div className="flex flex-col text-white gap-1 sm:gap-2">
-                  <label className="flex items-center gap-2 text-sm sm:text-base">
-                    <Clock size={16} className="sm:w-5 sm:h-5" />
-                    Time per Round (seconds):
+                <div className="flex flex-col text-white gap-3 sm:gap-4">
+                  <label className="flex items-center gap-3 text-lg sm:text-xl font-semibold">
+                    <div className="bg-white/5 p-3 rounded-lg flex items-center gap-2">
+                      <Clock size={20} className="sm:w-6 sm:h-6" />
+                      Time per Round: <span className="text-orange-400">{timePerRound}</span> seconds
+                    </div>
                   </label>
                   <input
-                    type="number"
+                    type="range"
                     value={timePerRound}
-                    onChange={(e) => setTimePerRound(Number(e.target.value))}
-                    className="bg-white/10 border-2 font-extrabold border-white/20 rounded-lg p-1.5 sm:p-2 w-full text-center text-sm sm:text-base"
+                    onChange={(e) => {
+                      const newTime = Math.min(Math.max(Number(e.target.value), 10), 120);
+                      setTimePerRound(newTime);
+                    }}
+                    className="w-full h-4 bg-white/10 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-orange-400 [&::-webkit-slider-thumb]:shadow-lg hover:[&::-webkit-slider-thumb]:bg-orange-500 transition-all"
                     min="10"
                     max="120"
                     step="5"
@@ -117,16 +153,16 @@ function Lobby() {
           </div>
 
           <div className="w-full lg:w-96">
-            <div className="bg-white/10 border-2 border-white/20 rounded-xl p-3 sm:p-4 h-full">
+            <div className="bg-white/10 border-2 overflow-auto border-white/20 rounded-xl p-3 sm:p-4 h-[400px]">
               <h2 className="text-white font-luckiest text-lg sm:text-xl mb-3 sm:mb-4 flex items-center gap-2">
                 <Users size={20} className="sm:w-6 sm:h-6" />
                 Players ({players?.length || 0})
               </h2>
-              <div className="space-y-2 max-h-[300px] sm:max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+              <div className="space-y-2 h-[calc(100%-60px)] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                 {players.map((player,index) => (
                   console.log("Player:",player),
                   <div key={index} className="flex items-center justify-between text-white p-1.5 sm:p-2 bg-white/5 rounded-lg text-sm sm:text-base">
-                    <span className='text-white'>{player.username}</span>
+                    <span className='text-white '>{player.username}</span>
                     <div className="flex items-center gap-1 sm:gap-2">
                       {player.isHost === "true" ? (
                         <span className="text-yellow-600 text-xs sm:text-sm">Host</span>
