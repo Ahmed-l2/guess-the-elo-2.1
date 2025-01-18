@@ -5,7 +5,7 @@ import { Users, User, Hash, Plus } from "lucide-react";
 import { Query } from "appwrite";
 import { databases } from "../lib/appwrite";
 import { v4 as uuidv4 } from "uuid";
-import { useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { user } from "../GlobalContext/atoms";
 
 function PartyCreation() {
@@ -15,7 +15,7 @@ function PartyCreation() {
   const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
 
-  const setValue = useSetAtom(user);
+  const [value, setValue] = useAtom(user);
 
   const handleJoinParty = async () => {
     if (!username) {
@@ -48,24 +48,59 @@ function PartyCreation() {
             return;
         }
 
-        const updatedPlayers = [
-            ...partyDocument.players,
-            JSON.stringify({ id: uuidv4(), username, score: "0", isHost: "false" }),
-        ];
+        // Parse the players array to JSON
+        const players = partyDocument.players.map((player) => JSON.parse(player));
 
-        await databases.updateDocument(
-            "672e683c001beba0b2a6",
-            "678ad4ab0017e805fec9",
-            partyDocument.$id,
-            { players: updatedPlayers }
+        // Retrieve the current user from the Jotai atom
+        const currentUser = players.find(
+            (player) => player.username === username && player.id === value.userId
         );
-        setValue({ username, userId: uuidv4(), isHost: false, partyCode });
-        navigate(`/lobby/${partyDocument.$id}`, { state: { username } });
+
+        if (currentUser) {
+            // If the user exists, navigate to the lobby
+            setValue({
+                username: currentUser.username,
+                userId: currentUser.id,
+                isHost: currentUser.isHost === "true",
+                partyCode,
+            });
+            navigate(`/lobby/${partyDocument.$id}`);
+        } else {
+            // If the user does not exist, add them as a new player
+            const newPlayer = {
+                id: value.userId || uuidv4(),
+                username,
+                score: "0",
+                isHost: "false",
+            };
+
+            const updatedPlayers = [
+                ...partyDocument.players,
+                JSON.stringify(newPlayer),
+            ];
+
+            await databases.updateDocument(
+                "672e683c001beba0b2a6",
+                "678ad4ab0017e805fec9",
+                partyDocument.$id,
+                { players: updatedPlayers }
+            );
+
+            // Update the Jotai atom with the new player's information
+            setValue({
+                username,
+                userId: newPlayer.id,
+                isHost: false,
+                partyCode,
+            });
+            navigate(`/lobby/${partyDocument.$id}`);
+        }
     } catch (error) {
         console.error("Party not found. Please check the code and try again.", error.message);
         // showError("Party not found. Please check the code and try again.");
     }
 };
+
 
   const handleCreateParty = async () => {
     if (!username) {
@@ -116,7 +151,7 @@ function PartyCreation() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="flex flex-col justify-center items-center w-full min-h-[800px] mt-16 relative overflow-hidden px-4"
+      className="flex flex-col justify-center items-center w-full min-h-[700px] md:min-h-screen mt-16 relative overflow-hidden px-4"
     >
       {showMessage && (
         <motion.div

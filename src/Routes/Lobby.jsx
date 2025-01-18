@@ -12,9 +12,10 @@ function Lobby() {
   const [players, setPlayers] = useState([])
   const [code, setCode] = useState('')
   const [isCopied, setIsCopied] = useState(false)
-  
+
   const { id } = useParams()
   const player = useAtomValue(user)
+  console.log("Atom: ", player);
 
   useEffect(() => {
     const fetchPartyData = async () => {
@@ -94,7 +95,7 @@ function Lobby() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className='flex flex-col justify-center items-center w-full min-h-screen relative overflow-hidden  px-4 sm:px-6'
+      className='flex flex-col justify-center items-center w-full md:my-0 my-20 md:min-h-screen relative overflow-hidden px-4 sm:px-6'
     >
       <motion.h1
         initial={{ y: -100 }}
@@ -102,7 +103,8 @@ function Lobby() {
         transition={{ type: "spring", bounce: 0.5 }}
         className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-luckiest font-bold text-white mb-2 animate-pulse text-center drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
       >
-     {player.isHost ? 'Party Lobby ' : 'Waiting for Host...'}
+     {console.log(player) && player.isHost ? 'Party Lobby ' : 'Waiting for Host...'}
+
       </motion.h1>
 
       <motion.div
@@ -198,7 +200,7 @@ function Lobby() {
                       <span className='text-white '>{playerObj.username} {player.username === playerObj.username && '(You)'}</span>
                       </div>
                       <div className="flex items-center gap-1 sm:gap-2">
-                        
+
                         {playerObj.isHost === "true" ? (
                           < Crown size={20} className="sm:w-6 text-yellow-500 sm:h-6" />
                         ) : (
@@ -206,7 +208,7 @@ function Lobby() {
                         )}
                         <span className="text-orange-400">{playerObj.score || 0} pts</span>
                       </div>
-                      
+
                     </div>
                   );
                 })}

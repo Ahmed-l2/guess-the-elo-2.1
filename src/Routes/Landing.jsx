@@ -9,15 +9,15 @@ import wtp from '/bgs/gtpcard.jpg'
 export default function Landing(){
     return(
       <>
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className='flex flex-col justify-center mt-8 items-center w-full min-h-[800px] relative overflow-hidden px-4'
+        className='flex flex-col justify-center mt-8 items-center w-full min-h-[700px] md:min-h-screen relative overflow-hidden px-4'
       >
-     
-        
-        <motion.h1 
+
+
+        <motion.h1
           initial={{ y: -100 }}
           animate={{ y: 0 }}
           transition={{ type: "spring", bounce: 0.5 }}
@@ -26,17 +26,17 @@ export default function Landing(){
         >
           What's The ELO!
         </motion.h1>
-        
-        
-        
-        <motion.div 
+
+
+
+        <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5 }}
           className="w-full mx-auto mt-2 md:mt-10 p-4 md:p-8"
         >
           <div className="flex flex-col md:flex-row justify-center z-50 items-center gap-8">
-            <Link 
+            <Link
               to="/WTE"
               className="relative text-white p-8 filter border-2 hover:shadow-white  rounded-2xl text-2xl md:text-3xl transition-all duration-300 shadow-xl w-full md:w-96 h-48 md:h-64 overflow-hidden group opacity-70 hover:rotate-1 hover:scale-105"
               style={{ backgroundImage: `url(${wte})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
@@ -47,11 +47,11 @@ export default function Landing(){
               </motion.div>
             </Link>
 
-            <div 
+            <div
               className="relative text-white  p-8 border-2 rounded-2xl hover:shadow-2xl hover:shadow-white text-2xl md:text-3xl transition-all cursor-pointer duration-300 shadow-xl w-full md:w-96 h-48 md:h-64 overflow-hidden group opacity-70 hover:rotate-1 hover:scale-105"
               style={{ backgroundImage: `url(${wtp})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
-            <Link 
+            <Link
               to="/party"
               className=""
               style={{ backgroundImage: `url(${wte})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
