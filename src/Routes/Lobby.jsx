@@ -18,10 +18,10 @@ function Lobby() {
           "678ad4ab0017e805fec9",
           id
         )
-        
+
         // Set rounds
           setRounds(response.rounds);
-          setPlayers(response.players); 
+          setPlayers(response.players);
           setTimePerRound(response.time_per_round);
 
 
@@ -71,7 +71,7 @@ function Lobby() {
     return () => clearTimeout(debounceTimer);
   }, [rounds, timePerRound]);
 
-  console.log("Fetched players:",players);
+  // console.log("Fetched players:", players);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -159,22 +159,24 @@ function Lobby() {
                 Players ({players?.length || 0})
               </h2>
               <div className="space-y-2 h-[calc(100%-60px)] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-                {players.map((player,index) => (
-                  console.log("Player:",player),
-                  <div key={index} className="flex items-center justify-between text-white p-1.5 sm:p-2 bg-white/5 rounded-lg text-sm sm:text-base">
-                    <span className='text-white '>{player.username}</span>
-                    <div className="flex items-center gap-1 sm:gap-2">
-                      {player.isHost === "true" ? (
-                        <span className="text-yellow-600 text-xs sm:text-sm">Host</span>
-                      ) : (
-                        <span className="text-gray-400 text-xs sm:text-sm">Player</span>
-                      )}
+                {players.map((player, index) => {
+                  const playerObj = JSON.parse(player);
+                  return (
+                    <div key={index} className="flex items-center justify-between text-white p-1.5 sm:p-2 bg-white/5 rounded-lg text-sm sm:text-base">
+                      <span className='text-white '>{playerObj.username}</span>
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        {playerObj.isHost === "true" ? (
+                          <span className="text-yellow-600 text-xs sm:text-sm">Host</span>
+                        ) : (
+                          <span className="text-gray-400 text-xs sm:text-sm">Player</span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
-          </div>        
+          </div>
         </div>
         <button
           className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-orange-400 border-2 border-white/20 rounded-xl text-white hover:bg-green-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25"
