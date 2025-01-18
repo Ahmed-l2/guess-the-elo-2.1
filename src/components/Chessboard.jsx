@@ -198,7 +198,7 @@ function Chessboard() {
   }, [guess, currentIndex, fenList.length, hasSubmitted]);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center mt-20">
       {isLoading && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"/>

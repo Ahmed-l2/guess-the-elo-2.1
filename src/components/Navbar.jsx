@@ -4,7 +4,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="top-0 w-full z-50 backdrop-blur-md">
+    <div className="top-0 fixed w-full z-50 backdrop-blur-md">
       <div className="flex items-center justify-between p-2">
         <div className="flex items-center gap-2">
           <img

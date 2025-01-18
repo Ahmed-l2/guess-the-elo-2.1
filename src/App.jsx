@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import Landing from './Routes/Landing';
 import Multiplayer from './Routes/Multiplayer';
 import PartyCreation from './Routes/PartyCreation';
+import Lobby from './Routes/Lobby';
+import PlayerLobby from './Routes/PlayerLobby';
 
 const pageVariants = {
   initial: { opacity: 0 },
@@ -63,6 +65,35 @@ const App = () => {
               </motion.div>
             }
           />
+          <Route
+            path="/lobby/:id"
+            element={
+              <motion.div
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.5 }}
+              >
+                <Lobby />
+              </motion.div>
+            }
+          />
+          <Route
+            path="/Plobby/:id"
+            element={
+              <motion.div
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.5 }}
+              >
+                <PlayerLobby />
+              </motion.div>
+            }
+          />
+          
           <Route
             path="/Multiplayer"
             element={

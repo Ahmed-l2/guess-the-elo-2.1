@@ -1,4 +1,4 @@
-import { Client, Functions } from 'appwrite';
+import { Client, Functions ,Databases} from 'appwrite';
 
 // Initialize Appwrite client
 const client = new Client();
@@ -8,7 +8,7 @@ client
 
 // Initialize Appwrite Functions service
 const functions = new Functions(client);
-
+const databases = new Databases(client);
 export const fetchRandomGame = async () => {
   try {
     // Generate a random document index within the total count
@@ -58,3 +58,4 @@ export const fetchGameDetails = async (gameId) => {
     throw error;
   }
 };
+export { databases, client, functions };

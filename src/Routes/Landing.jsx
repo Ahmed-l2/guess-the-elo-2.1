@@ -13,7 +13,7 @@ export default function Landing(){
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className='flex flex-col justify-center  items-center w-full min-h-[800px] relative overflow-hidden px-4'
+        className='flex flex-col justify-center mt-8 items-center w-full min-h-[800px] relative overflow-hidden px-4'
       >
      
         
