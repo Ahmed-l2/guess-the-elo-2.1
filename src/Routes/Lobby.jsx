@@ -3,12 +3,16 @@ import { motion } from 'framer-motion'
 import { Users, Clock, Settings, Play } from 'lucide-react'
 import { useParams, useLocation } from 'react-router-dom'
 import { databases, client } from "../lib/appwrite"
+import { user } from "../GlobalContext/atoms"
+import { useAtomValue } from 'jotai'
 
 function Lobby() {
   const [rounds, setRounds] = useState(1)
   const [timePerRound, setTimePerRound] = useState(60)
   const [players, setPlayers] = useState([])
+  const [code, setCode] = useState('')
   const { id } = useParams()
+  const player = useAtomValue(user)
 
   useEffect(() => {
     const fetchPartyData = async () => {
@@ -23,6 +27,7 @@ function Lobby() {
           setRounds(response.rounds);
           setPlayers(response.players);
           setTimePerRound(response.time_per_round);
+          setCode(response.partyId);
 
 
       } catch (error) {
@@ -97,7 +102,7 @@ function Lobby() {
         <div className="bg-white/10 border-2 border-white/20 rounded-xl p-3 sm:p-4 mb-4">
           <h2 className="text-white  font-luckiest text-lg sm:text-xl mb-2">Party Code</h2>
           <div className="bg-white/20 p-2 sm:p-3 rounded-lg text-white font-mono break-all select-all text-sm sm:text-base">
-          {id}
+          {code}
           </div>
         </div>
 
@@ -115,7 +120,8 @@ function Lobby() {
                       Number of Rounds: <span className="text-orange-400">{rounds}</span>
                     </div>
                   </label>
-                  <input
+                  {( player.isHost ? (
+                    <input
                     type="range"
                     value={rounds}
                     onChange={(e) => {
@@ -127,6 +133,11 @@ function Lobby() {
                     max="10"
                     step="1"
                   />
+                  ) : (
+                    <div className="bg-white/10 border-2 font-extrabold border-white/20 rounded-lg p-1.5 sm:p-2 w-full text-center text-sm sm:text-base">
+                    {rounds}
+                  </div>
+                  ))}
                 </div>
                 <div className="flex flex-col text-white gap-3 sm:gap-4">
                   <label className="flex items-center gap-3 text-lg sm:text-xl font-semibold">
@@ -135,7 +146,8 @@ function Lobby() {
                       Time per Round: <span className="text-orange-400">{timePerRound}</span> seconds
                     </div>
                   </label>
-                  <input
+                  {( player.isHost ? (
+                    <input
                     type="range"
                     value={timePerRound}
                     onChange={(e) => {
@@ -147,6 +159,11 @@ function Lobby() {
                     max="120"
                     step="5"
                   />
+                  ) : (
+                    <div className="bg-white/10 border-2 font-extrabold border-white/20 rounded-lg p-1.5 sm:p-2 w-full text-center text-sm sm:text-base">
+                    {timePerRound}
+                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -159,11 +176,11 @@ function Lobby() {
                 Players ({players?.length || 0})
               </h2>
               <div className="space-y-2 h-[calc(100%-60px)] overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-                {players.map((player, index) => {
-                  const playerObj = JSON.parse(player);
+                {players.map((players, index) => {
+                  const playerObj = JSON.parse(players);
                   return (
-                    <div key={index} className="flex items-center justify-between text-white p-1.5 sm:p-2 bg-white/5 rounded-lg text-sm sm:text-base">
-                      <span className='text-white '>{playerObj.username}</span>
+                    <div key={index} className={`flex items-center justify-between text-white p-1.5 sm:p-2 rounded-lg text-sm sm:text-base ${player.username === playerObj.username ? 'bg-green-500/20 font-bold' : 'bg-white/5 font-normal'}`}>
+                      <span className='text-white '>{playerObj.username} {player.username === playerObj.username && '(You)'}</span>
                       <div className="flex items-center gap-1 sm:gap-2">
                         {playerObj.isHost === "true" ? (
                           <span className="text-yellow-600 text-xs sm:text-sm">Host</span>
@@ -178,12 +195,12 @@ function Lobby() {
             </div>
           </div>
         </div>
-        <button
+        {( player.isHost && (<button
           className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-orange-400 border-2 border-white/20 rounded-xl text-white hover:bg-green-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25"
         >
           <Play size={20} className="sm:w-6 sm:h-6" />
           Start Game
-        </button>
+        </button>))}
       </motion.div>
     </motion.div>
   )

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Users, User, Hash, Plus } from "lucide-react";
+import { Query } from "appwrite";
 import { databases } from "../lib/appwrite";
 import { v4 as uuidv4 } from "uuid";
+import { useSetAtom } from "jotai";
+import { user } from "../GlobalContext/atoms";
 
 function PartyCreation() {
   const [username, setUsername] = useState("");
@@ -12,45 +15,57 @@ function PartyCreation() {
   const [showMessage, setShowMessage] = useState(false);
   const navigate = useNavigate();
 
+  const setValue = useSetAtom(user);
+
   const handleJoinParty = async () => {
     if (!username) {
-      showError("Please choose a username!");
-      return;
+        showError("Please choose a username!");
+        return;
     }
     if (!partyCode) {
-      showError("Please enter a party code to join!");
-      return;
+        showError("Please enter a party code to join!");
+        return;
     }
 
     try {
-      const response = await databases.getDocument(
-        "672e683c001beba0b2a6",
-        "678ad4ab0017e805fec9",
-        partyCode
-      );
+        const response = await databases.listDocuments(
+            "672e683c001beba0b2a6",
+            "678ad4ab0017e805fec9",
+            [
+                Query.equal('partyId', partyCode)
+            ]
+        );
+        console.log(response);
 
-      if (response.status !== "waiting") {
-        showError("The party has already started or expired.");
-        return;
-      }
+        if (response.documents.length === 0) {
+            showError("Party not found. Please check the code and try again.");
+            return;
+        }
 
-      const updatedPlayers = [
-        ...response.players,
-        JSON.stringify({ id: uuidv4(), username, score: "0", isHost: "false" }),
-      ];
+        const partyDocument = response.documents[0]; // Access the first document
+        if (partyDocument.status !== "waiting") {
+            showError("The party has already started or expired.");
+            return;
+        }
 
-      await databases.updateDocument(
-        "672e683c001beba0b2a6",
-        "678ad4ab0017e805fec9",
-        partyCode,
-        { players: updatedPlayers }
-      );
+        const updatedPlayers = [
+            ...partyDocument.players,
+            JSON.stringify({ id: uuidv4(), username, score: "0", isHost: "false" }),
+        ];
 
-      navigate(`/Plobby/${response.$id}`, { state: { username } });
+        await databases.updateDocument(
+            "672e683c001beba0b2a6",
+            "678ad4ab0017e805fec9",
+            partyDocument.$id,
+            { players: updatedPlayers }
+        );
+        setValue({ username, userId: uuidv4(), isHost: false, partyCode });
+        navigate(`/lobby/${partyDocument.$id}`, { state: { username } });
     } catch (error) {
-      showError("Party not found. Please check the code and try again.");
+        console.error("Party not found. Please check the code and try again.", error.message);
+        // showError("Party not found. Please check the code and try again.");
     }
-  };
+};
 
   const handleCreateParty = async () => {
     if (!username) {
@@ -60,6 +75,7 @@ function PartyCreation() {
 
     try {
       const hostId = uuidv4();
+      const partyId = Math.random().toString(36).substring(2, 10);
       localStorage.setItem("hostId", hostId);
 
       const response = await databases.createDocument(
@@ -67,7 +83,7 @@ function PartyCreation() {
         "678ad4ab0017e805fec9",
         uuidv4(),
         {
-          partyId: uuidv4(),
+          partyId: partyId,
           hostId: hostId,
           players: [
             JSON.stringify({ id: hostId, username: username, score: "0", isHost: "true" }),
@@ -81,7 +97,7 @@ function PartyCreation() {
           time_per_round: 60,
         }
       );
-
+      setValue({ username, userId: hostId, isHost: true, partyCode: partyId });
       navigate(`/lobby/${response.$id}`, { state: { username } });
     } catch (error) {
       console.error("Error creating party:", error);
