@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Users, Clock, Settings, Play } from 'lucide-react'
+import { Users, Clock, Settings, Play, Crown ,Clipboard} from 'lucide-react'
 import { useParams, useLocation } from 'react-router-dom'
 import { databases, client } from "../lib/appwrite"
 import { user } from "../GlobalContext/atoms"
@@ -11,6 +11,8 @@ function Lobby() {
   const [timePerRound, setTimePerRound] = useState(60)
   const [players, setPlayers] = useState([])
   const [code, setCode] = useState('')
+  const [isCopied, setIsCopied] = useState(false)
+  
   const { id } = useParams()
   const player = useAtomValue(user)
 
@@ -76,6 +78,16 @@ function Lobby() {
     return () => clearTimeout(debounceTimer);
   }, [rounds, timePerRound]);
 
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch (error) {
+      console.error("Failed to copy code:", error);
+    }
+  };
+
   // console.log("Fetched players:", players);
   return (
     <motion.div
@@ -90,7 +102,7 @@ function Lobby() {
         transition={{ type: "spring", bounce: 0.5 }}
         className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-luckiest font-bold text-white mb-2 animate-pulse text-center drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
       >
-      Party Lobby
+     {player.isHost ? 'Party Lobby ' : 'Waiting for Host...'}
       </motion.h1>
 
       <motion.div
@@ -99,10 +111,11 @@ function Lobby() {
         transition={{ delay: 0.5 }}
         className="w-full max-w-6xl mx-auto p-2 sm:p-4"
       >
-        <div className="bg-white/10 border-2 border-white/20 rounded-xl p-3 sm:p-4 mb-4">
+        <div className={`bg-white/10 border-2 ${isCopied ? 'border-green-500' : 'border-white/20'} transition-colors duration-300 rounded-xl p-3 sm:p-4 mb-4`}>
           <h2 className="text-white  font-luckiest text-lg sm:text-xl mb-2">Party Code</h2>
-          <div className="bg-white/20 p-2 sm:p-3 rounded-lg text-white font-mono break-all select-all text-sm sm:text-base">
-          {code}
+          <div className={`bg-white/20 p-2 sm:p-3 rounded-lg text-white font-mono break-all text-sm sm:text-base flex justify-between items-center gap-2 ${isCopied ? 'bg-green-500/20' : ''}`}>
+          <span className='font-bold text-xl'>{code} {isCopied && <span className="text-green-400 ml-2">Copied!</span>}</span>
+          <Clipboard size={20} onClick={copyToClipboard} className="sm:w-6 cursor-pointer transition-all hover:text-orange-400 sm:h-6" />
           </div>
         </div>
 
@@ -180,14 +193,20 @@ function Lobby() {
                   const playerObj = JSON.parse(players);
                   return (
                     <div key={index} className={`flex items-center justify-between text-white p-1.5 sm:p-2 rounded-lg text-sm sm:text-base ${player.username === playerObj.username ? 'bg-green-500/20 font-bold' : 'bg-white/5 font-normal'}`}>
+                      <div>
+                      <span>#{index+1} </span>
                       <span className='text-white '>{playerObj.username} {player.username === playerObj.username && '(You)'}</span>
-                      <div className="flex items-center gap-1 sm:gap-2">
-                        {playerObj.isHost === "true" ? (
-                          <span className="text-yellow-600 text-xs sm:text-sm">Host</span>
-                        ) : (
-                          <span className="text-gray-400 text-xs sm:text-sm">Player</span>
-                        )}
                       </div>
+                      <div className="flex items-center gap-1 sm:gap-2">
+                        
+                        {playerObj.isHost === "true" ? (
+                          < Crown size={20} className="sm:w-6 text-yellow-500 sm:h-6" />
+                        ) : (
+                          ''
+                        )}
+                        <span className="text-orange-400">{playerObj.score || 0} pts</span>
+                      </div>
+                      
                     </div>
                   );
                 })}
