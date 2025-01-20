@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Users, Clock, Settings, Play, Crown ,Clipboard} from 'lucide-react'
-import { useParams, useLocation } from 'react-router-dom'
+import { Users, Clock, Settings, Play, Crown ,Clipboard, CircleX} from 'lucide-react'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { databases, client } from "../lib/appwrite"
 import { user } from "../GlobalContext/atoms"
 import { useAtomValue } from 'jotai'
@@ -10,11 +10,13 @@ function Lobby() {
   const [rounds, setRounds] = useState(1)
   const [timePerRound, setTimePerRound] = useState(60)
   const [players, setPlayers] = useState([])
+  const [hostId, setHostId] = useState('')
   const [code, setCode] = useState('')
   const [isCopied, setIsCopied] = useState(false)
 
   const { id } = useParams()
   const player = useAtomValue(user)
+  const navigate = useNavigate()
   console.log("Atom: ", player);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ function Lobby() {
           setPlayers(response.players);
           setTimePerRound(response.time_per_round);
           setCode(response.partyId);
+          setHostId(response.hostId);
 
 
       } catch (error) {
@@ -53,6 +56,12 @@ function Lobby() {
       unsubscribe();
     };
   }, [id]);
+
+  useEffect(() => {
+    if (players.length > 0 && !players.some(p => JSON.parse(p).id === player.userId)) {
+      navigate('/');
+    }
+  }, [players, player.userId, navigate]);
 
   const updateGameSettings = async (rounds, timePerRound) => {
     try {
@@ -89,6 +98,25 @@ function Lobby() {
     }
   };
 
+  const handlePlayerLeave = async (playerId) => {
+    try {
+      const updatedPlayers = players.filter(
+        (player) => JSON.parse(player).id !== playerId
+      );
+
+      await databases.updateDocument(
+        "672e683c001beba0b2a6",
+        "678ad4ab0017e805fec9",
+        id,
+        { players: updatedPlayers }
+      );
+
+      console.log(`Player ${playerId} removed from party.`);
+    } catch (error) {
+      console.error("Error updating players:", error);
+    }
+  };
+
   // console.log("Fetched players:", players);
   return (
     <motion.div
@@ -103,7 +131,7 @@ function Lobby() {
         transition={{ type: "spring", bounce: 0.5 }}
         className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-luckiest font-bold text-white mb-2 animate-pulse text-center drop-shadow-[0_5px_5px_rgba(0,0,0,0.5)]"
       >
-     {player.isHost ? 'Party Lobby ' : 'Waiting for Host...'}
+     {player.userId === hostId ? "Party Lobby" : "Waiting for Host..."}
 
       </motion.h1>
 
@@ -135,7 +163,7 @@ function Lobby() {
                       Number of Rounds: <span className="text-orange-400">{rounds}</span>
                     </div>
                   </label>
-                  {( player.isHost ? (
+                  {( player.userId === hostId ? (
                     <input
                     type="range"
                     value={rounds}
@@ -161,7 +189,7 @@ function Lobby() {
                       Time per Round: <span className="text-orange-400">{timePerRound}</span> seconds
                     </div>
                   </label>
-                  {( player.isHost ? (
+                  {( player.userId === hostId ? (
                     <input
                     type="range"
                     value={timePerRound}
@@ -200,15 +228,20 @@ function Lobby() {
                       <span className='text-white '>{playerObj.username} {player.username === playerObj.username && '(You)'}</span>
                       </div>
                       <div className="flex items-center gap-1 sm:gap-2">
-
-                        {playerObj.isHost === "true" ? (
+                        {playerObj.id === hostId ? (
                           < Crown size={20} className="sm:w-6 text-yellow-500 sm:h-6" />
                         ) : (
                           ''
                         )}
                         <span className="text-orange-400">{playerObj.score || 0} pts</span>
+                        {player.userId === hostId && playerObj.id !== hostId && (
+                          <CircleX
+                            size={20}
+                            className="sm:w-6 sm:h-6 cursor-pointer text-red-500"
+                            onClick={() => handlePlayerLeave(playerObj.id)}
+                          />
+                        )}
                       </div>
-
                     </div>
                   );
                 })}
@@ -216,7 +249,7 @@ function Lobby() {
             </div>
           </div>
         </div>
-        {( player.isHost && (<button
+        {( player.userId === hostId && (<button
           className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-orange-400 border-2 border-white/20 rounded-xl text-white hover:bg-green-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25"
         >
           <Play size={20} className="sm:w-6 sm:h-6" />
