@@ -5,7 +5,6 @@ export const user = atomWithStorage('user',
   {
     username: null,
     userId: null,
-    isHost: false,
     partyCode: null,
   }
 );

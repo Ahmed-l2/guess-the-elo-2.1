@@ -51,6 +51,19 @@ function PartyCreation() {
         // Parse the players array to JSON
         const players = partyDocument.players.map((player) => JSON.parse(player));
 
+        // Parse and check blacklist
+        const blacklist = partyDocument.blacklist.map((item) => JSON.parse(item));
+        console.log('blacklist :', blacklist);
+        if (blacklist.some(item => item.id === value.userId)) {
+            showError("Cannot Join party");
+            return;
+        }
+
+        if (players.length >= 3) {
+            showError("Party is full.");
+            return;
+        }
+
         // Retrieve the current user from the Jotai atom
         const currentUser = players.find(
             (player) => player.username === username && player.id === value.userId
@@ -61,7 +74,6 @@ function PartyCreation() {
             setValue({
                 username: currentUser.username,
                 userId: currentUser.id,
-                isHost: currentUser.isHost === "true",
                 partyCode,
             });
             navigate(`/lobby/${partyDocument.$id}`);
@@ -71,7 +83,6 @@ function PartyCreation() {
                 id: value.userId || uuidv4(),
                 username,
                 score: "0",
-                isHost: "false",
             };
 
             const updatedPlayers = [
@@ -90,7 +101,6 @@ function PartyCreation() {
             setValue({
                 username,
                 userId: newPlayer.id,
-                isHost: false,
                 partyCode,
             });
             navigate(`/lobby/${partyDocument.$id}`);
@@ -100,8 +110,6 @@ function PartyCreation() {
         // showError("Party not found. Please check the code and try again.");
     }
 };
-
-
   const handleCreateParty = async () => {
     if (!username) {
       showError("Please choose a username!");
@@ -121,7 +129,7 @@ function PartyCreation() {
           partyId: partyId,
           hostId: hostId,
           players: [
-            JSON.stringify({ id: hostId, username: username, score: "0", isHost: "true" }),
+            JSON.stringify({ id: hostId, username: username, score: "0" }),
           ],
           status: "waiting",
           rounds: 3,
@@ -132,7 +140,7 @@ function PartyCreation() {
           time_per_round: 60,
         }
       );
-      setValue({ username, userId: hostId, isHost: true, partyCode: partyId });
+      setValue({ username, userId: hostId, partyCode: partyId });
       navigate(`/lobby/${response.$id}`, { state: { username } });
     } catch (error) {
       console.error("Error creating party:", error);

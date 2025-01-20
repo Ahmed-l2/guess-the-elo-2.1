@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Users, Clock, Settings, Play, Crown ,Clipboard, CircleX} from 'lucide-react'
+import { Users, Clock, Settings, Play, Crown ,Clipboard, CircleX, DoorOpen } from 'lucide-react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { databases, client } from "../lib/appwrite"
 import { user } from "../GlobalContext/atoms"
 import { useAtomValue } from 'jotai'
+import { useModal } from '../App'
 
 function Lobby() {
   const [rounds, setRounds] = useState(1)
@@ -13,11 +14,22 @@ function Lobby() {
   const [hostId, setHostId] = useState('')
   const [code, setCode] = useState('')
   const [isCopied, setIsCopied] = useState(false)
+  const [blacklist, setBlacklist] = useState([])
 
   const { id } = useParams()
+  const { openModal } = useModal();
   const player = useAtomValue(user)
   const navigate = useNavigate()
   console.log("Atom: ", player);
+
+  const handleOpenModal = () => {
+    openModal(
+      <div>
+        <h1 className="text-lg font-bold">KICKED</h1>
+        <p>You have been kicked from the party.</p>
+      </div>
+    );
+  }
 
   useEffect(() => {
     const fetchPartyData = async () => {
@@ -34,6 +46,7 @@ function Lobby() {
           setTimePerRound(response.time_per_round);
           setCode(response.partyId);
           setHostId(response.hostId);
+          setBlacklist(response.blacklist);
 
 
       } catch (error) {
@@ -49,6 +62,7 @@ function Lobby() {
         setRounds(response.payload.rounds);
         setPlayers(response.payload.players);
         setTimePerRound(response.payload.time_per_round);
+        setBlacklist(response.payload.blacklist);
       }
     );
 
@@ -58,10 +72,22 @@ function Lobby() {
   }, [id]);
 
   useEffect(() => {
-    if (players.length > 0 && !players.some(p => JSON.parse(p).id === player.userId)) {
-      navigate('/');
-    }
-  }, [players, player.userId, navigate]);
+    const checkPlayerStatus = async () => {
+      try {
+        console.log(blacklist);
+        if (blacklist && blacklist.some(p => JSON.parse(p).id === player.userId)) {
+          handleOpenModal();
+          navigate('/');
+        } else if (players.length > 0 && !players.some(p => JSON.parse(p).id === player.userId)) {
+          navigate('/');
+        }
+      } catch (error) {
+        console.error("Error checking player status:", error);
+      }
+    };
+
+    checkPlayerStatus();
+  }, [players, player.userId, navigate, blacklist]);
 
   const updateGameSettings = async (rounds, timePerRound) => {
     try {
@@ -104,6 +130,16 @@ function Lobby() {
         (player) => JSON.parse(player).id !== playerId
       );
 
+      // First update the blacklist
+      const response = await databases.updateDocument(
+        "672e683c001beba0b2a6",
+        "678ad4ab0017e805fec9",
+        id,
+        {
+          blacklist: players.filter((player) => JSON.parse(player).id === playerId)
+        }
+      );
+      // Then remove the player
       await databases.updateDocument(
         "672e683c001beba0b2a6",
         "678ad4ab0017e805fec9",
@@ -238,7 +274,7 @@ function Lobby() {
                           <CircleX
                             size={20}
                             className="sm:w-6 sm:h-6 cursor-pointer text-red-500"
-                            onClick={() => handlePlayerLeave(playerObj.id)}
+                            onClick={() => {handlePlayerLeave(playerObj.id)}}
                           />
                         )}
                       </div>
@@ -249,12 +285,19 @@ function Lobby() {
             </div>
           </div>
         </div>
-        {( player.userId === hostId && (<button
-          className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-orange-400 border-2 border-white/20 rounded-xl text-white hover:bg-green-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25"
-        >
+        {( player.userId === hostId ? (
+          <button
+          className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-orange-400 border-2 border-white/20 rounded-xl text-white hover:bg-green-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25">
           <Play size={20} className="sm:w-6 sm:h-6" />
           Start Game
-        </button>))}
+        </button>) : (
+          <button
+          onClick={() => handlePlayerLeave(player.userId)}
+          className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-red-400 border-2 border-white/20 rounded-xl text-white hover:bg-red-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-red-500/25">
+          <DoorOpen size={20} className="sm:w-6 sm:h-6" />
+          Leave Party
+        </button>
+        ))}
       </motion.div>
     </motion.div>
   )
