@@ -130,22 +130,28 @@ function Lobby() {
         (player) => JSON.parse(player).id !== playerId
       );
 
-      if (playerId !== player.userId) {
-        const response = await databases.updateDocument(
-          "672e683c001beba0b2a6",
-          "678ad4ab0017e805fec9",
-          id,
-          {
-            blacklist: players.filter((player) => JSON.parse(player).id === playerId)
-          }
-        );
-      }
+      // if (playerId !== player.userId) {
+      //   const response = await databases.updateDocument(
+      //     "672e683c001beba0b2a6",
+      //     "678ad4ab0017e805fec9",
+      //     id,
+      //     {
+      //       blacklist: players.filter((player) => JSON.parse(player).id === playerId)
+      //     }
+      //   );
+      // }
+
       // Then remove the player
       await databases.updateDocument(
         "672e683c001beba0b2a6",
         "678ad4ab0017e805fec9",
         id,
-        { players: updatedPlayers }
+        {
+          players: updatedPlayers,
+          blacklist: playerId !== player.userId
+            ? [...blacklist, ...players.filter((player) => JSON.parse(player).id === playerId)]
+            : blacklist
+        }
       );
 
       console.log(`Player ${playerId} removed from party.`);

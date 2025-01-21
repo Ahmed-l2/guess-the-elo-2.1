@@ -11,13 +11,10 @@ const functions = new Functions(client);
 const databases = new Databases(client);
 export const fetchRandomGame = async () => {
   try {
-    // Generate a random document index within the total count
-    const randomOffset = Math.floor(Math.random() * 7226);
 
     // Call the Cloud Function to get the filtered game data
     const response = await functions.createExecution(
-      '6734e194003198613988',  // Replace with the actual ID of your Cloud Function
-      JSON.stringify({ offset: randomOffset })
+      '6734e194003198613988',  // ID of your Cloud Function
     );
 
     // Parse the response payload from the Cloud Function

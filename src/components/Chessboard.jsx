@@ -118,7 +118,6 @@ function Chessboard() {
   };
 
   const lastMove = () => {
-
     playClickAudio();
     setCurrentIndex(fenList.length - 1);
   };
