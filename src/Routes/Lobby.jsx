@@ -33,45 +33,54 @@ function Lobby() {
   }
 
   useEffect(() => {
+    // Fetch initial party data
     const fetchPartyData = async () => {
       try {
         const response = await databases.getDocument(
           "672e683c001beba0b2a6",
           "678ad4ab0017e805fec9",
           id
-        )
-
-        // Set rounds
-          setRounds(response.rounds);
-          setPlayers(response.players);
-          setTimePerRound(response.time_per_round);
-          setCode(response.partyId);
-          setHostId(response.hostId);
-          setBlacklist(response.blacklist);
-
-
+        );
+  
+        // initialize state
+        setRounds(response.rounds);
+        setPlayers(response.players);
+        setTimePerRound(response.time_per_round);
+        setCode(response.partyId);
+        setHostId(response.hostId);
+        setBlacklist(response.blacklist);
+        setGameState(response.gameState);
       } catch (error) {
         console.error("Error fetching party data:", error);
       }
-    }
-
+    };
+  
     fetchPartyData();
-
+  
+    // Subscribe to live changes on this document
     const unsubscribe = client.subscribe(
       `databases.672e683c001beba0b2a6.collections.678ad4ab0017e805fec9.documents.${id}`,
       response => {
-        setRounds(response.payload.rounds);
-        setPlayers(response.payload.players);
-        setTimePerRound(response.payload.time_per_round);
-        setBlacklist(response.payload.blacklist);
-        setGameState(response.payload.gameState);
+        const payload = response.payload;
+  
+        // update all relevant pieces of state
+        setRounds(payload.rounds);
+        setPlayers(payload.players);
+        setTimePerRound(payload.time_per_round);
+        setBlacklist(payload.blacklist);
+  
+        // **NEW**: if gameState has become "playing", immediately navigate
+        if (payload.gameState === "playing") {
+          navigate(`/multiplayer/${id}`);
+        }
+  
+        // keep local gameState in sync too (in case you need it elsewhere)
+        setGameState(payload.gameState);
       }
     );
-
-    return () => {
-      unsubscribe();
-    };
-  }, [id]);
+  
+    return () => unsubscribe();
+  }, [id, navigate]);
 
   useEffect(() => {
     const checkPlayerStatus = async () => {
@@ -195,11 +204,11 @@ function Lobby() {
     }
   };
 
-  useEffect(() => {
-    if (gameState === "playing") {
-      navigate(`/multiplayer/${id}`);
-    }
-  }, [gameState, id, navigate]);
+  // useEffect(() => {
+  //   if (gameState === "playing") {
+  //     navigate(`/multiplayer/${id}`);
+  //   }
+  // }, [gameState, id, navigate]);
 
 
   // console.log("Fetched players:", players);
