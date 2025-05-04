@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Users, Clock, Settings, Play, Crown ,Clipboard, CircleX, DoorOpen } from 'lucide-react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import { databases, client } from "../lib/appwrite"
+import { databases, client, fetchRandomGame } from "../lib/appwrite"
 import { user } from "../GlobalContext/atoms"
 import { useAtomValue } from 'jotai'
 import { useModal } from '../App'
@@ -15,6 +15,7 @@ function Lobby() {
   const [code, setCode] = useState('')
   const [isCopied, setIsCopied] = useState(false)
   const [blacklist, setBlacklist] = useState([])
+  const [gameState, setGameState] = useState('lobby')
 
   const { id } = useParams()
   const { openModal } = useModal();
@@ -63,6 +64,7 @@ function Lobby() {
         setPlayers(response.payload.players);
         setTimePerRound(response.payload.time_per_round);
         setBlacklist(response.payload.blacklist);
+        setGameState(response.payload.gameState);
       }
     );
 
@@ -159,6 +161,46 @@ function Lobby() {
       console.error("Error updating players:", error);
     }
   };
+
+  const startGame = async () => {
+    try {
+      // Fetch random games for all rounds
+      const gameQueue = [];
+      for (let i = 0; i < rounds; i++) {
+        const gameData = await fetchRandomGame();
+        gameQueue.push(JSON.stringify(gameData)); // Stringify each game object
+      }
+
+      console.log("Game Queue:", gameQueue);
+      console.log(typeof gameQueue[0], typeof gameQueue[0]);
+      console.log(Array.isArray(gameQueue));
+
+      // Update party status to playing and set the game queue
+      await databases.updateDocument(
+        "672e683c001beba0b2a6",
+        "678ad4ab0017e805fec9",
+        id,
+        {
+          gameState: "playing",
+          gameQueue: gameQueue, // Array of stringified game objects
+          CurrentRound: 1,
+          roundResults: []
+        }
+      );
+
+      // Navigate to the multiplayer game screen
+      // navigate(`/multiplayer/${id}`);
+    } catch (error) {
+      console.error("Error starting game:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (gameState === "playing") {
+      navigate(`/multiplayer/${id}`);
+    }
+  }, [gameState, id, navigate]);
+
 
   // console.log("Fetched players:", players);
   return (
@@ -294,6 +336,8 @@ function Lobby() {
         </div>
         {( player.userId === hostId ? (
           <button
+          onClick={startGame}
+          // disabled={players.length < 2}
           className="w-full mt-3 sm:mt-4 p-3 sm:p-4 text-base sm:text-lg font-luckiest bg-orange-400 border-2 border-white/20 rounded-xl text-white hover:bg-green-500/80 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-green-500/25">
           <Play size={20} className="sm:w-6 sm:h-6" />
           Start Game

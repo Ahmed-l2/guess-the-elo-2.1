@@ -206,7 +206,7 @@ function Chessboard() {
       <div className="max-h-[90v] w-full lg:max-w-6xl lg:py-4  md:max-w-5xl sm:max-w-3xl bg-[#161618] p-3 sm:p-6 shadow-2xl sm:rounded-2xl flex flex-col">
         {/* Chessboard Title */}
         <div className="flex justify-between gap-2 sm:gap-3 mb-2 sm:mb-4">
-          <p className={`${gameMode()} rounded-lg w-1/3   font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
+          <p className={`${gameMode()} rounded-lg w-1/3 font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate `} > {eventTranslation() || "game type"}</p>
           <p className='bg-secnd rounded-lg w-full text-white font-bold text-center p-2 sm:p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate hover:whitespace-normal hover:overflow-visible' > {opening || "Opening name"}</p>
         </div>
 
@@ -227,7 +227,8 @@ function Chessboard() {
                 <NavButton onClick={nextMove} icon={<ChevronRight size={24} className="sm:w-8 sm:h-8 mx-auto" />} />
                 <NavButton onClick={lastMove} icon={<ChevronsRight size={24} className="sm:w-8 sm:h-8 mx-auto" />} />
               </div>
-              <p className='hidden sm:block bg-secnd rounded-lg w-full text-white font-bold text-center p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate' > {`Move ${currentIndex}` || "Moves"}</p>
+              <p className='hidden sm:block bg-secnd rounded-lg w-full text-white font-bold text-center p-4 text-xs sm:text-base shadow-md hover:bg-opacity-90 transition-all truncate' > {`Move ${currentIndex}` || "Moves"}
+              </p>
               <div className='text-white font-bold truncate w-full bg-secnd p-4 text-center text-xs sm:text-base rounded-lg shadow-md transition-all hover:bg-opacity-90 sm:mb-0 mb-4'>
                 {currentIndex == fenList.length -1 ?
                   <p className='text-white'>{resultTranslation()}</p> :

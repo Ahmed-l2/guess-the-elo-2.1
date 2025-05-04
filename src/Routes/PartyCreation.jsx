@@ -43,7 +43,7 @@ function PartyCreation() {
         }
 
         const partyDocument = response.documents[0]; // Access the first document
-        if (partyDocument.status !== "waiting") {
+        if (partyDocument.gameState !== "lobby") {
             showError("The party has already started or expired.");
             return;
         }
@@ -64,21 +64,33 @@ function PartyCreation() {
             return;
         }
 
-        // Retrieve the current user from the Jotai atom
-        const currentUser = players.find(
-            (player) => player.username === username && player.id === value.userId
-        );
+        // Check if the user already exists in the party by userId
+        const existingPlayer = players.find(player => player.id === value.userId);
 
-        if (currentUser) {
-            // If the user exists, navigate to the lobby
+        if (existingPlayer) {
+            // Update the existing player's username
+            const updatedPlayers = players.map(player => {
+                if (player.id === value.userId) {
+                    return { ...player, username };
+                }
+                return player;
+            });
+
+            await databases.updateDocument(
+                "672e683c001beba0b2a6",
+                "678ad4ab0017e805fec9",
+                partyDocument.$id,
+                { players: updatedPlayers.map(player => JSON.stringify(player)) }
+            );
+
             setValue({
-                username: currentUser.username,
-                userId: currentUser.id,
+                username,
+                userId: value.userId,
                 partyCode,
             });
             navigate(`/lobby/${partyDocument.$id}`);
         } else {
-            // If the user does not exist, add them as a new player
+            // Add new player
             const newPlayer = {
                 id: value.userId || uuidv4(),
                 username,
@@ -97,7 +109,6 @@ function PartyCreation() {
                 { players: updatedPlayers }
             );
 
-            // Update the Jotai atom with the new player's information
             setValue({
                 username,
                 userId: newPlayer.id,

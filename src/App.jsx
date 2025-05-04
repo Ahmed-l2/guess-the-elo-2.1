@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import Landing from './Routes/Landing';
 import PartyCreation from './Routes/PartyCreation';
 import Lobby from './Routes/Lobby';
+import MultiplayerGame from './Routes/MultiplayerGame';
+import './style/multiplayer.css';
 
 const ModalContext = createContext();
 
@@ -113,6 +115,20 @@ const App = () => {
                   transition={{ duration: 0.5 }}
                 >
                   <Lobby />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/multiplayer/:id"
+              element={
+                <motion.div
+                  variants={pageVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ duration: 0.5 }}
+                >
+                  <MultiplayerGame />
                 </motion.div>
               }
             />
